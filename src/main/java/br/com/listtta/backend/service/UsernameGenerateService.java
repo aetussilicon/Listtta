@@ -1,14 +1,20 @@
 package br.com.listtta.backend.service;
 
 import org.jetbrains.annotations.NotNull;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import java.text.Normalizer;
 import java.util.Random;
 
+@Component
 public class UsernameGenerateService {
-    public static String usernameGenerator(@NotNull String normalizedString) {
 
-        char[] stringToSplit = normalizedString.toCharArray();
+    public String usernameGenerator(@NotNull String name) {
+
+        String cleanName = removeAccents(name);
+
+        char[] stringToSplit = cleanName.toCharArray();
         int arrayLength = stringToSplit.length;
         int charsToExtract = 3;
 
@@ -28,9 +34,10 @@ public class UsernameGenerateService {
         return str1 + str2 + randomInt;
     }
 
-    public String removeAccents(String name) {
+    private String removeAccents(String name) {
 
         String normalizedString = Normalizer.normalize(name, Normalizer.Form.NFD);
         return normalizedString.replaceAll("\\p{InCombiningDiacriticalMarks}+", "").toLowerCase();
     }
+
 }
