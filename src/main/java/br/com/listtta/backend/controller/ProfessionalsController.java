@@ -42,4 +42,12 @@ public class ProfessionalsController {
     public ResponseEntity<List<ProfessionalsDto>> listAllProfessionals() {
         return new ResponseEntity<>(professionalsService.listAllProfessionals(), HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{professionalId}")
+    public ResponseEntity<Professionals> deleteProfessional(@PathVariable UUID professionalId) {
+        if (professionalsService.deleteProfessional(professionalId)) {
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

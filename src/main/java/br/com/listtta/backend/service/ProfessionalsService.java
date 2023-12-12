@@ -65,4 +65,12 @@ public class ProfessionalsService {
     public List<ProfessionalsDto> listAllProfessionals(){
         return professionalsMapper.listModelToDto(professionalsRepository.findAll());
     }
+
+    public boolean deleteProfessional(UUID professionalId) {
+        Optional<Professionals> chekcInDatabase = professionalsRepository.findById(professionalId);
+        if (chekcInDatabase.isPresent()) {
+            professionalsRepository.deleteById(professionalId);
+            return true;
+        } return false;
+    }
 }
