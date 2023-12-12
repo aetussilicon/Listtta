@@ -1,6 +1,7 @@
 package br.com.listtta.backend.model.mapper;
 
 import br.com.listtta.backend.model.Professionals;
+import br.com.listtta.backend.model.dto.ProfessionalUpdateDto;
 import br.com.listtta.backend.model.dto.ProfessionalsDto;
 import br.com.listtta.backend.model.dto.ProfessionalsSignUpDto;
 import org.mapstruct.Mapper;
@@ -18,7 +19,13 @@ public interface ProfessionalsMapper {
     @Mapping(target = "professionalId", expression = "java(UUID.randomUUID())")
     Professionals signUpDtoToModel(ProfessionalsSignUpDto professionalsSignUpDto);
 
+    @Mapping(target = "professionalId", ignore = true)
+    @Mapping(target = "username", ignore = true)
+    @Mapping(target = "taxNumber", ignore = true)
+    Professionals updateDtoToModel(ProfessionalUpdateDto professionalUpdateDto);
+
 
     ProfessionalsDto professionalModeltoDto (Professionals professionals);
-//    List<ProfessionalsDto> listModelToDto (List)
+
+    List<ProfessionalsDto> listModelToDto (List<Professionals> professionalsList);
 }

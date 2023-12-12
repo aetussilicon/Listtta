@@ -1,15 +1,18 @@
 package br.com.listtta.backend.controller;
 
 import br.com.listtta.backend.model.Professionals;
+import br.com.listtta.backend.model.dto.ProfessionalUpdateDto;
 import br.com.listtta.backend.model.dto.ProfessionalsDto;
 import br.com.listtta.backend.model.dto.ProfessionalsSignUpDto;
 import br.com.listtta.backend.service.ProfessionalsService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,8 +27,19 @@ public class ProfessionalsController {
         return new ResponseEntity<>(professionalsService.createNewProfessional(professionalsSignUpDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/list/{professionalId}")
+    @PatchMapping("/update/{professionalId}")
+    @Transactional
+    public ResponseEntity<Professionals> patchProfessional(@PathVariable UUID professionalId, @RequestBody ProfessionalUpdateDto professionalUpdateDto){
+        return new ResponseEntity<>(professionalsService.patchProfessional(professionalId, professionalUpdateDto), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/list/professional/{professionalId}")
     public ResponseEntity<ProfessionalsDto> getProfessional(@PathVariable UUID professionalId){
         return new ResponseEntity<>(professionalsService.listOneProfessional(professionalId), HttpStatus.OK);
+    }
+
+    @GetMapping("/list/all")
+    public ResponseEntity<List<ProfessionalsDto>> listAllProfessionals() {
+        return new ResponseEntity<>(professionalsService.listAllProfessionals(), HttpStatus.OK);
     }
 }
