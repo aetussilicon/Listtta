@@ -1,4 +1,4 @@
-package br.com.listtta.backend.model.dto;
+package br.com.listtta.backend.model.dto.professionals;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
