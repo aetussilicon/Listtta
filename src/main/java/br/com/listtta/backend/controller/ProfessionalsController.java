@@ -1,9 +1,9 @@
 package br.com.listtta.backend.controller;
 
-import br.com.listtta.backend.model.Professionals;
-import br.com.listtta.backend.model.dto.ProfessionalUpdateDto;
-import br.com.listtta.backend.model.dto.ProfessionalsDto;
-import br.com.listtta.backend.model.dto.ProfessionalsSignUpDto;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalUpdateDto;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsDto;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignUpDto;
+import br.com.listtta.backend.model.entities.Professionals;
 import br.com.listtta.backend.service.ProfessionalsService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

@@ -1,17 +1,15 @@
 package br.com.listtta.backend.service;
 
-import br.com.listtta.backend.exceptions.ProfessionalNotFoundException;
 import br.com.listtta.backend.exceptions.UpdateFieldsException;
-import br.com.listtta.backend.model.Professionals;
-import br.com.listtta.backend.model.dto.ProfessionalUpdateDto;
-import br.com.listtta.backend.model.dto.ProfessionalsDto;
-import br.com.listtta.backend.model.dto.ProfessionalsSignUpDto;
+import br.com.listtta.backend.exceptions.UserNotFound;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalUpdateDto;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsDto;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignUpDto;
+import br.com.listtta.backend.model.entities.Professionals;
 import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
 import br.com.listtta.backend.repository.ProfessionalsRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -59,7 +57,7 @@ public class ProfessionalsService {
         if (checkProfessionalInDatabase.isPresent()) {
             return professionalsMapper.professionalModeltoDto(checkProfessionalInDatabase.get());
         }
-        throw new ProfessionalNotFoundException("Profissional não encontrado");
+        throw new UserNotFound("Profissional não encontrado");
     }
 
     public List<ProfessionalsDto> listAllProfessionals(){
