@@ -1,5 +1,6 @@
 package br.com.listtta.backend.model.dto.professionals;
 
+import br.com.listtta.backend.model.dto.generics.AbstractUserSignUpDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -9,39 +10,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class ProfessionalsSignUpDto {
-
-    private UUID userId;
-
-    @NotNull
-    private String fullName;
-
-    private String username;
-
-    @NotNull
-    private String phoneNumber;
-
-    @NotNull
-    private String taxNumber;
-
-    @NotNull
-    @Email
-    private String email;
-
-    @NotNull
-    private String password;
-
-    @NotNull
-    private String state;
-
-    @NotNull
-    private String city;
-
-    @NotNull
-    private String district;
-
-    @NotNull
-    private String postalCode;
+public class ProfessionalsSignUpDto extends AbstractUserSignUpDto {
 
     @NotNull
     private String instagramUrl;
