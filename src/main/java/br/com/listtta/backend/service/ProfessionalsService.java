@@ -31,13 +31,13 @@ public class ProfessionalsService {
         return professionalsRepository.save(professionalsMapper.signUpDtoToModel(professionalsSignUpDto));
     }
 
-    public Professionals patchProfessional(UUID professionalId, ProfessionalUpdateDto professionalUpdateDto){
-        Optional<Professionals> checkProfessionalInDatabase = professionalsRepository.findById(professionalId);
+    public Professionals patchProfessional(UUID userId, ProfessionalUpdateDto professionalUpdateDto){
+        Optional<Professionals> checkProfessionalInDatabase = professionalsRepository.findById(userId);
         Professionals professionalsToUpdate = checkProfessionalInDatabase.get();
         Professionals updateFields = professionalsMapper.updateDtoToModel(professionalUpdateDto);
 
         if (checkProfessionalInDatabase.isPresent()){
-            for (Field field : Professionals.class.getDeclaredFields()){
+            for (Field field : Professionals.class.getSuperclass().getDeclaredFields()) {
                 field.setAccessible(true);
 
                 try {
@@ -52,8 +52,8 @@ public class ProfessionalsService {
         return professionalsToUpdate;
     }
 
-    public ProfessionalsDto listOneProfessional(UUID professionalId){
-        Optional<Professionals> checkProfessionalInDatabase = professionalsRepository.findById(professionalId);
+    public ProfessionalsDto listOneProfessional(UUID userId){
+        Optional<Professionals> checkProfessionalInDatabase = professionalsRepository.findById(userId);
         if (checkProfessionalInDatabase.isPresent()) {
             return professionalsMapper.professionalModeltoDto(checkProfessionalInDatabase.get());
         }
@@ -64,10 +64,10 @@ public class ProfessionalsService {
         return professionalsMapper.listModelToDto(professionalsRepository.findAll());
     }
 
-    public boolean deleteProfessional(UUID professionalId) {
-        Optional<Professionals> chekcInDatabase = professionalsRepository.findById(professionalId);
+    public boolean deleteProfessional(UUID userId) {
+        Optional<Professionals> chekcInDatabase = professionalsRepository.findById(userId);
         if (chekcInDatabase.isPresent()) {
-            professionalsRepository.deleteById(professionalId);
+            professionalsRepository.deleteById(userId);
             return true;
         } return false;
     }
