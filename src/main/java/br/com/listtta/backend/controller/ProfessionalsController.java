@@ -27,15 +27,15 @@ public class ProfessionalsController {
         return new ResponseEntity<>(professionalsService.createNewProfessional(professionalsSignUpDto), HttpStatus.CREATED);
     }
 
-    @PatchMapping("/update/{professionalId}")
+    @PatchMapping("/update/{userId}")
     @Transactional
-    public ResponseEntity<Professionals> patchProfessional(@PathVariable UUID professionalId, @RequestBody ProfessionalUpdateDto professionalUpdateDto){
-        return new ResponseEntity<>(professionalsService.patchProfessional(professionalId, professionalUpdateDto), HttpStatus.ACCEPTED);
+    public ResponseEntity<Professionals> patchProfessional(@PathVariable UUID userId, @RequestBody ProfessionalUpdateDto professionalUpdateDto){
+        return new ResponseEntity<>(professionalsService.patchProfessional(userId, professionalUpdateDto), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/list/professional/{professionalId}")
-    public ResponseEntity<ProfessionalsDto> getProfessional(@PathVariable UUID professionalId){
-        return new ResponseEntity<>(professionalsService.listOneProfessional(professionalId), HttpStatus.OK);
+    @GetMapping("/list/professional/{userId}")
+    public ResponseEntity<ProfessionalsDto> getProfessional(@PathVariable UUID userId){
+        return new ResponseEntity<>(professionalsService.listOneProfessional(userId), HttpStatus.OK);
     }
 
     @GetMapping("/list/all")
@@ -43,9 +43,9 @@ public class ProfessionalsController {
         return new ResponseEntity<>(professionalsService.listAllProfessionals(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{professionalId}")
-    public ResponseEntity<Professionals> deleteProfessional(@PathVariable UUID professionalId) {
-        if (professionalsService.deleteProfessional(professionalId)) {
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity<Professionals> deleteProfessional(@PathVariable UUID userId) {
+        if (professionalsService.deleteProfessional(userId)) {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

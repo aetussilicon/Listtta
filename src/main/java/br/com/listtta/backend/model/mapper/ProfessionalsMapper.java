@@ -16,10 +16,10 @@ public interface ProfessionalsMapper {
 
     ProfessionalsMapper INSTANCE = Mappers.getMapper(ProfessionalsMapper.class);
 
-    @Mapping(target = "professionalId", expression = "java(UUID.randomUUID())")
+    @Mapping(target = "userId", expression = "java(UUID.randomUUID())")
     Professionals signUpDtoToModel(ProfessionalsSignUpDto professionalsSignUpDto);
 
-    @Mapping(target = "professionalId", ignore = true)
+    @Mapping(target = "userId", ignore = true)
     @Mapping(target = "username", ignore = true)
     @Mapping(target = "taxNumber", ignore = true)
     Professionals updateDtoToModel(ProfessionalUpdateDto professionalUpdateDto);

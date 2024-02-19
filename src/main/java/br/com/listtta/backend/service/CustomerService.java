@@ -32,8 +32,8 @@ public class CustomerService {
         return customerRepository.save(customerMapper.signUpDtoToModel(customerSignUpDto));
     }
 
-    public Customer patchCustomer(UUID customerId, CustomerUpdateDto customerUpdateDto){
-        Optional<Customer> checkCustomerInDatabase = customerRepository.findById(customerId);
+    public Customer patchCustomer(UUID userId, CustomerUpdateDto customerUpdateDto){
+        Optional<Customer> checkCustomerInDatabase = customerRepository.findById(userId);
 
         Customer customerToUpdate = checkCustomerInDatabase.get();
         Customer updateFields = customerMapper.updateDtoToModel(customerUpdateDto);
@@ -54,8 +54,8 @@ public class CustomerService {
         return customerToUpdate;
     }
 
-    public CustomerDto getOneCustomer(UUID customerId) {
-        Optional<Customer> checkCustomerInDatabase = customerRepository.findById(customerId);
+    public CustomerDto getOneCustomer(UUID userId) {
+        Optional<Customer> checkCustomerInDatabase = customerRepository.findById(userId);
         if (checkCustomerInDatabase.isPresent()) {
             return customerMapper.customerModelToDto(checkCustomerInDatabase.get());
         }
@@ -66,10 +66,10 @@ public class CustomerService {
         return customerMapper.listModelToDto(customerRepository.findAll());
     }
 
-    public boolean deleteCustomer(UUID customerId) {
-        Optional<Customer> checkInDatabase = customerRepository.findById(customerId);
+    public boolean deleteCustomer(UUID userId) {
+        Optional<Customer> checkInDatabase = customerRepository.findById(userId);
         if (checkInDatabase.isPresent()) {
-            customerRepository.deleteById(customerId);
+            customerRepository.deleteById(userId);
             return true;
         } return false;
     }

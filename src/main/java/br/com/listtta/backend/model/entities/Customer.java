@@ -11,12 +11,12 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "customerId")
+@EqualsAndHashCode(of = "userId")
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID customerId;
+    private UUID userId;
 
     @Column(name = "full_name")
     private String fullName;

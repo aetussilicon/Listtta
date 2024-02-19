@@ -9,7 +9,7 @@ import java.util.UUID;
 @Setter
 public class ProfessionalsDto {
 
-    private UUID professionalId;
+    private UUID userId;
     private String fullName;
     private String username;
     private String phoneNumber;

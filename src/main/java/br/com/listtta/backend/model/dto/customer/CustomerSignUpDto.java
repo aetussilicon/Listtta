@@ -11,7 +11,7 @@ import java.util.UUID;
 @Setter
 public class CustomerSignUpDto {
 
-    private UUID customerId;
+    private UUID userId;
 
     @NotNull
     private String fullName;

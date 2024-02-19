@@ -16,10 +16,10 @@ public interface CustomerMapper {
 
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
 
-    @Mapping(target = "customerId", expression = "java(UUID.randomUUID())")
+    @Mapping(target = "userId", expression = "java(UUID.randomUUID())")
     Customer signUpDtoToModel (CustomerSignUpDto customerSignUpDto);
 
-    @Mapping(target = "customerId", ignore = true)
+    @Mapping(target = "userId", ignore = true)
     @Mapping(target = "username", ignore = true)
     @Mapping(target = "taxNumber", ignore = true)
     Customer updateDtoToModel(CustomerUpdateDto customerUpdateDto);

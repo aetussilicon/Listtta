@@ -27,15 +27,15 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.createNewCustomer(customerSignUpDto), HttpStatus.CREATED);
     }
 
-    @PatchMapping("/update/{customerId}")
+    @PatchMapping("/update/{userId}")
     @Transactional
-    public ResponseEntity<Customer> patchCustomer(@PathVariable UUID customerId, @RequestBody CustomerUpdateDto customerUpdateDto) {
-        return new ResponseEntity<>(customerService.patchCustomer(customerId, customerUpdateDto), HttpStatus.ACCEPTED);
+    public ResponseEntity<Customer> patchCustomer(@PathVariable UUID userId, @RequestBody CustomerUpdateDto customerUpdateDto) {
+        return new ResponseEntity<>(customerService.patchCustomer(userId, customerUpdateDto), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/list/customer/{customerId}")
-    public ResponseEntity<CustomerDto> getOneCustomer(@PathVariable UUID customerId) {
-        return new ResponseEntity<>(customerService.getOneCustomer(customerId), HttpStatus.OK);
+    @GetMapping("/list/customer/{userId}")
+    public ResponseEntity<CustomerDto> getOneCustomer(@PathVariable UUID userId) {
+        return new ResponseEntity<>(customerService.getOneCustomer(userId), HttpStatus.OK);
     }
 
     @GetMapping("/list/all")
