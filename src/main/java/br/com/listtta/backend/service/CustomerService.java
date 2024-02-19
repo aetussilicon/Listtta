@@ -39,7 +39,7 @@ public class CustomerService {
         Customer updateFields = customerMapper.updateDtoToModel(customerUpdateDto);
 
         if (checkCustomerInDatabase.isPresent()) {
-            for (Field field : Customer.class.getDeclaredFields()) {
+            for (Field field : Customer.class.getSuperclass().getDeclaredFields()) {
                 field.setAccessible(true);
 
                 try {
