@@ -1,5 +1,6 @@
 package br.com.listtta.backend.model.dto.generics;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,6 @@ import lombok.Setter;
 public class CreateNewFilterDto {
 
     private Long filterId;
-    private String filterName;
-    private String displayName;
+    @NotNull private String filterName;
+    @NotNull private String displayName;
 }
