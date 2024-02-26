@@ -18,7 +18,7 @@ public interface FiltersMapper {
     @Mapping(target = "filterId", source = "filterId")
     Filters createNewFilterDtoToModel (CreateNewFilterDto createNewFilterDto);
     Filters updateFilterDtoToModel (UpdateFilterDto updateFilterDto);
-    FiltersDto filtersModelToDto (FiltersDto filtersDto);
+    FiltersDto filtersModelToDto (Filters filters);
     List<FiltersDto> listFiltersModelToDto (List<Filters> filtersList);
 
 }
