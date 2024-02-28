@@ -1,4 +1,4 @@
-package br.com.listtta.backend.model.dto.generics;
+package br.com.listtta.backend.model.dto.filters;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
