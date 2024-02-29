@@ -1,7 +1,6 @@
 package br.com.listtta.backend.service;
 
 import org.jetbrains.annotations.NotNull;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.text.Normalizer;

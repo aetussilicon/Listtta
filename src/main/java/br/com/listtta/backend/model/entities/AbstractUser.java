@@ -1,42 +1,39 @@
-package br.com.listtta.backend.model;
+package br.com.listtta.backend.model.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
 
-@Entity
-@Table (name = "professionals")
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "professionalId")
-public class Professionals {
+@EqualsAndHashCode (of = "userId")
+@MappedSuperclass
+public abstract class AbstractUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID professionalId;
+    private UUID userId;
 
     @Column(name = "full_name")
     private String fullName;
     private String username;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    private String email;
+    private String password;
 
     @Column(name = "tax_number")
     private String taxNumber;
-    private String email;
-    private String password;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
     private String state;
     private String city;
     private String district;
 
     @Column(name = "postal_code")
     private String postalCode;
-    private String instagramUrl;
-
-    //TODO SET OF SERVICES
-    //TODO Profile Picture
+    
 }
