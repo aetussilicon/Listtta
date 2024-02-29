@@ -23,55 +23,51 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final UsernameGenerateService usernameGenerateService;
     private final CustomerMapper customerMapper;
+    Customer checkedCustomer;
+
+    //Method to check if the customer exists in the database with it's customerId.
+    private Customer checkCustomerInDatabase(UUID userId) {
+        Optional<Customer> checkCustomer = customerRepository.findById(userId);
+
+        if (checkCustomer.isPresent()) {
+            return checkCustomer.get();
+        } throw new UserNotFound("Usuário não encontrado!");
+    }
 
     public Customer createNewCustomer(CustomerSignUpDto customerSignUpDto) {
-        customerSignUpDto.setUsername(
-                usernameGenerateService.usernameGenerator(customerSignUpDto.getFullName())
-        );
-
+        customerSignUpDto.setUsername(usernameGenerateService.usernameGenerator(customerSignUpDto.getFullName()));
         return customerRepository.save(customerMapper.signUpDtoToModel(customerSignUpDto));
     }
 
-    public Customer patchCustomer(UUID userId, CustomerUpdateDto customerUpdateDto){
-        Optional<Customer> checkCustomerInDatabase = customerRepository.findById(userId);
-
-        Customer customerToUpdate = checkCustomerInDatabase.get();
+    public Customer patchCustomer(UUID userId, CustomerUpdateDto customerUpdateDto) {
+        checkedCustomer = checkCustomerInDatabase(userId);
         Customer updateFields = customerMapper.updateDtoToModel(customerUpdateDto);
 
-        if (checkCustomerInDatabase.isPresent()) {
             for (Field field : Customer.class.getSuperclass().getDeclaredFields()) {
                 field.setAccessible(true);
 
                 try {
-                    if (field.get(updateFields) != null && !field.get(updateFields).equals(field.get(customerToUpdate))) {
-                        field.set(customerToUpdate, field.get(updateFields));
+                    if (field.get(updateFields) != null && !field.get(updateFields).equals(field.get(checkedCustomer))) {
+                        field.set(checkedCustomer, field.get(updateFields));
                     }
-                } catch (IllegalAccessException e){
+                } catch (IllegalAccessException e) {
                     throw new UpdateFieldsException("Não foi possível atualizar o usuário!");
                 }
             }
-        }
-        return customerToUpdate;
+        return checkedCustomer;
     }
 
     public CustomerDto getOneCustomer(UUID userId) {
-        Optional<Customer> checkCustomerInDatabase = customerRepository.findById(userId);
-        if (checkCustomerInDatabase.isPresent()) {
-            return customerMapper.customerModelToDto(checkCustomerInDatabase.get());
-        }
-        throw new UserNotFound("Usuário não encontrado!");
+        return customerMapper.customerModelToDto(checkCustomerInDatabase(userId));
     }
 
     public List<CustomerDto> getAllCustomers() {
         return customerMapper.listModelToDto(customerRepository.findAll());
     }
 
-    public boolean deleteCustomer(UUID userId) {
-        Optional<Customer> checkInDatabase = customerRepository.findById(userId);
-        if (checkInDatabase.isPresent()) {
-            customerRepository.deleteById(userId);
-            return true;
-        } return false;
+    public String deleteCustomer(UUID userId) {
+        checkCustomerInDatabase(userId);
+        customerRepository.deleteById(userId);
+        return "Usuário deletado com sucesso!";
     }
-
 }
