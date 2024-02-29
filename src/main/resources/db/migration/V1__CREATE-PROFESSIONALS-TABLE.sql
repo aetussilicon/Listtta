@@ -10,5 +10,5 @@ CREATE TABLE IF NOT EXISTS professionals (
     city VARCHAR(30),
     district VARCHAR (50),
     postal_code VARCHAR (9),
-    instagram_url VARCHAR(255)
+    instagram_url VARCHAR(255) NOT NULL UNIQUE
 );

@@ -18,6 +18,8 @@ public interface ProfessionalsMapper {
     ProfessionalsMapper INSTANCE = Mappers.getMapper(ProfessionalsMapper.class);
 
     @Mapping(target = "userId", expression = "java(UUID.randomUUID())")
+    @IterableMapping(elementTargetType = ProfessionalsSignUpDto.class)
+    @Mapping(source = "instagramUrl", target = "instagramUrl")
     Professionals signUpDtoToModel(ProfessionalsSignUpDto professionalsSignUpDto);
 
     @Mapping(target = "userId", ignore = true)
@@ -25,8 +27,8 @@ public interface ProfessionalsMapper {
     @Mapping(target = "taxNumber", ignore = true)
     Professionals updateDtoToModel(ProfessionalUpdateDto professionalUpdateDto);
 
-
-    ProfessionalsDto professionalModeltoDto (Professionals professionals);
+    @IterableMapping(elementTargetType = ProfessionalsDto.class)
+    ProfessionalsDto professionalModelToDto (Professionals professionals);
 
     List<ProfessionalsDto> listModelToDto (List<Professionals> professionalsList);
 }
