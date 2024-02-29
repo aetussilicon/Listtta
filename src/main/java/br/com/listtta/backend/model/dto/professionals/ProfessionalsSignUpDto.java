@@ -12,6 +12,6 @@ import java.util.Set;
 @Setter
 public class ProfessionalsSignUpDto extends AbstractUserSignUpDto {
 
-    @NotNull
-    private String instagramUrl;
+    @NotNull private String instagramUrl;
+    @NotNull Set<Filters> professionalSkills;
 }
