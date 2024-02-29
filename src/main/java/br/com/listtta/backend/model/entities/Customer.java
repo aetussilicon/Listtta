@@ -1,9 +1,7 @@
 package br.com.listtta.backend.model.entities;
 
-import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.UUID;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "customers")

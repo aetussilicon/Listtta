@@ -1,12 +1,12 @@
 package br.com.listtta.backend.model.dto.professionals;
 
 import br.com.listtta.backend.model.dto.generics.AbstractUserSignUpDto;
-import jakarta.validation.constraints.Email;
+import br.com.listtta.backend.model.entities.Filters;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
+import java.util.Set;
 
 @Getter
 @Setter
