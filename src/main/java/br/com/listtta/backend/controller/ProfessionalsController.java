@@ -33,7 +33,7 @@ public class ProfessionalsController {
         return new ResponseEntity<>(professionalsService.patchProfessional(userId, professionalUpdateDto), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/list/professional/{userId}")
+    @GetMapping("/list/{userId}")
     public ResponseEntity<ProfessionalsDto> getProfessional(@PathVariable UUID userId){
         return new ResponseEntity<>(professionalsService.listOneProfessional(userId), HttpStatus.OK);
     }
@@ -44,10 +44,7 @@ public class ProfessionalsController {
     }
 
     @DeleteMapping("/delete/{userId}")
-    public ResponseEntity<Professionals> deleteProfessional(@PathVariable UUID userId) {
-        if (professionalsService.deleteProfessional(userId)) {
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> deleteProfessional(@PathVariable UUID userId) {
+        return new ResponseEntity<>(professionalsService.deleteProfessional(userId), HttpStatus.ACCEPTED);
     }
 }
