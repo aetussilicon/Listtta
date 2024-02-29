@@ -13,7 +13,8 @@ import lombok.*;
 public class Filters {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "filters_seq_generator")
+    @SequenceGenerator(name = "filters_seq_generator", sequenceName = "filters_seq", allocationSize = 1)
     @Column(name = "filter_id")
     private Long filterId;
 
