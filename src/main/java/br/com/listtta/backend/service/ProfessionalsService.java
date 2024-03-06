@@ -8,6 +8,7 @@ import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignUpDto;
 import br.com.listtta.backend.model.entities.Professionals;
 import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
 import br.com.listtta.backend.repository.ProfessionalsRepository;
+import br.com.listtta.backend.util.validation.CPFValidatorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,11 @@ public class ProfessionalsService {
     private final ProfessionalsRepository professionalsRepository;
     private final UsernameGenerateService usernameGenerateService;
     private final ProfessionalsMapper professionalsMapper;
+    private final CPFValidatorService validator;
     Professionals checkedProfessional;
 
-    private Professionals checkProfessionalInDatabase(UUID userId) {
-        Optional<Professionals> checkProfessional = professionalsRepository.findById(userId);
+    private Professionals checkProfessionalInDatabase(String username) {
+        Optional<Professionals> checkProfessional = professionalsRepository.findUserByUsername(username);
 
         if (checkProfessional.isPresent()) {
             return checkProfessional.get();
@@ -38,11 +40,13 @@ public class ProfessionalsService {
         professionalsSignUpDto.setUsername(
                 usernameGenerateService.usernameGenerator(professionalsSignUpDto.getFullName()));
 
+        professionalsSignUpDto.setTaxNumber(validator.cpfValidation(professionalsSignUpDto.getTaxNumber()));
+
         return professionalsRepository.save(professionalsMapper.signUpDtoToModel(professionalsSignUpDto));
     }
 
-    public Professionals patchProfessional(UUID userId, ProfessionalUpdateDto professionalUpdateDto) {
-        checkedProfessional = checkProfessionalInDatabase(userId);
+    public Professionals patchProfessional(String username, ProfessionalUpdateDto professionalUpdateDto) {
+        checkedProfessional = checkProfessionalInDatabase(username);
         Professionals updateFields = professionalsMapper.updateDtoToModel(professionalUpdateDto);
 
         for (Field field : Professionals.class.getSuperclass().getDeclaredFields()) {
@@ -59,17 +63,16 @@ public class ProfessionalsService {
         return checkedProfessional;
     }
 
-    public ProfessionalsDto listOneProfessional(UUID userId) {
-        return professionalsMapper.professionalModelToDto(checkProfessionalInDatabase(userId));
+    public ProfessionalsDto listOneProfessional(String username) {
+        return professionalsMapper.professionalModelToDto(checkProfessionalInDatabase(username));
     }
 
     public List<ProfessionalsDto> listAllProfessionals() {
         return professionalsMapper.listModelToDto(professionalsRepository.findAll());
     }
 
-    public String deleteProfessional(UUID userId) {
-        checkProfessionalInDatabase(userId);
-        professionalsRepository.deleteById(userId);
+    public String deleteProfessional(String username) {
+        professionalsRepository.delete(checkProfessionalInDatabase(username));
         return "Usuário deletado com sucesso";
     }
 }

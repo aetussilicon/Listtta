@@ -27,20 +27,25 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.createNewCustomer(customerSignUpDto), HttpStatus.CREATED);
     }
 
-    @PatchMapping("/update/{userId}")
+    @PatchMapping("/update/{username}")
     @Transactional
-    public ResponseEntity<Customer> patchCustomer(@PathVariable UUID userId, @RequestBody CustomerUpdateDto customerUpdateDto) {
-        return new ResponseEntity<>(customerService.patchCustomer(userId, customerUpdateDto), HttpStatus.ACCEPTED);
+    public ResponseEntity<Customer> patchCustomer(@PathVariable String username, @RequestBody CustomerUpdateDto customerUpdateDto) {
+        return new ResponseEntity<>(customerService.patchCustomer(username, customerUpdateDto), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/list/customer/{userId}")
-    public ResponseEntity<CustomerDto> getOneCustomer(@PathVariable UUID userId) {
-        return new ResponseEntity<>(customerService.getOneCustomer(userId), HttpStatus.OK);
+    @GetMapping("/list/{username}")
+    public ResponseEntity<CustomerDto> getOneCustomer(@PathVariable String username) {
+        return new ResponseEntity<>(customerService.getOneCustomer(username), HttpStatus.OK);
     }
 
     @GetMapping("/list/all")
     public ResponseEntity<List<CustomerDto>> getAllCustomers(){
         return new ResponseEntity<>(customerService.getAllCustomers(), HttpStatus.OK);
+    }
+
+    @DeleteMapping("delete/{username}")
+    public ResponseEntity<String> deleteCustomer(@PathVariable String username) {
+        return new ResponseEntity<>(customerService.deleteCustomer(username), HttpStatus.ACCEPTED);
     }
 
 }

@@ -8,6 +8,7 @@ import br.com.listtta.backend.model.dto.customer.CustomerUpdateDto;
 import br.com.listtta.backend.model.entities.Customer;
 import br.com.listtta.backend.model.mapper.CustomerMapper;
 import br.com.listtta.backend.repository.CustomerRepository;
+import br.com.listtta.backend.util.validation.CPFValidatorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +24,13 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final UsernameGenerateService usernameGenerateService;
     private final CustomerMapper customerMapper;
+    private final CPFValidatorService validator;
+
     Customer checkedCustomer;
 
     //Method to check if the customer exists in the database with it's customerId.
-    private Customer checkCustomerInDatabase(UUID userId) {
-        Optional<Customer> checkCustomer = customerRepository.findById(userId);
+    private Customer checkCustomerInDatabase(String username) {
+        Optional<Customer> checkCustomer = customerRepository.findUserByUsername(username);
 
         if (checkCustomer.isPresent()) {
             return checkCustomer.get();
@@ -36,11 +39,12 @@ public class CustomerService {
 
     public Customer createNewCustomer(CustomerSignUpDto customerSignUpDto) {
         customerSignUpDto.setUsername(usernameGenerateService.usernameGenerator(customerSignUpDto.getFullName()));
+        customerSignUpDto.setTaxNumber(validator.cpfValidation(customerSignUpDto.getTaxNumber()));
         return customerRepository.save(customerMapper.signUpDtoToModel(customerSignUpDto));
     }
 
-    public Customer patchCustomer(UUID userId, CustomerUpdateDto customerUpdateDto) {
-        checkedCustomer = checkCustomerInDatabase(userId);
+    public Customer patchCustomer(String username, CustomerUpdateDto customerUpdateDto) {
+        checkedCustomer = checkCustomerInDatabase(username);
         Customer updateFields = customerMapper.updateDtoToModel(customerUpdateDto);
 
             for (Field field : Customer.class.getSuperclass().getDeclaredFields()) {
@@ -57,17 +61,16 @@ public class CustomerService {
         return checkedCustomer;
     }
 
-    public CustomerDto getOneCustomer(UUID userId) {
-        return customerMapper.customerModelToDto(checkCustomerInDatabase(userId));
+    public CustomerDto getOneCustomer(String username) {
+        return customerMapper.customerModelToDto(checkCustomerInDatabase(username));
     }
 
     public List<CustomerDto> getAllCustomers() {
         return customerMapper.listModelToDto(customerRepository.findAll());
     }
 
-    public String deleteCustomer(UUID userId) {
-        checkCustomerInDatabase(userId);
-        customerRepository.deleteById(userId);
+    public String deleteCustomer(String username) {
+        customerRepository.delete(checkCustomerInDatabase(username));
         return "Usuário deletado com sucesso!";
     }
 }
