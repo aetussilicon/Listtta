@@ -30,6 +30,7 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     implementation 'org.jetbrains:annotations:24.0.0'
 	implementation 'org.jetbrains:annotations:24.0.0'
+	implementation group: 'br.com.caelum.stella', name: 'caelum-stella-core', version: '2.1.6'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
