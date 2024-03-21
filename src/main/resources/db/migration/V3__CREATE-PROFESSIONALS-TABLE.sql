@@ -1,10 +1,11 @@
-CREATE SEQUENCE professioanls_seq;
+CREATE SEQUENCE professionals_seq;
 
 CREATE TABLE IF NOT EXISTS professionals (
-    user_id UUID PRIMARY KEY,
+    details_id BIGINT PRIMARY KEY,
+    user_id UUID,
     professional_type TEXT,
     instagram_url VARCHAR(255),
-    skills BIGINT NOT NULL,
+    skills BIGINT,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (skills) REFERENCES filters(filter_id)
 );
