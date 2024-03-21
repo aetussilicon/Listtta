@@ -1,3 +1,5 @@
+CREATE SEQUENCE professioanls_seq;
+
 CREATE TABLE IF NOT EXISTS professionals (
     user_id UUID PRIMARY KEY,
     professional_type TEXT,
