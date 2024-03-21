@@ -1,11 +1,10 @@
 package br.com.listtta.backend.repository;
 
-import br.com.listtta.backend.model.entities.Professionals;
+import br.com.listtta.backend.model.entities.ProfessionalDetails;
+import br.com.listtta.backend.model.entities.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-@Repository
-public interface ProfessionalsRepository extends AbstractUserRepository<Professionals> {
+public interface ProfessionalsRepository extends JpaRepository<ProfessionalDetails, Long> {
 }
