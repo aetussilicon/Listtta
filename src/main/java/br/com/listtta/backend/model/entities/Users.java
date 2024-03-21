@@ -1,5 +1,7 @@
 package br.com.listtta.backend.model.entities;
 
+import br.com.listtta.backend.model.enums.ProfessionalsType;
+import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,11 +10,12 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Entity
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode (of = "userId")
-@MappedSuperclass
-public abstract class AbstractUser {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -35,5 +38,7 @@ public abstract class AbstractUser {
 
     @Column(name = "postal_code")
     private String postalCode;
-    
+
+    @Enumerated(EnumType.STRING)
+    private UserRoles role;
 }

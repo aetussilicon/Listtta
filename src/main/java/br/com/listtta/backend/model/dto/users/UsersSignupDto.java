@@ -1,5 +1,7 @@
-package br.com.listtta.backend.model.dto.generics;
+package br.com.listtta.backend.model.dto.users;
 
+import br.com.listtta.backend.model.enums.ProfessionalsType;
+import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -9,7 +11,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public abstract class AbstractUserSignUpDto{
+public class UsersSignupDto {
 
     private UUID userId;
     @NotNull private String fullName;
@@ -22,5 +24,8 @@ public abstract class AbstractUserSignUpDto{
     @NotNull private String city;
     @NotNull private String district;
     @NotNull private String postalCode;
+    @NotNull private UserRoles role;
+    private ProfessionalsType type;
+    private String instagramUrl;
 
 }
