@@ -1,12 +1,11 @@
 package br.com.listtta.backend.model.entities;
 
 import br.com.listtta.backend.model.enums.ProfessionalsType;
-import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.Set;
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "professionals")
 @Entity
