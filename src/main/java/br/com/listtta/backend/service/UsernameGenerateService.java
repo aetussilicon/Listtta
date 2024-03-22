@@ -23,8 +23,8 @@ public class UsernameGenerateService {
         System.arraycopy(stringToSplit, 0, firstThreeLettersOfFfirstName, 0, 3);
         System.arraycopy(stringToSplit, arrayLength - charsToExtract, lastThreeLettersOfLastName, 0, charsToExtract);
 
-        String str1 = new String(firstThreeLettersOfFfirstName).toLowerCase();
-        String str2 = new String(lastThreeLettersOfLastName).toLowerCase();
+        String str1 = new String(firstThreeLettersOfFfirstName).toUpperCase();
+        String str2 = new String(lastThreeLettersOfLastName).toUpperCase();
 
         Random complement = new Random();
 
