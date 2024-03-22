@@ -1,13 +1,9 @@
-package br.com.listtta.backend.model.dto;
+package br.com.listtta.backend.model.dto.professionals;
 
-import br.com.listtta.backend.model.entities.Filters;
 import br.com.listtta.backend.model.entities.Users;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Setter
