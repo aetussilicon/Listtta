@@ -1,6 +1,5 @@
 package br.com.listtta.backend.model.entities;
 
-import br.com.listtta.backend.model.enums.ProfessionalsType;
 import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.*;
