@@ -1,6 +1,7 @@
 package br.com.listtta.backend.model.dto.professionals;
 
 import br.com.listtta.backend.model.enums.ProfessionalsType;
+import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ public class ProfessionalsDto {
     @Email
     private String email;
     private String password;
+    private UserRoles role;
     private String taxNumber;
     private String phoneNumber;
     private String state;

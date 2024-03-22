@@ -28,7 +28,6 @@ public class FindUsersMethods {
         }
     }
 
-
     public Users findUserByUsername(String username) {
         Optional<Users> checkingUser = usersRepository.findUserByUsername(username);
 
