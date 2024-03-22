@@ -4,7 +4,10 @@ import br.com.listtta.backend.model.entities.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.UUID;
+import java.util.Optional;
 
 public interface ProfessionalsRepository extends JpaRepository<ProfessionalDetails, Long> {
+
+    Optional<ProfessionalDetails> findProfessionalByUsers(Users users);
+
 }
