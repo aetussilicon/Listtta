@@ -14,6 +14,7 @@ import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
 import br.com.listtta.backend.util.validation.CPFValidatorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -39,6 +40,8 @@ public class UsersService {
 
        usersSignupDto.setUsername(
                 usernameGenerateService.usernameGenerator(usersSignupDto.getFullName()));
+
+       usersSignupDto.setPassword(new BCryptPasswordEncoder().encode(usersSignupDto.getPassword()));
 
         Users newUser = mapper.usersSignupDto(usersSignupDto);
 
