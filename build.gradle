@@ -30,6 +30,8 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     implementation 'org.jetbrains:annotations:24.0.0'
 	implementation 'org.jetbrains:annotations:24.0.0'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'com.auth0:java-jwt:4.4.0'
 	implementation group: 'br.com.caelum.stella', name: 'caelum-stella-core', version: '2.1.6'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
@@ -38,6 +40,7 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation "org.mockito:mockito-core:3.+"
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
