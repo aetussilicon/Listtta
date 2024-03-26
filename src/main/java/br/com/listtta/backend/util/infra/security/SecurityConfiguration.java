@@ -25,17 +25,35 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/professionals/list/all").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/users/list/all").hasRole("PROFESSIONAL")
+                        .requestMatchers(HttpMethod.GET, "/blog/list/{blogPostId}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/blog/list/all").permitAll()
+
+                        //Requests apenas usuários
+                        .requestMatchers(HttpMethod.PATCH, "/users/update/{username}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/professionals/list/all").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/filters/list/{filterName}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/filters/list/all").hasRole("USER")
+                        //Requests apenas para profissionais
+                        .requestMatchers(HttpMethod.PATCH, "/professionals/update/{username}").hasRole("PROFESSIONAL")
+                        .requestMatchers(HttpMethod.GET, "/professionals/list/{username}").hasRole("PROFESSIONALS")
+                        //Requests apenas para admins
+                        .requestMatchers(HttpMethod.GET, "/users/list/all").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/professionals/list/all").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/filters/create").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/filters/update/{filterId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/filters/delete/{filterId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/blog/new-post").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
