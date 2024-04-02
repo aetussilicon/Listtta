@@ -20,7 +20,7 @@ public interface UsersMapper {
     Users usersSignupDto(UsersSignupDto usersSignupDto);
 
     @Mapping(target = "userId", ignore = true)
-    @Mapping(target = "username", ignore = true)
+    @Mapping(target = "userTag", ignore = true)
     @Mapping(target = "taxNumber", ignore = true)
     Users updateDtoToModel(UsersUpdateDto userUpdateDto);
 

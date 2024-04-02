@@ -19,15 +19,15 @@ public class ProfessionalsController {
     private final ProfessionalsService professionalsService;
 
     @PatchMapping
-    @RequestMapping("update/{username}")
-    public ResponseEntity<ProfessionalDetails> updateDetails(@PathVariable String username, ProfessionalsUpdateDto professionalsUpdateDto) {
-        return new ResponseEntity<>(professionalsService.updateProfessionalDetails(username, professionalsUpdateDto), HttpStatus.ACCEPTED);
+    @RequestMapping("update/{userTag}")
+    public ResponseEntity<ProfessionalDetails> updateDetails(@PathVariable String userTag, ProfessionalsUpdateDto professionalsUpdateDto) {
+        return new ResponseEntity<>(professionalsService.updateProfessionalDetails(userTag, professionalsUpdateDto), HttpStatus.ACCEPTED);
     }
 
     @GetMapping
-    @RequestMapping("list/{username}")
-    public ResponseEntity<ProfessionalsDto> getProfessional(@PathVariable String username) {
-        return new ResponseEntity<>(professionalsService.getProfessional(username), HttpStatus.OK);
+    @RequestMapping("list/{userTag}")
+    public ResponseEntity<ProfessionalsDto> getProfessional(@PathVariable String userTag) {
+        return new ResponseEntity<>(professionalsService.getProfessional(userTag), HttpStatus.OK);
     }
 
     @GetMapping

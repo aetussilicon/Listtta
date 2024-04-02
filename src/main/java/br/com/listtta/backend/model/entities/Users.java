@@ -27,7 +27,9 @@ public class Users implements UserDetails {
 
     @Column(name = "full_name")
     private String fullName;
-    private String username;
+
+    @Column(name = "user_tag")
+    private String userTag;
     private String email;
     private String password;
 

@@ -32,8 +32,8 @@ public class ProfessionalsService {
 
     //Método não salvando no banco de dados
     //TODO corrigir método
-    public ProfessionalDetails updateProfessionalDetails(String username, ProfessionalsUpdateDto professionalsUpdateDto) {
-        Users professionalUser = findUsers.findUserByUsername(username);
+    public ProfessionalDetails updateProfessionalDetails(String userTag, ProfessionalsUpdateDto professionalsUpdateDto) {
+        Users professionalUser = findUsers.findUserByUserTag(userTag);
         ProfessionalDetails detailsToUpdate = findUsers.findProfessionalByUser(professionalUser);
         ProfessionalDetails updateFields = professionalsMapper.updateProfessionalDtoToModel(professionalsUpdateDto);
 
@@ -51,8 +51,8 @@ public class ProfessionalsService {
         return detailsToUpdate;
     }
 
-    public ProfessionalsDto getProfessional(String username) {
-        Users user = findUsers.findUserByUsername(username);
+    public ProfessionalsDto getProfessional(String userTag) {
+        Users user = findUsers.findUserByUserTag(userTag);
         ProfessionalDetails details = findUsers.findProfessionalByUser(user);
 
         return professionalsMapper.professionalModelToDto(user, details);

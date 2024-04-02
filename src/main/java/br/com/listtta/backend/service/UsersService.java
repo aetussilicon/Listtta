@@ -38,7 +38,7 @@ public class UsersService {
 
         findUsersMethods.findUserByTaxNumberAndThrowErro(usersSignupDto.getTaxNumber());
 
-       usersSignupDto.setUsername(
+       usersSignupDto.setUserTag(
                 usernameGenerateService.usernameGenerator(usersSignupDto.getFullName()));
 
        usersSignupDto.setPassword(new BCryptPasswordEncoder().encode(usersSignupDto.getPassword()));
@@ -47,21 +47,21 @@ public class UsersService {
 
         usersRepository.save(newUser);
 
-        if (usersSignupDto.getRole() == UserRoles.PROFESSIONAL) {
-            ProfessionalsSignupDtoComplement complement = new ProfessionalsSignupDtoComplement();
-
-            complement.setUsers(newUser);
-            complement.setType(usersSignupDto.getType());
-            complement.setInstagramUrl(usersSignupDto.getInstagramUrl());
-
-            professionalsRepository.save(professionalsMapper.professionalsDetailsDtoToModel(complement));
-        }
+//        if (usersSignupDto.getRole() == UserRoles.PROFESSIONAL) {
+//            ProfessionalsSignupDtoComplement complement = new ProfessionalsSignupDtoComplement();
+//
+//            complement.setUsers(newUser);
+//            complement.setType(usersSignupDto.getType());
+//            complement.setInstagramUrl(usersSignupDto.getInstagramUrl());
+//
+//            professionalsRepository.save(professionalsMapper.professionalsDetailsDtoToModel(complement));
+//        }
 
         return newUser;
     }
 
-    public Users updateUser(String username, UsersUpdateDto usersUpdateDto) {
-        Users userToUpdate = findUsersMethods.findUserByUsername(username);
+    public Users updateUser(String userTag, UsersUpdateDto usersUpdateDto) {
+        Users userToUpdate = findUsersMethods.findUserByUserTag(userTag);
         Users updateFields = mapper.updateDtoToModel(usersUpdateDto);
 
         for(Field field : Users.class.getDeclaredFields()) {
@@ -80,8 +80,8 @@ public class UsersService {
     }
 
 
-    public UsersDto getUser(String username) {
-        return mapper.userModelToDto(findUsersMethods.findUserByUsername(username));
+    public UsersDto getUser(String userTag) {
+        return mapper.userModelToDto(findUsersMethods.findUserByUserTag(userTag));
     }
 
     public List<UsersDto> getAllUsers() {

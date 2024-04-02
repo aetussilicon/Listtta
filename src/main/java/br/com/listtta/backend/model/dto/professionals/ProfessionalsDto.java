@@ -14,6 +14,7 @@ public class ProfessionalsDto {
     @Email
     private String email;
     private String password;
+    private String userTag;
     private UserRoles role;
     private String taxNumber;
     private String phoneNumber;
