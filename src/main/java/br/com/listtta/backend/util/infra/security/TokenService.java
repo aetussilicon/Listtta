@@ -24,6 +24,7 @@ public class TokenService {
             String token = JWT.create()
                     .withIssuer("listtta")
                     .withSubject(users.getEmail())
+                    .withClaim("userTag", users.getUserTag())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
             return token;
