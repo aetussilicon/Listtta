@@ -27,10 +27,26 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/professionals/list/all").permitAll()
+                        //Endpoints públicos
                         .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/users/list/all").hasRole("PROFESSIONAL")
+
+                        //Endpoints usuários
+                        .requestMatchers(HttpMethod.GET, "/filters/list/all").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/professionals/list/all").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/filters/list/{filterName}").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/users/update/{userTag}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/users/list/{userTag}").hasRole("USER")
+
+                        //Endpoints profissionais
+                        .requestMatchers(HttpMethod.GET, "/professionals/list/{userTag}").hasRole("PROFESSIONAL")
+                        .requestMatchers(HttpMethod.POST, "/professionals/update/{userTag}").hasRole("PROFESSIONAL")
+
+                        //Endpoints admins
+                        .requestMatchers(HttpMethod.POST, "/filters/create").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/filters/update/{filterId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/filters/delete/{filterId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/users/list/all").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
