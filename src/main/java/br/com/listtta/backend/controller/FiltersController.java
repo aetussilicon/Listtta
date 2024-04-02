@@ -25,7 +25,7 @@ public class FiltersController {
         return new ResponseEntity<>(filtersService.createNewFilter(createNewFilterDto), HttpStatus.CREATED);
     }
 
-    @PatchMapping("patch/{filterId}")
+    @PatchMapping("update/{filterId}")
     public ResponseEntity<Filters> patchFilter(@PathVariable Long filterId, @RequestBody UpdateFilterDto updateFilterDto) {
         return new ResponseEntity<>(filtersService.patchFilter(filterId, updateFilterDto), HttpStatus.ACCEPTED);
     }
