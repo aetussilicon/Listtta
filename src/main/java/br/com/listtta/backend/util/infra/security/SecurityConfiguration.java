@@ -35,8 +35,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/filters/list/all").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/professionals/list/all").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/filters/list/{filterName}").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/users/update/{userTag}").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/users/list/{userTag}").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/users/update/{userTag}").permitAll()//hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/users/list/{userTag}").permitAll()//hasRole("USER")
 
                         //Endpoints profissionais
                         .requestMatchers(HttpMethod.GET, "/professionals/list/{userTag}").hasRole("PROFESSIONAL")
@@ -46,7 +46,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/filters/create").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/filters/update/{filterId}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/filters/delete/{filterId}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/users/list/all").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/users/list/all").permitAll()//hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
