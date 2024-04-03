@@ -1,5 +1,6 @@
 package br.com.listtta.backend.model.dto.users;
 
+import br.com.listtta.backend.model.entities.Address;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
 import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.annotation.Nullable;
@@ -21,10 +22,11 @@ public class UsersSignupDto {
     @NotNull private String password;
     @NotNull private String taxNumber;
     @NotNull private String phoneNumber;
-    @NotNull private String state;
-    @NotNull private String city;
-    @NotNull private String district;
-    @NotNull private String postalCode;
+    @NotNull Address userAddress;
+    //    @NotNull private String state;
+//    @NotNull private String city;
+//    @NotNull private String district;
+//    @NotNull private String postalCode;
     @NotNull private UserRoles role;
 
 }
