@@ -38,12 +38,16 @@ public class Users implements UserDetails {
 
     @Column(name = "phone_number")
     private String phoneNumber;
-    private String state;
-    private String city;
-    private String district;
 
-    @Column(name = "postal_code")
-    private String postalCode;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_address")
+    private Address userAddress;
+//    private String state;
+//    private String city;
+//    private String district;
+//
+//    @Column(name = "postal_code")
+//    private String postalCode;
 
     @Enumerated(EnumType.STRING)
     private UserRoles role;
