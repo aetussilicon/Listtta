@@ -3,6 +3,7 @@ package br.com.listtta.backend.model.dto.blog;
 import java.util.Date;
 
 import br.com.listtta.backend.model.entities.Users;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,8 +11,10 @@ import lombok.Setter;
 @Setter
 public class CreatePostDto {
     private Long postId;
-    private Users author;
+    private Users authorId;
+    @NotNull private String authorUserTag;
+    private String authorName;
     private Date createdDate;
-    private String postCategory;
-    private String post;
+    @NotNull private String postCategory;
+    @NotNull private String post;
 }

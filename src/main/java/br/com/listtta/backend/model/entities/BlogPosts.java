@@ -2,13 +2,7 @@ package br.com.listtta.backend.model.entities;
 
 import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,8 +22,11 @@ public class BlogPosts {
     @Column(name = "post_id")
     private Long postId;
 
-    private Users author;
-
+    @OneToOne
+    @JoinColumn(name = "author_id")
+    private Users authorId;
+    private String authorUserTag;
+    private String authorName;
     @Column(name = "created_date")
     private Date createdDate;
 
