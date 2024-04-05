@@ -15,5 +15,4 @@ public class UsersDto {
     private String password;
     private String taxNumber;
     private String phoneNumber;
-    private Address userAddress;
 }

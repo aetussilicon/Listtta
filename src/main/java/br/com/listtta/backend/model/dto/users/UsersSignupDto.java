@@ -22,11 +22,9 @@ public class UsersSignupDto {
     @NotNull private String password;
     @NotNull private String taxNumber;
     @NotNull private String phoneNumber;
-    @NotNull Address userAddress;
-    //    @NotNull private String state;
-//    @NotNull private String city;
-//    @NotNull private String district;
-//    @NotNull private String postalCode;
     @NotNull private UserRoles role;
-
+    private String state;
+    private String city;
+    private String district;
+    private String postalCode;
 }
