@@ -17,6 +17,11 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq_generator")
     @SequenceGenerator(name = "address_seq_generator", sequenceName = "address_seq", allocationSize = 1)
     private Long addressId;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private Users users;
+    private String userTag;
     private String state;
     private String city;
     private String district;
