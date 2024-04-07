@@ -1,8 +1,9 @@
 package br.com.listtta.backend.service;
 
-import br.com.listtta.backend.exceptions.UpdateFieldsException;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDto;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDto;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDto;
+import br.com.listtta.backend.model.dto.users.UsersSignupDto;
 import br.com.listtta.backend.model.entities.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.Users;
 import br.com.listtta.backend.model.enums.UserRoles;
@@ -10,10 +11,10 @@ import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
 import br.com.listtta.backend.repository.ProfessionalsRepository;
 import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
+import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 @Service
@@ -29,6 +30,18 @@ public class ProfessionalsService {
 
     //Validações
     private final FindUsersMethods findUsers;
+    private final Patcher patcher;
+
+    public ProfessionalDetails createNewProfessionalDetals(UsersSignupDto signupDto) {
+        Users professionalUser = findUsers.findUserByUserTag(signupDto.getUserTag());
+
+        ProfessionalsSignupDto professionalDetails = signupDto.getProfessionalsDto();
+
+        professionalDetails.setUsers(professionalUser);
+        professionalDetails.setUserTag(signupDto.getUserTag());
+
+        return professionalsRepository.save(professionalsMapper.professionalsDetailsDtoToModel(professionalDetails));
+    }
 
     //Método não salvando no banco de dados
     //TODO corrigir método
@@ -37,16 +50,11 @@ public class ProfessionalsService {
         ProfessionalDetails detailsToUpdate = findUsers.findProfessionalByUser(professionalUser);
         ProfessionalDetails updateFields = professionalsMapper.updateProfessionalDtoToModel(professionalsUpdateDto);
 
-        for(Field field : ProfessionalDetails.class.getDeclaredFields()) {
-            field.setAccessible(true);
-
-            try {
-                if (field.get(updateFields) != null && !field.get(updateFields).equals(field.get(detailsToUpdate))) {
-                    field.set(detailsToUpdate, field.get(updateFields));
-                }
-            } catch (IllegalAccessException e) {
-                throw new UpdateFieldsException("Não foi possível atualizar os detalhes do profissional.");
-            }
+        try {
+            Patcher.patch(detailsToUpdate, updateFields);
+            professionalsRepository.save(detailsToUpdate);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
         return detailsToUpdate;
     }
