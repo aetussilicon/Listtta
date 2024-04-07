@@ -1,7 +1,7 @@
 package br.com.listtta.backend.model.mapper;
 
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDto;
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDtoComplement;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDto;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDto;
 import br.com.listtta.backend.model.entities.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.Users;
@@ -18,11 +18,14 @@ public interface ProfessionalsMapper {
 
     ProfessionalsMapper INSTANCE = Mappers.getMapper(ProfessionalsMapper.class);
 
-    ProfessionalDetails professionalsDetailsDtoToModel(ProfessionalsSignupDtoComplement complement);
+    ProfessionalDetails professionalsDetailsDtoToModel(ProfessionalsSignupDto complement);
+
+    @Mapping(target = "userTag", source = "details.userTag", ignore = true)
     ProfessionalsDto professionalModelToDto(Users users, ProfessionalDetails details);
     ProfessionalDetails updateProfessionalDtoToModel(ProfessionalsUpdateDto professionalsUpdateDto);
 
     @Mapping(source = "user.role", target = "role")
+    @Mapping(source = "user.userTag", target = "userTag", ignore = true)
     ProfessionalsDto userModelToDto(Users user, ProfessionalDetails details);
 
     default List<ProfessionalsDto> listModelToDto(List<Users> usersList, List<ProfessionalDetails> professionalDetailsList) {
