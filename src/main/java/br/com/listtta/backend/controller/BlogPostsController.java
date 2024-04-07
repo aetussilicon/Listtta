@@ -6,7 +6,6 @@ import br.com.listtta.backend.model.entities.BlogPosts;
 import br.com.listtta.backend.service.BlogPostsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

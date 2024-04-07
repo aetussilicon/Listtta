@@ -1,6 +1,5 @@
 package br.com.listtta.backend.model.dto.blog;
 
-import br.com.listtta.backend.model.entities.Users;
 import lombok.Getter;
 import lombok.Setter;
 

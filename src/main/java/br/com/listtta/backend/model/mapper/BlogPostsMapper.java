@@ -1,12 +1,10 @@
 package br.com.listtta.backend.model.mapper;
 
 import br.com.listtta.backend.model.dto.blog.BlogPostDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
-
 import br.com.listtta.backend.model.dto.blog.CreatePostDto;
 import br.com.listtta.backend.model.entities.BlogPosts;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 

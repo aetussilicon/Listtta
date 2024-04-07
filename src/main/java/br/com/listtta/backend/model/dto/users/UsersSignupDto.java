@@ -1,9 +1,7 @@
 package br.com.listtta.backend.model.dto.users;
 
-import br.com.listtta.backend.model.entities.Address;
-import br.com.listtta.backend.model.enums.ProfessionalsType;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDto;
 import br.com.listtta.backend.model.enums.UserRoles;
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -27,4 +25,5 @@ public class UsersSignupDto {
     private String city;
     private String district;
     private String postalCode;
+    private ProfessionalsSignupDto professionalsDto;
 }

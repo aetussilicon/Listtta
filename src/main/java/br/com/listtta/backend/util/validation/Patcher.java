@@ -1,8 +1,5 @@
 package br.com.listtta.backend.util.validation;
 
-import br.com.listtta.backend.model.entities.Users;
-import org.hibernate.Internal;
-import org.hibernate.annotations.Comment;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
