@@ -1,5 +1,6 @@
 package br.com.listtta.backend.service;
 
+import br.com.listtta.backend.exceptions.UpdateFieldsException;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDto;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDto;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDto;
@@ -54,7 +55,7 @@ public class ProfessionalsService {
             Patcher.patch(detailsToUpdate, updateFields);
             professionalsRepository.save(detailsToUpdate);
         } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+            throw new UpdateFieldsException("Não foi possível atualizar o usuário: " + e);
         }
         return detailsToUpdate;
     }
