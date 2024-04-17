@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("blog")
 @RequiredArgsConstructor
 public class BlogPostsController {
-
     private final BlogPostsService blogService;
 
     @PostMapping("publish")

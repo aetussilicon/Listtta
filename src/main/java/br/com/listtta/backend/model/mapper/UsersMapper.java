@@ -26,5 +26,4 @@ public interface UsersMapper {
 
     UsersDto userModelToDto(Users users);
     List<UsersDto> listModelToDto(List<Users> usersList);
-
 }
