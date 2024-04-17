@@ -24,6 +24,7 @@ public class ProfessionalDetails {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private Users users;
+    private String userTag;
 
     @Column(name = "professional_type")
     @Enumerated(EnumType.STRING)

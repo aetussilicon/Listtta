@@ -28,8 +28,8 @@ public class FindUsersMethods {
         }
     }
 
-    public Users findUserByUsername(String username) {
-        Optional<Users> checkingUser = usersRepository.findUserByUsername(username);
+    public Users findUserByUserTag(String userTag) {
+        Optional<Users> checkingUser = usersRepository.findUserByUserTag(userTag);
 
         if (checkingUser.isPresent()) {
             return checkingUser.get();

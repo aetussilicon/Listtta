@@ -20,15 +20,15 @@ public class UsersController {
     private final UsersService service;
 
     @PatchMapping
-    @RequestMapping("update/{username}")
-    public ResponseEntity<Users> updateUser(@PathVariable String username, @RequestBody @Valid UsersUpdateDto usersUpdateDto) {
-        return new ResponseEntity<>(service.updateUser(username, usersUpdateDto), HttpStatus.ACCEPTED);
+    @RequestMapping("update/{userTag}")
+    public ResponseEntity<Users> updateUser(@PathVariable String userTag, @RequestBody @Valid UsersUpdateDto usersUpdateDto) {
+        return new ResponseEntity<>(service.updateUser(userTag, usersUpdateDto), HttpStatus.ACCEPTED);
     }
 
     @GetMapping
-    @RequestMapping("list/{username}")
-    public ResponseEntity<UsersDto> getUser(@PathVariable String username) {
-        return new ResponseEntity<>(service.getUser(username), HttpStatus.OK);
+    @RequestMapping("list/{userTag}")
+    public ResponseEntity<UsersDto> getUser(@PathVariable String userTag) {
+        return new ResponseEntity<>(service.getUser(userTag), HttpStatus.OK);
     }
 
     @GetMapping

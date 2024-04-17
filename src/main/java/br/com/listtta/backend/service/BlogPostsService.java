@@ -1,11 +1,13 @@
 package br.com.listtta.backend.service;
 
-import br.com.listtta.backend.model.dto.blgposts.BlogPostDto;
-import br.com.listtta.backend.model.dto.blgposts.NewPostDto;
-import br.com.listtta.backend.model.entities.BlogPost;
+import br.com.listtta.backend.model.dto.blog.BlogPostDto;
+import br.com.listtta.backend.model.dto.blog.CreatePostDto;
+import br.com.listtta.backend.model.entities.BlogPosts;
+import br.com.listtta.backend.model.entities.Users;
 import br.com.listtta.backend.model.mapper.BlogPostsMapper;
 import br.com.listtta.backend.repository.BlogPostsRepository;
-import br.com.listtta.backend.repository.UsersRepository;
+import br.com.listtta.backend.util.FindUsersMethods;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,22 +19,29 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BlogPostsService {
 
-    private final BlogPostsRepository blogPostsRepository;
-    private final BlogPostsMapper blogPostsMapper;
-    public BlogPost publishNewBlogPost(NewPostDto newPostDto) {
-        newPostDto.setCreatedDate(new Date());
-        return  blogPostsRepository.save(blogPostsMapper.createNewBlogPostDtoToModel(newPostDto));
+    private final BlogPostsRepository blogRepo;
+    private final BlogPostsMapper blogMapper;
+    private final FindUsersMethods findMethods;
+
+    public BlogPosts createNewPost(CreatePostDto createPostDto) {
+        Users postAuthor = findMethods.findUserByUserTag(createPostDto.getAuthorUserTag());
+
+        createPostDto.setAuthorId(postAuthor);
+        createPostDto.setAuthorName(postAuthor.getFullName());
+        createPostDto.setCreatedDate(new Date());
+
+        return blogRepo.save(blogMapper.createNewBlogPostsDtoToModel(createPostDto));
     }
 
-    public BlogPostDto getBlogPost(Long postId){
-        Optional<BlogPost> checkPostInDatabase = blogPostsRepository.findById(postId);
-        if (checkPostInDatabase.isPresent()) {
-            return blogPostsMapper.postModelToDto(checkPostInDatabase.get());
+    public BlogPostDto getPost(Long postId) {
+        Optional<BlogPosts> findPostIdDatabase = blogRepo.findById(postId);
+        if (findPostIdDatabase.isPresent()) {
+            return blogMapper.postModelToDto(findPostIdDatabase.get());
         } throw new RuntimeException();
     }
 
-    public List<BlogPostDto> getAllPosts() {
-        return blogPostsMapper.allPostsToDto(blogPostsRepository.findAll());
+    public List<BlogPostDto> listAllPosts(){
+        return blogMapper.listPostModelsToDto(blogRepo.findAll());
     }
 
 }

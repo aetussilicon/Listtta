@@ -27,7 +27,9 @@ public class Users implements UserDetails {
 
     @Column(name = "full_name")
     private String fullName;
-    private String username;
+
+    @Column(name = "user_tag")
+    private String userTag;
     private String email;
     private String password;
 
@@ -36,12 +38,6 @@ public class Users implements UserDetails {
 
     @Column(name = "phone_number")
     private String phoneNumber;
-    private String state;
-    private String city;
-    private String district;
-
-    @Column(name = "postal_code")
-    private String postalCode;
 
     @Enumerated(EnumType.STRING)
     private UserRoles role;

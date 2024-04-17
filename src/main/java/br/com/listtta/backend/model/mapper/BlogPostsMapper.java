@@ -1,10 +1,9 @@
 package br.com.listtta.backend.model.mapper;
 
-import br.com.listtta.backend.model.dto.blgposts.BlogPostDto;
-import br.com.listtta.backend.model.dto.blgposts.NewPostDto;
-import br.com.listtta.backend.model.entities.BlogPost;
+import br.com.listtta.backend.model.dto.blog.BlogPostDto;
+import br.com.listtta.backend.model.dto.blog.CreatePostDto;
+import br.com.listtta.backend.model.entities.BlogPosts;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -14,7 +13,8 @@ public interface BlogPostsMapper {
 
     BlogPostsMapper INSTANCE = Mappers.getMapper(BlogPostsMapper.class);
 
-    BlogPost createNewBlogPostDtoToModel(NewPostDto newPostDto);
-    BlogPostDto postModelToDto(BlogPost blogPost);
-    List<BlogPostDto> allPostsToDto(List<BlogPost> blogPostList);
+    BlogPosts createNewBlogPostsDtoToModel (CreatePostDto createPostDto);
+
+    BlogPostDto postModelToDto(BlogPosts blogPosts);
+    List<BlogPostDto> listPostModelsToDto(List<BlogPosts> blogPostsList);
 }

@@ -14,9 +14,4 @@ public class UsersUpdateDto {
     @Email private String email;
     private String password;
     private UserRoles role;
-    private String state;
-    private String city;
-    private String district;
-    private String postalCode;
-
 }
