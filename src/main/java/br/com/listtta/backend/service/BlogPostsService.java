@@ -7,6 +7,7 @@ import br.com.listtta.backend.model.entities.Users;
 import br.com.listtta.backend.model.mapper.BlogPostsMapper;
 import br.com.listtta.backend.repository.BlogPostsRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

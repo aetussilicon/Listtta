@@ -17,5 +17,4 @@ public interface BlogPostsMapper {
 
     BlogPostDto postModelToDto(BlogPosts blogPosts);
     List<BlogPostDto> listPostModelsToDto(List<BlogPosts> blogPostsList);
-    
 }
