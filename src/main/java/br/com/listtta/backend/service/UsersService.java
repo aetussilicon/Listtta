@@ -45,12 +45,12 @@ public class UsersService {
         findUsersMethods.findUserByTaxNumberAndThrowErro(usersSignupDto.getTaxNumber());
 
         //Cria uma UserTag -- MARCADO PARA REMOÇÃO
-       usersSignupDto.setUserTag(usernameGenerateService.usernameGenerator(usersSignupDto.getFullName()));
+        usersSignupDto.setUserTag(usernameGenerateService.usernameGenerator(usersSignupDto.getFullName()));
 
-       //Criptografa senha do usuário.
-       usersSignupDto.setPassword(new BCryptPasswordEncoder().encode(usersSignupDto.getPassword()));
+        //Criptografa senha do usuário.
+        usersSignupDto.setPassword(new BCryptPasswordEncoder().encode(usersSignupDto.getPassword()));
 
-       //Mapeia o usuário para entidade e salva no banco de dados.
+        //Mapeia o usuário para entidade e salva no banco de dados.
         Users newUser = mapper.usersSignupDto(usersSignupDto);
         usersRepository.save(newUser);
 
@@ -78,12 +78,11 @@ public class UsersService {
         return userToUpdate;
     }
 
-
     public UsersDto getUser(String userTag) {
         return mapper.userModelToDto(findUsersMethods.findUserByUserTag(userTag));
     }
 
     public List<UsersDto> getAllUsers() {
-       return mapper.listModelToDto(usersRepository.findAll());
+        return mapper.listModelToDto(usersRepository.findAll());
     }
 }
