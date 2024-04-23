@@ -9,11 +9,13 @@ import br.com.listtta.backend.model.mapper.UsersMapper;
 import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
 import br.com.listtta.backend.util.validation.CPFValidatorService;
+import br.com.listtta.backend.util.validation.DateFormatter;
 import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,6 +36,7 @@ public class UsersService {
     private final UsernameGenerateService usernameGenerateService;
     private final CPFValidatorService validatorService;
     private final FindUsersMethods findUsersMethods;
+    private final DateFormatter dateFormatter;
 
     //Método de cadastro de usuários.
     public Users createNewUser(UsersSignupDto usersSignupDto) {
@@ -44,8 +47,7 @@ public class UsersService {
         //Verifica se não já não existe um usuário com esse CPF.
         findUsersMethods.findUserByTaxNumberAndThrowErro(usersSignupDto.getTaxNumber());
 
-        //Cria uma UserTag -- MARCADO PARA REMOÇÃO
-        usersSignupDto.setUserTag(usernameGenerateService.usernameGenerator(usersSignupDto.getFullName()));
+        usersSignupDto.setCreatedDate(new Date());
 
         //Criptografa senha do usuário.
         usersSignupDto.setPassword(new BCryptPasswordEncoder().encode(usersSignupDto.getPassword()));
