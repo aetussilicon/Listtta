@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
    user_id UUID PRIMARY KEY UNIQUE NOT NULL,
    user_tag VARCHAR(20) UNIQUE,
+   puid VARCHAR(10) NOT NULL UNIQUE,
    full_name VARCHAR(90),
    user_gender TEXT,
 --   profile_picture BYTEA,
