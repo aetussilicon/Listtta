@@ -10,7 +10,7 @@ public class NewUserAddressDto {
 
     private Long addressId;
     private Users users;
-    private String userTag;
+    private String puid;
     private String state;
     private String city;
     private String district;

@@ -21,12 +21,7 @@ public class Address {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private Users users;
-    private String userTag;
+    private String puid;
     private String state;
     private String city;
-    private String district;
-
-    @Column(name = "postal_code")
-    private String postalCode;
-
 }

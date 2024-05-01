@@ -27,6 +27,8 @@ public class Users implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID userId;
 
+    private String puid;
+
     @Column(name = "user_tag")
     private String userTag;
 

@@ -11,6 +11,7 @@ public class UsersDto {
     private String fullName;
     @Email private String email;
     private String userTag;
+    private String puid;
     private String password;
     private String taxNumber;
     private String phoneNumber;

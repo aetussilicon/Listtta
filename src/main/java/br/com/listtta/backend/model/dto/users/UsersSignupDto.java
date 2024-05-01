@@ -16,7 +16,7 @@ import java.util.UUID;
 public class UsersSignupDto {
 
     private UUID userId;
-    private String userTag;
+    private String puid;
     @NotNull private String fullName;
     private Date createdDate;
     @NotNull @Email private String email;

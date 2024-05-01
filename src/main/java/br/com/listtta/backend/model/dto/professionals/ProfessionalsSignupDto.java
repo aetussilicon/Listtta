@@ -12,7 +12,7 @@ public class ProfessionalsSignupDto {
 
     private long detailsId;
     private Users users;
-    private String userTag;
+    private String puid;
     @NotNull private ProfessionalsType type;
     @NotNull private String instagramUrl;
 }
