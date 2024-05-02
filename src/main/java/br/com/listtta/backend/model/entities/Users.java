@@ -1,6 +1,6 @@
 package br.com.listtta.backend.model.entities;
 
-import br.com.listtta.backend.model.enums.Gender;
+import br.com.listtta.backend.model.enums.UserGender;
 import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,9 +35,9 @@ public class Users implements UserDetails {
     @Column(name = "full_name")
     private String fullName;
 
-    @Lob
-    @Column(name = "profile_picture")
-    private byte[] profilePicture;
+//    @Lob
+//    @Column(name = "profile_picture")
+//    private byte[] profilePicture;
     private String email;
     private String password;
 
@@ -55,7 +55,7 @@ public class Users implements UserDetails {
 
     @Column(name = "user_gender")
     @Enumerated(EnumType.STRING)
-    private Gender userGender;
+    private UserGender userGender;
 
     @Enumerated(EnumType.STRING)
     private UserRoles role;
