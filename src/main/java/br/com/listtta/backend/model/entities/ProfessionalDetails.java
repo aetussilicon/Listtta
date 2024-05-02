@@ -25,6 +25,7 @@ public class ProfessionalDetails {
     @JoinColumn(name = "user_id")
     private Users users;
     private String userTag;
+    private String puid;
 
     @Column(name = "professional_type")
     @Enumerated(EnumType.STRING)
