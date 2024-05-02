@@ -30,7 +30,7 @@ public class PuidGenerator {
         }
         return puid;
     }
-    
+
     private String generateRandomNumber() {
         int number = 14;
 
@@ -43,14 +43,4 @@ public class PuidGenerator {
 
         return sb.toString();
     }
-
-    public static void main(String[] args) {
-        PuidGenerator generator = new PuidGenerator();
-        ProfessionalsType tattoo = ProfessionalsType.TATTOO;
-        ProfessionalsType piercer = ProfessionalsType.PIERCER;
-        ProfessionalsType vazio = null;
-
-        System.out.println(generator.puidGenerator(vazio));
-    }
-
 }
