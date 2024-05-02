@@ -1,11 +1,14 @@
 package br.com.listtta.backend.model.mapper;
 
+import br.com.listtta.backend.model.dto.address.NewUserAddressDto;
 import br.com.listtta.backend.model.dto.users.UsersDto;
 import br.com.listtta.backend.model.dto.users.UsersSignupDto;
 import br.com.listtta.backend.model.dto.users.UsersUpdateDto;
+import br.com.listtta.backend.model.entities.Address;
 import br.com.listtta.backend.model.entities.Users;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -20,10 +23,9 @@ public interface UsersMapper {
     Users usersSignupDto(UsersSignupDto usersSignupDto);
 
     @Mapping(target = "userId", ignore = true)
-    @Mapping(target = "userTag", ignore = true)
-    @Mapping(target = "taxNumber", ignore = true)
     Users updateDtoToModel(UsersUpdateDto userUpdateDto);
 
     UsersDto userModelToDto(Users users);
+
     List<UsersDto> listModelToDto(List<Users> usersList);
 }
