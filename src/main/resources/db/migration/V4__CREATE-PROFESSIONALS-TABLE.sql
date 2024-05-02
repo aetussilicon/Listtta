@@ -3,7 +3,7 @@ CREATE SEQUENCE professionals_seq;
 CREATE TABLE IF NOT EXISTS professionals (
     details_id BIGINT PRIMARY KEY,
     user_id UUID NOT NULL UNIQUE,
-    puid VARCHAR(10) NOT NULL UNIQUE,
+    puid VARCHAR(20) NOT NULL UNIQUE,
     user_tag VARCHAR(10) UNIQUE,
     professional_type TEXT NOT NULL,
     instagram_url VARCHAR(255),
