@@ -1,6 +1,7 @@
 package br.com.listtta.backend.model.dto.users;
 
 import br.com.listtta.backend.model.entities.Address;
+import br.com.listtta.backend.model.enums.UserGender;
 import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
@@ -10,10 +11,12 @@ import lombok.Setter;
 @Setter
 public class UsersUpdateDto {
 
+    private String userTag;
     private String fullName;
-    private String phoneNumber;
+    private UserGender userGender;
+    private String taxNumber;
     @Email private String email;
-    private String password;
-    private UserRoles role;
+    private String phoneNumber;
+    private String whatsappContact;
     private Address address;
 }
