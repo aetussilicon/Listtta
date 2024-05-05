@@ -3,7 +3,7 @@ package br.com.listtta.backend.model.enums;
 import lombok.Getter;
 
 @Getter
-public enum UserGender {
+public enum UsersGender {
 
     MASCULINO("masculino"),
     FEMININO("feminino"),
@@ -11,7 +11,7 @@ public enum UserGender {
 
     private final String userGender;
 
-    UserGender(String userGender) {
+    UsersGender(String userGender) {
         this.userGender = userGender;
     }
 }

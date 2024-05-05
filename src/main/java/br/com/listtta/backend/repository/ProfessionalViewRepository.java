@@ -1,8 +1,8 @@
 package br.com.listtta.backend.repository;
 
-import br.com.listtta.backend.model.entities.ProfessionalView;
+import br.com.listtta.backend.model.entities.Professionals.ProfessionalView;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
-import br.com.listtta.backend.model.enums.UserGender;
+import br.com.listtta.backend.model.enums.UsersGender;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,7 +18,7 @@ public interface ProfessionalViewRepository extends JpaRepository<ProfessionalVi
             "AND (:state is null OR u.state = :state)" +
             "AND(:type is null OR u.type = :type)")
     List<ProfessionalView> findAllByQueryParameters(
-            @Param("userGender") UserGender userGender,
+            @Param("userGender") UsersGender usersGender,
             @Param("city") String city,
             @Param("state") String state,
             @Param("type")ProfessionalsType type

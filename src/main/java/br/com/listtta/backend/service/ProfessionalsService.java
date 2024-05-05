@@ -6,11 +6,11 @@ import br.com.listtta.backend.model.dto.professionals.ProfessionalsDto;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDto;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDto;
 import br.com.listtta.backend.model.dto.users.UsersSignupDto;
-import br.com.listtta.backend.model.entities.ProfessionalDetails;
-import br.com.listtta.backend.model.entities.ProfessionalsViewMapper;
+import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
+import br.com.listtta.backend.model.mapper.ProfessionalsViewMapper;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
-import br.com.listtta.backend.model.enums.UserGender;
+import br.com.listtta.backend.model.enums.UsersGender;
 import br.com.listtta.backend.model.enums.UserRoles;
 import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
 import br.com.listtta.backend.repository.ProfessionalViewRepository;
@@ -84,12 +84,12 @@ public class ProfessionalsService {
     }
 
     public List<ProfessionalsDto> getProfessionalsByFilters(ProfessionalsRequestedParamsDTO professionalsRequestedParams) {
-        UserGender userGender = professionalsRequestedParams.getUserGender();
+        UsersGender usersGender = professionalsRequestedParams.getUsersGender();
         String city = professionalsRequestedParams.getCity();
         String state = professionalsRequestedParams.getState();
         ProfessionalsType type = professionalsRequestedParams.getType();
 
-        return professionalsViewMapper.listModelToDto(professionalViewRepository.findAllByQueryParameters(userGender, city, state, type));
+        return professionalsViewMapper.listModelToDto(professionalViewRepository.findAllByQueryParameters(usersGender, city, state, type));
     }
 
 }

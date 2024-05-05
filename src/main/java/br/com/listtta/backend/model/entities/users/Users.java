@@ -1,6 +1,6 @@
 package br.com.listtta.backend.model.entities.users;
 
-import br.com.listtta.backend.model.enums.UserGender;
+import br.com.listtta.backend.model.enums.UsersGender;
 import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.*;
@@ -55,7 +55,7 @@ public class Users implements UserDetails {
 
     @Column(name = "user_gender")
     @Enumerated(EnumType.STRING)
-    private UserGender userGender;
+    private UsersGender usersGender;
 
     @Enumerated(EnumType.STRING)
     private UserRoles role;
