@@ -3,7 +3,7 @@ package br.com.listtta.backend.service;
 import br.com.listtta.backend.model.dto.users.UsersDto;
 import br.com.listtta.backend.model.dto.users.UsersSignupDto;
 import br.com.listtta.backend.model.dto.users.UsersUpdateDto;
-import br.com.listtta.backend.model.entities.Users;
+import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.UserRoles;
 import br.com.listtta.backend.model.mapper.UsersMapper;
 import br.com.listtta.backend.repository.UsersRepository;

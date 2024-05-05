@@ -3,7 +3,6 @@ package br.com.listtta.backend.model.dto.professionals;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
 import br.com.listtta.backend.model.enums.UserGender;
 import br.com.listtta.backend.model.enums.UserRoles;
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;

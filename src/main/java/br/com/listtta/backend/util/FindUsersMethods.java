@@ -5,7 +5,7 @@ import br.com.listtta.backend.exceptions.UserAlreadyInDatabaseException;
 import br.com.listtta.backend.exceptions.UserNotFound;
 import br.com.listtta.backend.model.entities.Address;
 import br.com.listtta.backend.model.entities.ProfessionalDetails;
-import br.com.listtta.backend.model.entities.Users;
+import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.repository.AddressRepository;
 import br.com.listtta.backend.repository.ProfessionalsRepository;
 import br.com.listtta.backend.repository.UsersRepository;

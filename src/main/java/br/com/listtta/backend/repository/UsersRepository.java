@@ -1,6 +1,6 @@
 package br.com.listtta.backend.repository;
 
-import br.com.listtta.backend.model.entities.Users;
+import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.UserRoles;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;

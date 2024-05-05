@@ -1,13 +1,9 @@
 package br.com.listtta.backend.service;
 
 import br.com.listtta.backend.model.enums.ProfessionalsType;
-import br.com.listtta.backend.model.enums.UserRoles;
-import org.hibernate.usertype.UserType;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
-import java.text.Normalizer;
 import java.util.Random;
 
 @Component

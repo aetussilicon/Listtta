@@ -1,4 +1,4 @@
-package br.com.listtta.backend.model.entities;
+package br.com.listtta.backend.model.entities.users;
 
 import br.com.listtta.backend.model.enums.UserGender;
 import br.com.listtta.backend.model.enums.UserRoles;

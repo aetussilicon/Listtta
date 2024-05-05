@@ -2,7 +2,7 @@ package br.com.listtta.backend.controller;
 
 import br.com.listtta.backend.model.dto.users.UsersDto;
 import br.com.listtta.backend.model.dto.users.UsersUpdateDto;
-import br.com.listtta.backend.model.entities.Users;
+import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.service.UsersService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

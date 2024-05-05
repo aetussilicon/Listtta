@@ -1,5 +1,6 @@
 package br.com.listtta.backend.model.entities;
 
+import br.com.listtta.backend.model.entities.users.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

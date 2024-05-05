@@ -8,7 +8,7 @@ import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDto;
 import br.com.listtta.backend.model.dto.users.UsersSignupDto;
 import br.com.listtta.backend.model.entities.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.ProfessionalsViewMapper;
-import br.com.listtta.backend.model.entities.Users;
+import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
 import br.com.listtta.backend.model.enums.UserGender;
 import br.com.listtta.backend.model.enums.UserRoles;
