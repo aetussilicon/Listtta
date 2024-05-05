@@ -24,7 +24,7 @@ public class BlogPostsService {
     private final FindUsersMethods findMethods;
 
     public BlogPosts createNewPost(CreatePostDto createPostDto) {
-        Users postAuthor = findMethods.findUserByUserTag(createPostDto.getAuthorUserTag());
+        Users postAuthor = findMethods.findUsersByPuid(createPostDto.getAuthorUserTag());
 
         createPostDto.setAuthorId(postAuthor);
         createPostDto.setAuthorName(postAuthor.getFullName());

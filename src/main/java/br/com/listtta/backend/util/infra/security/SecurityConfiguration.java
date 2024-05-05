@@ -25,7 +25,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable())
+//                .cors(cors -> cors.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         //Endpoints públicos
@@ -33,17 +33,18 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/blog/get/{postId}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/blog/get/all").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/professionals/list/all/filters").permitAll()
 
                         //Endpoints usuários
                         .requestMatchers(HttpMethod.GET, "/filters/list/all").permitAll()//hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/professionals/list/all").permitAll()//hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/filters/list/{filterName}").permitAll()//.hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/users/update/{userTag}").permitAll()//hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/users/list/{userTag}").permitAll()//hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/users/update/{puid}").permitAll()//hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/users/list/{puid}").permitAll()//hasRole("USER")
 
                         //Endpoints profissionais
-                        .requestMatchers(HttpMethod.GET, "/professionals/list/{userTag}").hasRole("PROFESSIONAL")
-                        .requestMatchers(HttpMethod.POST, "/professionals/update/{userTag}").permitAll()//hasRole("PROFESSIONAL")
+                        .requestMatchers(HttpMethod.GET, "/professionals/list/{puid}").hasRole("PROFESSIONAL")
+                        .requestMatchers(HttpMethod.POST, "/professionals/update/{puid}").permitAll()//hasRole("PROFESSIONAL")
 
                         //Endpoints admins
                         .requestMatchers(HttpMethod.POST, "/filters/create").hasRole("ADMIN")
