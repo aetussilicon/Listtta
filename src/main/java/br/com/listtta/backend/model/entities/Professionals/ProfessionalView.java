@@ -1,7 +1,8 @@
-package br.com.listtta.backend.model.entities;
+package br.com.listtta.backend.model.entities.Professionals;
 
+import br.com.listtta.backend.model.entities.filters.Filters;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
-import br.com.listtta.backend.model.enums.UserGender;
+import br.com.listtta.backend.model.enums.UsersGender;
 import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.*;
@@ -45,7 +46,7 @@ public class ProfessionalView {
 
     @Column(name = "user_gender")
     @Enumerated(EnumType.STRING)
-    private UserGender userGender;
+    private UsersGender usersGender;
 
     @Enumerated(EnumType.STRING)
     private UserRoles role;

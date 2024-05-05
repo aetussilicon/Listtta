@@ -1,4 +1,4 @@
-package br.com.listtta.backend.model.entities;
+package br.com.listtta.backend.model.entities.users;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

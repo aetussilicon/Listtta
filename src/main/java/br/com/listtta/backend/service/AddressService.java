@@ -4,7 +4,7 @@ import br.com.listtta.backend.model.dto.address.NewUserAddressDto;
 import br.com.listtta.backend.model.dto.address.UpdateUserAddressDto;
 import br.com.listtta.backend.model.dto.users.UsersSignupDto;
 import br.com.listtta.backend.model.dto.users.UsersUpdateDto;
-import br.com.listtta.backend.model.entities.Address;
+import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.mapper.AddressMapper;
 import br.com.listtta.backend.repository.AddressRepository;

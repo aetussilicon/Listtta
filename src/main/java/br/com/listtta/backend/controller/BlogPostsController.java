@@ -2,7 +2,7 @@ package br.com.listtta.backend.controller;
 
 import br.com.listtta.backend.model.dto.blog.BlogPostDto;
 import br.com.listtta.backend.model.dto.blog.CreatePostDto;
-import br.com.listtta.backend.model.entities.BlogPosts;
+import br.com.listtta.backend.model.entities.blog.BlogPosts;
 import br.com.listtta.backend.service.BlogPostsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package br.com.listtta.backend.model.entities;
+package br.com.listtta.backend.model.entities.address;
 
 import br.com.listtta.backend.model.entities.users.Users;
 import jakarta.persistence.*;

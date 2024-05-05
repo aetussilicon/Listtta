@@ -1,7 +1,7 @@
 package br.com.listtta.backend.model.dto.users;
 
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDto;
-import br.com.listtta.backend.model.entities.Address;
+import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

@@ -1,6 +1,7 @@
-package br.com.listtta.backend.model.entities;
+package br.com.listtta.backend.model.mapper;
 
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDto;
+import br.com.listtta.backend.model.entities.Professionals.ProfessionalView;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

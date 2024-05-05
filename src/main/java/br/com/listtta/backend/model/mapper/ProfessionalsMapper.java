@@ -3,7 +3,7 @@ package br.com.listtta.backend.model.mapper;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDto;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDto;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDto;
-import br.com.listtta.backend.model.entities.ProfessionalDetails;
+import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.UserRoles;
 import org.mapstruct.Mapper;
