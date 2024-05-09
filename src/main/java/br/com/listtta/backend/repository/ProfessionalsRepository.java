@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface ProfessionalsRepository extends JpaRepository<ProfessionalDetails, Long> {
 
     Optional<ProfessionalDetails> findProfessionalByUsers(Users users);
-
+    Optional<ProfessionalDetails> findProfessionalByPuid(String puid);
 }
