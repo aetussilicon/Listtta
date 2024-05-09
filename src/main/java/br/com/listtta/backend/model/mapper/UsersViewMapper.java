@@ -5,7 +5,6 @@ import br.com.listtta.backend.model.entities.users.UsersView;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import javax.swing.*;
 import java.util.List;
 
 @Mapper(componentModel = "spring")

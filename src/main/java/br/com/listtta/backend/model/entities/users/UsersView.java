@@ -20,6 +20,8 @@ public class UsersView {
     @Id
     private UUID userId;
 
+    private String puid;
+
     @Column(name = "user_tag")
     private String userTag;
 

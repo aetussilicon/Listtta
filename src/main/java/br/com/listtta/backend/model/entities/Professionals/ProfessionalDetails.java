@@ -1,6 +1,5 @@
 package br.com.listtta.backend.model.entities.Professionals;
 
-import br.com.listtta.backend.model.entities.filters.Filters;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
 import jakarta.persistence.*;
@@ -8,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Set;
 
 @Table(name = "professionals")
 @Entity
@@ -37,12 +34,4 @@ public class ProfessionalDetails {
 
     @Column(name = "instagram_url")
     private String instagramUrl;
-
-    @ManyToMany
-    @JoinTable(
-            name = "professionals_skills",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "filter_id")
-    )
-    private Set<Filters> filterId;
 }

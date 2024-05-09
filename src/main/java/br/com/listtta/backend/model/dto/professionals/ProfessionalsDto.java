@@ -22,8 +22,6 @@ public class ProfessionalsDto {
     private String phoneNumber;
     private String state;
     private String city;
-    private String district;
-    private String postalCode;
     private ProfessionalsType type;
     private String instagramUrl;
 }

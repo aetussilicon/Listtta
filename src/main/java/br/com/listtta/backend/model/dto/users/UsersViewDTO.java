@@ -1,6 +1,6 @@
 package br.com.listtta.backend.model.dto.users;
 
-import br.com.listtta.backend.model.enums.UsersGender;
+import br.com.listtta.backend.model.enums.UserGender;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +13,7 @@ public class UsersViewDTO {
     String userTag;
     String puid;
     String fullName;
-    UsersGender usersGender;
+    UserGender userGender;
     Date createdDate;
     String email;
     String taxNumber;

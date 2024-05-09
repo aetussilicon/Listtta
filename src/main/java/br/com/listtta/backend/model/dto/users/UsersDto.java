@@ -1,6 +1,5 @@
 package br.com.listtta.backend.model.dto.users;
 
-import br.com.listtta.backend.model.entities.address.Address;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +15,4 @@ public class UsersDto {
     private String password;
     private String taxNumber;
     private String phoneNumber;
-    private Address address;
 }

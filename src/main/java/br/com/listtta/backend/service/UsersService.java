@@ -1,5 +1,12 @@
 package br.com.listtta.backend.service;
 
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.listtta.backend.model.dto.users.UsersDto;
 import br.com.listtta.backend.model.dto.users.UsersSignupDto;
 import br.com.listtta.backend.model.dto.users.UsersUpdateDto;
@@ -8,15 +15,8 @@ import br.com.listtta.backend.model.enums.UserRoles;
 import br.com.listtta.backend.model.mapper.UsersMapper;
 import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
-import br.com.listtta.backend.util.validation.CPFValidatorService;
 import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +34,6 @@ public class UsersService {
 
     //Métodos extras
     private final PuidGenerator puidGenerator;
-    private final CPFValidatorService validatorService;
     private final FindUsersMethods findUsersMethods;
 
 //   Método de cadastro de usuários.
@@ -66,6 +65,7 @@ public class UsersService {
             professionalsService.createNewProfessionalDetals(usersSignupDto);
         }
 
+//        return usersViewService.getFullUserDetails(usersSignupDto.getPuid());
         return newUser;
     }
 
