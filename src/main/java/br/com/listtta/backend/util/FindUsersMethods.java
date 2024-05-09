@@ -62,6 +62,15 @@ public class FindUsersMethods {
 
     }
 
+    //Por PUID
+    public ProfessionalDetails findProfessionalByPuid (String puid) {
+        Optional<ProfessionalDetails> checkingDetails = professionalsRepository.findProfessionalByPuid(puid);
+
+        if (checkingDetails.isPresent()) {
+            return checkingDetails.get();
+        } throw new ProfessionalDetailsNotFoundException();
+    }
+
     //Procura de endereços.
     //Por PUID
     public Address findUserAddress(String puid) {
@@ -70,7 +79,4 @@ public class FindUsersMethods {
             return checkAddressInDatabase.get();
         } return null;
     }
-
-    //
-
 }
