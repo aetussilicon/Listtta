@@ -9,6 +9,4 @@ public class UpdateUserAddressDto {
 
     private String state;
     private String city;
-    private String district;
-    private String postalCode;
 }

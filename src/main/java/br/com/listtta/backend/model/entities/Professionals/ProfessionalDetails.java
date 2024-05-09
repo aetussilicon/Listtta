@@ -1,5 +1,6 @@
-package br.com.listtta.backend.model.entities;
+package br.com.listtta.backend.model.entities.Professionals;
 
+import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class ProfessionalDetails {
     @JoinColumn(name = "user_id")
     private Users users;
     private String userTag;
+    private String puid;
 
     @Column(name = "professional_type")
     @Enumerated(EnumType.STRING)
@@ -32,6 +34,4 @@ public class ProfessionalDetails {
 
     @Column(name = "instagram_url")
     private String instagramUrl;
-    // private Set<Filters> skills;
-
 }

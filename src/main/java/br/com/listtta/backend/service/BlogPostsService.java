@@ -2,12 +2,11 @@ package br.com.listtta.backend.service;
 
 import br.com.listtta.backend.model.dto.blog.BlogPostDto;
 import br.com.listtta.backend.model.dto.blog.CreatePostDto;
-import br.com.listtta.backend.model.entities.BlogPosts;
-import br.com.listtta.backend.model.entities.Users;
+import br.com.listtta.backend.model.entities.blog.BlogPosts;
+import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.mapper.BlogPostsMapper;
 import br.com.listtta.backend.repository.BlogPostsRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,7 @@ public class BlogPostsService {
     private final FindUsersMethods findMethods;
 
     public BlogPosts createNewPost(CreatePostDto createPostDto) {
-        Users postAuthor = findMethods.findUserByUserTag(createPostDto.getAuthorUserTag());
+        Users postAuthor = findMethods.findUsersByPuid(createPostDto.getAuthorUserTag());
 
         createPostDto.setAuthorId(postAuthor);
         createPostDto.setAuthorName(postAuthor.getFullName());

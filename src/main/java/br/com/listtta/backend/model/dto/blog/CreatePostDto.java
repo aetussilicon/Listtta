@@ -1,6 +1,6 @@
 package br.com.listtta.backend.model.dto.blog;
 
-import br.com.listtta.backend.model.entities.Users;
+import br.com.listtta.backend.model.entities.users.Users;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

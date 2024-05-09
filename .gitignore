@@ -87,3 +87,4 @@ bin/main/db/migration/V1__CREATE-USERS-TABLE.sql
 bin/main/db/migration/V2__CREATE-FILTERS-TABLE-AND-INSERT.sql
 bin/main/db/migration/V3__CREATE-PROFESSIONALS-TABLE.sql
 .vscode/launch.json
+/bin

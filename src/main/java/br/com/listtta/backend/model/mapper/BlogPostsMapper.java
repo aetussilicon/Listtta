@@ -2,7 +2,7 @@ package br.com.listtta.backend.model.mapper;
 
 import br.com.listtta.backend.model.dto.blog.BlogPostDto;
 import br.com.listtta.backend.model.dto.blog.CreatePostDto;
-import br.com.listtta.backend.model.entities.BlogPosts;
+import br.com.listtta.backend.model.entities.blog.BlogPosts;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

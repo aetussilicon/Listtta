@@ -3,7 +3,7 @@ package br.com.listtta.backend.controller;
 import br.com.listtta.backend.model.dto.authentication.LoginDto;
 import br.com.listtta.backend.model.dto.authentication.LoginResponseDto;
 import br.com.listtta.backend.model.dto.users.UsersSignupDto;
-import br.com.listtta.backend.model.entities.Users;
+import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.service.UsersService;
 import br.com.listtta.backend.util.infra.security.TokenService;
 import jakarta.validation.Valid;
@@ -26,6 +26,7 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
+    @SuppressWarnings("rawtypes")
     @PostMapping
     @RequestMapping("login")
     public ResponseEntity login(@RequestBody @Valid LoginDto loginDto) {

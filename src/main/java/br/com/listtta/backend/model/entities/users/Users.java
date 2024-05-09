@@ -1,5 +1,6 @@
-package br.com.listtta.backend.model.entities;
+package br.com.listtta.backend.model.entities.users;
 
+import br.com.listtta.backend.model.enums.UserGender;
 import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,19 +27,35 @@ public class Users implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID userId;
 
-    @Column(name = "full_name")
-    private String fullName;
+    private String puid;
 
     @Column(name = "user_tag")
     private String userTag;
+
+    @Column(name = "full_name")
+    private String fullName;
+
+//    @Lob
+//    @Column(name = "profile_picture")
+//    private byte[] profilePicture;
     private String email;
     private String password;
+
+    @Column(name = "created_date")
+    private Date createdDate;
 
     @Column(name = "tax_number")
     private String taxNumber;
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "whatsapp_contact")
+    private String whatsappContact;
+
+    @Column(name = "user_gender")
+    @Enumerated(EnumType.STRING)
+    private UserGender userGender;
 
     @Enumerated(EnumType.STRING)
     private UserRoles role;

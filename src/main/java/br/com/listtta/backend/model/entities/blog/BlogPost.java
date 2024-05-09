@@ -1,4 +1,4 @@
-package br.com.listtta.backend.model.entities;
+package br.com.listtta.backend.model.entities.blog;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
