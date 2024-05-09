@@ -35,19 +35,32 @@ public class ProfessionalsService {
     private final ProfessionalsMapper professionalsMapper;
     private final ProfessionalsViewMapper professionalsViewMapper;
 
+    //Services
+    private final ProfessionalsSkillsService skillsService;
+
     //Validações
     private final FindUsersMethods findUsers;
 
     @Transactional
     public ProfessionalDetails createNewProfessionalDetals(UsersSignupDto signupDto) {
         Users professionalUser = findUsers.findUsersByPuid(signupDto.getPuid());
-
+    
+        // Mapeando o DTO de detalhes profissionais
         ProfessionalsSignupDto professionalDetails = signupDto.getProfessionalsDto();
-
+    
+        // Definindo o usuário e o PUID nos detalhes profissionais
         professionalDetails.setUsers(professionalUser);
         professionalDetails.setPuid(signupDto.getPuid());
+    
+        // Mapeando o DTO de detalhes profissionais para a entidade
+        ProfessionalDetails professional = professionalsMapper.professionalsDetailsDtoToModel(professionalDetails);
+    
+        // Salvando os detalhes profissionais no repositório
+        ProfessionalDetails savedProfessional = professionalsRepository.save(professional);
+        
+        skillsService.attachedProfessionalsSkills(signupDto);
 
-        return professionalsRepository.save(professionalsMapper.professionalsDetailsDtoToModel(professionalDetails));
+        return savedProfessional;
     }
     
     //Método não salvando no banco de dados
