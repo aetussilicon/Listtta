@@ -34,6 +34,7 @@ public class ProfessionalsController {
     @GetMapping
     @RequestMapping("list/all")
     public ResponseEntity<List<ProfessionalsDto>> getAllProfessionals() {
-        return new ResponseEntity<>(professionalsService.listAllProfessionals(), HttpStatus.OK);
+        return new ResponseEntity<>(professionalsService.getAllProfessionalsView(), HttpStatus.OK);
     }
+
 }

@@ -1,28 +1,26 @@
 package br.com.listtta.backend.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.listtta.backend.exceptions.UpdateFieldsException;
-import br.com.listtta.backend.model.dto.ProfessionalsRequestedParamsDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDto;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDto;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDto;
 import br.com.listtta.backend.model.dto.users.UsersSignupDto;
-import br.com.listtta.backend.model.entities.ProfessionalDetails;
-import br.com.listtta.backend.model.entities.ProfessionalsViewMapper;
+import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.users.Users;
-import br.com.listtta.backend.model.enums.ProfessionalsType;
-import br.com.listtta.backend.model.enums.UserGender;
 import br.com.listtta.backend.model.enums.UserRoles;
 import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
+import br.com.listtta.backend.model.mapper.ProfessionalsViewMapper;
 import br.com.listtta.backend.repository.ProfessionalViewRepository;
 import br.com.listtta.backend.repository.ProfessionalsRepository;
 import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
 import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +37,6 @@ public class ProfessionalsService {
 
     //Validações
     private final FindUsersMethods findUsers;
-    private final Patcher patcher;
 
     @Transactional
     public ProfessionalDetails createNewProfessionalDetals(UsersSignupDto signupDto) {
@@ -52,9 +49,8 @@ public class ProfessionalsService {
 
         return professionalsRepository.save(professionalsMapper.professionalsDetailsDtoToModel(professionalDetails));
     }
-
+    
     //Método não salvando no banco de dados
-    //TODO corrigir método
     public ProfessionalDetails updateProfessionalDetails(String userTag, ProfessionalsUpdateDto professionalsUpdateDto) {
         Users professionalUser = findUsers.findUsersByPuid(userTag);
         ProfessionalDetails detailsToUpdate = findUsers.findProfessionalByUser(professionalUser);
@@ -83,13 +79,8 @@ public class ProfessionalsService {
         return professionalsMapper.listModelToDto(usersList, professionalDetailsList);
     }
 
-    public List<ProfessionalsDto> getProfessionalsByFilters(ProfessionalsRequestedParamsDTO professionalsRequestedParams) {
-        UserGender userGender = professionalsRequestedParams.getUserGender();
-        String city = professionalsRequestedParams.getCity();
-        String state = professionalsRequestedParams.getState();
-        ProfessionalsType type = professionalsRequestedParams.getType();
-
-        return professionalsViewMapper.listModelToDto(professionalViewRepository.findAllByQueryParameters(userGender, city, state, type));
+    public List<ProfessionalsDto> getAllProfessionalsView() {
+        return professionalsViewMapper.listModelToDto(professionalViewRepository.findAll());
     }
 
 }
