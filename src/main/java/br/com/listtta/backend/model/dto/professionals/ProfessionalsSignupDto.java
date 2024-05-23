@@ -17,5 +17,5 @@ public class ProfessionalsSignupDto {
     private String puid;
     @Nullable private ProfessionalsType type;
     private String instagramUrl;
-    private Set<Long> skills;
+    @Nullable private Set<Long> skills;
 }

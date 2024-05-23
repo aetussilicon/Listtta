@@ -21,11 +21,13 @@ public interface ProfessionalsMapper {
     ProfessionalDetails professionalsDetailsDtoToModel(ProfessionalsSignupDto complement);
 
     @Mapping(target = "userTag", source = "details.userTag", ignore = true)
+    @Mapping(target = "puid", ignore = true)
     ProfessionalsDto professionalModelToDto(Users users, ProfessionalDetails details);
     ProfessionalDetails updateProfessionalDtoToModel(ProfessionalsUpdateDto professionalsUpdateDto);
 
     @Mapping(source = "user.role", target = "role")
     @Mapping(source = "user.userTag", target = "userTag", ignore = true)
+    @Mapping(target = "puid", ignore = true)
     ProfessionalsDto userModelToDto(Users user, ProfessionalDetails details);
 
     default List<ProfessionalsDto> listModelToDto(List<Users> usersList, List<ProfessionalDetails> professionalDetailsList) {

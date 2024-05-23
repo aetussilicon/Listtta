@@ -20,8 +20,11 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "userId")
 public class ProfessionalView {
 
-    @Id
+
     private UUID userId;
+
+    @Id
+    private String puid;
 
     @Column(name = "user_tag")
     private String userTag;
@@ -64,7 +67,7 @@ public class ProfessionalView {
     @ManyToMany
     @JoinTable(
             name = "professionals_skills",
-            joinColumns = @JoinColumn(name = "user_id"),
+            joinColumns = @JoinColumn(name = "puid"),
             inverseJoinColumns = @JoinColumn(name = "filter_id")
     )
     private Set<Filters> skills;

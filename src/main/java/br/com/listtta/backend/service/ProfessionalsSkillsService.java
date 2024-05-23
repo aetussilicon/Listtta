@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import br.com.listtta.backend.model.enums.ProfessionalsType;
 import org.springframework.stereotype.Service;
 
 import br.com.listtta.backend.model.dto.users.UsersSignupDto;
@@ -31,28 +32,29 @@ public class ProfessionalsSkillsService {
     //Metódos
     private final FindUsersMethods findMethods;
 
-    @Transactional
+    @Transactional  
     public void attachedProfessionalsSkills (UsersSignupDto signupDto) {
         ProfessionalDetails professional = findMethods.findProfessionalByPuid(signupDto.getPuid());
+        if (signupDto.getProfessionalsDto().getType() == ProfessionalsType.TATTOO) {
+            if (signupDto.getProfessionalsDto().getSkills() != null) {
+                Set<Long> processedSkills = new HashSet<>();
 
-        if (signupDto.getProfessionalsDto().getSkills() != null) {
-            Set<Long> processedSkills = new HashSet<>();
+                for (Long filterId : signupDto.getProfessionalsDto().getSkills()) {
+                    if (processedSkills.add(filterId)) {
+                        Optional<Filters> checkSkillInDb = filtersRepository.findById(filterId);
+                        checkSkillInDb.ifPresent(filter -> {
+                            ProfessionalsSkillsDto skillsDto = new ProfessionalsSkillsDto();
+                            skillsDto.setPuid(professional.getPuid());
+                            skillsDto.setFilterId(filterId);
 
-            for (Long filterId : signupDto.getProfessionalsDto().getSkills()) {
-                if (processedSkills.add(filterId)) {
-                    Optional<Filters> checkSkillInDb = filtersRepository.findById(filterId);
-                    checkSkillInDb.ifPresent(filter -> {
-                        ProfessionalsSkillsDto skillsDto = new ProfessionalsSkillsDto();
-                        skillsDto.setPuid(professional.getPuid());
-                        skillsDto.setFilterId(filterId);
+                            skillsRepository.save(skillsMapper.skillsDtoToModel(skillsDto));
+                        });
 
-                        skillsRepository.save(skillsMapper.skillsDtoToModel(skillsDto));
-                    });
-
+                    }
                 }
+            } else {
+                throw new RuntimeException();
             }
-        } else {
-            throw new RuntimeException();
-        } 
+        } signupDto.getProfessionalsDto().setSkills(null);
     }    
 }
