@@ -1,4 +1,4 @@
-CREATE VIEW professionals_view AS
+CREATE VIEW professional_details AS
 SELECT u.user_id, u.user_tag, u.puid, u.full_name, u.user_gender, u.created_date, u.email,
        u.password, u.tax_number, u.phone_number, u.whatsapp_contact, u.role,
        a.state, a.city, p.professional_type, p.instagram_url, ARRAY_AGG(ps.filter_id) AS skills
