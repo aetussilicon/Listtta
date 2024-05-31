@@ -18,10 +18,6 @@ public class UsersSignupDto {
 
     private UUID userId;
     private String puid;
-    private String fullName; //Remover
-    private String taxNumber; //Remover
-    private String phoneNumber; //Remover
-    private String whatsappContact; //Remover
     private Date createdDate;
     private UserGender userGender;
     @NotNull @Email private String email;
