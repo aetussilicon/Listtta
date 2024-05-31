@@ -8,20 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ProfessionalViewRepository extends JpaRepository<ProfessionalView, UUID> {
-
-    @Query("SELECT u FROM ProfessionalView u WHERE " +
-            "(:userGender is null OR u.userGender = :userGender) " +
-            "AND (:city is null OR u.city = :city) " +
-            "AND (:state is null OR u.state = :state)" +
-            "AND(:type is null OR u.type = :type)")
-    List<ProfessionalView> findAllByQueryParameters(
-            @Param("userGender") UserGender userGender,
-            @Param("city") String city,
-            @Param("state") String state,
-            @Param("type")ProfessionalsType type
-    );
-
+    Optional<ProfessionalView> findProfessionalViewByPuid(String puid);
 }

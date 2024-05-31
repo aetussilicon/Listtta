@@ -18,29 +18,12 @@ public interface ProfessionalsMapper {
 
     ProfessionalsMapper INSTANCE = Mappers.getMapper(ProfessionalsMapper.class);
 
+    @Mapping(target = "userTag", ignore = true)
     ProfessionalDetails professionalsDetailsDtoToModel(ProfessionalsSignupDto complement);
 
-    @Mapping(target = "userTag", source = "details.userTag", ignore = true)
+    @Mapping(target = "detailsId", ignore = true)
+    @Mapping(target = "users", ignore = true)
+    @Mapping(target = "userTag", ignore = true)
     @Mapping(target = "puid", ignore = true)
-    ProfessionalsDto professionalModelToDto(Users users, ProfessionalDetails details);
     ProfessionalDetails updateProfessionalDtoToModel(ProfessionalsUpdateDto professionalsUpdateDto);
-
-    @Mapping(source = "user.role", target = "role")
-    @Mapping(source = "user.userTag", target = "userTag", ignore = true)
-    @Mapping(target = "puid", ignore = true)
-    ProfessionalsDto userModelToDto(Users user, ProfessionalDetails details);
-
-    default List<ProfessionalsDto> listModelToDto(List<Users> usersList, List<ProfessionalDetails> professionalDetailsList) {
-        return usersList.stream()
-                .filter(user -> user.getRole() == UserRoles.PROFESSIONAL)
-                .map(user -> userModelToDto(user, findProfessionalDetailsByUser(user, professionalDetailsList)))
-                .collect(Collectors.toList());
-    }
-
-    default ProfessionalDetails findProfessionalDetailsByUser(Users user, List<ProfessionalDetails> professionalDetailsList) {
-        return professionalDetailsList.stream()
-                .filter(details -> details.getUsers().equals(user))
-                .findFirst()
-                .orElse(null); // Handle if no matching ProfessionalDetails is found
-    }
 }

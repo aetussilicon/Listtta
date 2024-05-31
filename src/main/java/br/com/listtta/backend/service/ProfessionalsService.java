@@ -1,7 +1,10 @@
 package br.com.listtta.backend.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import br.com.listtta.backend.exceptions.UserNotFound;
+import br.com.listtta.backend.model.entities.Professionals.ProfessionalView;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,22 +81,14 @@ public class ProfessionalsService {
         return detailsToUpdate;
     }
 
-    public ProfessionalsDto getProfessional(String userTag) {
-        Users user = findUsers.findUsersByPuid(userTag);
-        ProfessionalDetails details = findUsers.findProfessionalByUser(user);
-
-        return professionalsMapper.professionalModelToDto(user, details);
-    }
-
-    public List<ProfessionalsDto> listAllProfessionals() {
-        List<Users> usersList = usersRepository.findByRole(UserRoles.PROFESSIONAL);
-        List<ProfessionalDetails> professionalDetailsList = professionalsRepository.findAll(); // Se necessário
-
-        return professionalsMapper.listModelToDto(usersList, professionalDetailsList);
+    public ProfessionalsDto getProfessional(String puid) {
+        Optional<ProfessionalView> checkingProfessional = professionalViewRepository.findProfessionalViewByPuid(puid);
+        if (checkingProfessional.isPresent()) {
+            return professionalsViewMapper.professionalModelToDto(checkingProfessional.get());
+        } throw new UserNotFound();
     }
 
     public List<ProfessionalsDto> getAllProfessionalsView() {
         return professionalsViewMapper.listModelToDto(professionalViewRepository.findAll());
     }
-
 }
