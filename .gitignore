@@ -88,3 +88,8 @@ bin/main/db/migration/V2__CREATE-FILTERS-TABLE-AND-INSERT.sql
 bin/main/db/migration/V3__CREATE-PROFESSIONALS-TABLE.sql
 .vscode/launch.json
 /bin
+gradlew
+.settings/org.eclipse.jdt.core.prefs
+.settings/org.eclipse.jdt.apt.core.prefs
+.settings/org.eclipse.buildship.core.prefs
+.factorypath
