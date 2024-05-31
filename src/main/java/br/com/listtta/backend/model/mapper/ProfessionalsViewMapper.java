@@ -12,6 +12,6 @@ public interface ProfessionalsViewMapper {
 
     ProfessionalsViewMapper INSTANCE = Mappers.getMapper(ProfessionalsViewMapper.class);
 
+    ProfessionalsDto professionalModelToDto(ProfessionalView professionalView);
     List<ProfessionalsDto> listModelToDto(List<ProfessionalView> professionalViewList);
-
 }

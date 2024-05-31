@@ -49,7 +49,6 @@ public class ProfessionalsSkillsService {
 
                             skillsRepository.save(skillsMapper.skillsDtoToModel(skillsDto));
                         });
-
                     }
                 }
             } else {

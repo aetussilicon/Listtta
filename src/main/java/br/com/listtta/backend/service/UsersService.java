@@ -48,6 +48,7 @@ public class UsersService {
         } else if (usersSignupDto.getRole() == UserRoles.PROFESSIONAL) {
             usersSignupDto.setPuid(puidGenerator.puidGenerator(usersSignupDto.getProfessionalsDto().getType()));
         }
+
         //Data de criação da conta.
         usersSignupDto.setCreatedDate(new Date());
 
