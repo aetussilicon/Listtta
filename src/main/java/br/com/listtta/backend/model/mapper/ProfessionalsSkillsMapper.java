@@ -1,5 +1,6 @@
 package br.com.listtta.backend.model.mapper;
 
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsSkillsDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

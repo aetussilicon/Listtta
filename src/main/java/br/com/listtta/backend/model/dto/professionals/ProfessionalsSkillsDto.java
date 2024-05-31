@@ -1,4 +1,4 @@
-package br.com.listtta.backend.model.mapper;
+package br.com.listtta.backend.model.dto.professionals;
 
 import lombok.Getter;
 import lombok.Setter;
