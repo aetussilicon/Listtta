@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'br.com.listtta'
-version = '0.0.1-SNAPSHOT'
+version = '0.9.9'
 
 java {
 	sourceCompatibility = '17'
