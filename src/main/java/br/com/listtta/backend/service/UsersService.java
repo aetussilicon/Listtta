@@ -65,8 +65,6 @@ public class UsersService {
         if (usersSignupDto.getRole() == UserRoles.PROFESSIONAL) {
             professionalsService.createNewProfessionalDetals(usersSignupDto);
         }
-
-//        return usersViewService.getFullUserDetails(usersSignupDto.getPuid());
         return newUser;
     }
 
