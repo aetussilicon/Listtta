@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.listtta.backend.exceptions.UpdateFieldsException;
-import br.com.listtta.backend.model.dto.users.UsersSignupDto;
+import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
@@ -44,7 +44,7 @@ public class ProfessionalsService {
     private final FindUsersMethods findUsers;
 
     @Transactional
-    public ProfessionalDetails createNewProfessionalDetals(UsersSignupDto signupDto) {
+    public ProfessionalDetails createNewProfessionalDetals(UsersSignupDTO signupDto) {
         Users professionalUser = findUsers.findUsersByPuid(signupDto.getPuid());
     
         // Mapeando o DTO de detalhes profissionais

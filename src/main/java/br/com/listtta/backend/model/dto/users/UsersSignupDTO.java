@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class UsersSignupDto {
+public class UsersSignupDTO {
 
     private UUID userId;
     private String puid;

@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UsersUpdateDto {
+public class UsersUpdateDTO {
 
     private String userTag;
     private String fullName;

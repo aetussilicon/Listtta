@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateNewFilterDto {
+public class CreateNewFilterDTO {
 
     private Long filterId;
     @NotNull private String filterName;

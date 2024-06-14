@@ -1,9 +1,9 @@
 package br.com.listtta.backend.service;
 
 import br.com.listtta.backend.exceptions.UpdateFieldsException;
-import br.com.listtta.backend.model.dto.filters.CreateNewFilterDto;
-import br.com.listtta.backend.model.dto.filters.FiltersDto;
-import br.com.listtta.backend.model.dto.filters.UpdateFilterDto;
+import br.com.listtta.backend.model.dto.filters.CreateNewFilterDTO;
+import br.com.listtta.backend.model.dto.filters.FiltersDTO;
+import br.com.listtta.backend.model.dto.filters.UpdateFilterDTO;
 import br.com.listtta.backend.model.entities.filters.Filters;
 import br.com.listtta.backend.model.mapper.FiltersMapper;
 import br.com.listtta.backend.repository.FiltersRepository;
@@ -83,11 +83,11 @@ public class FiltersService {
         throw new RuntimeException("Filtro não encontrado!");
     }
 
-    public Filters createNewFilter(CreateNewFilterDto createNewFilterDto) {
+    public Filters createNewFilter(CreateNewFilterDTO createNewFilterDto) {
         return filtersRepository.save(filtersMapper.createNewFilterDtoToModel(createNewFilterDto));
     }
 
-    public Filters patchFilter(Long filterId, UpdateFilterDto updateFilterDto) {
+    public Filters patchFilter(Long filterId, UpdateFilterDTO updateFilterDto) {
         Filters checkedFilter = checkFilterInDatabaseById(filterId);
         Filters fieldsToUpdate = filtersMapper.updateFilterDtoToModel(updateFilterDto);
 
@@ -105,11 +105,11 @@ public class FiltersService {
         return checkedFilter;
     }
 
-    public FiltersDto getOneFilter(String filterName) {
+    public FiltersDTO getOneFilter(String filterName) {
         return filtersMapper.filtersModelToDto(checkFilterInDatabaseByName(filterName));
     }
 
-    public List<FiltersDto> gerAllFilters() {
+    public List<FiltersDTO> gerAllFilters() {
         return filtersMapper.listFiltersModelToDto(filtersRepository.findAll());
     }
 

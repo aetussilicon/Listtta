@@ -8,7 +8,7 @@ import br.com.listtta.backend.model.dto.professionals.ProfessionalsSkillsDTO;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
 import org.springframework.stereotype.Service;
 
-import br.com.listtta.backend.model.dto.users.UsersSignupDto;
+import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.filters.Filters;
 import br.com.listtta.backend.model.mapper.ProfessionalsSkillsMapper;
@@ -33,7 +33,7 @@ public class ProfessionalsSkillsService {
     private final FindUsersMethods findMethods;
 
     @Transactional  
-    public void attachedProfessionalsSkills (UsersSignupDto signupDto) {
+    public void attachedProfessionalsSkills (UsersSignupDTO signupDto) {
         ProfessionalDetails professional = findMethods.findProfessionalByPuid(signupDto.getPuid());
         if (signupDto.getProfessionalsDto().getType() == ProfessionalsType.TATTOO) {
             if (signupDto.getProfessionalsDto().getSkills() != null) {

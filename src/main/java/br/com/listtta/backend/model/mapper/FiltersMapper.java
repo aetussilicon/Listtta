@@ -1,8 +1,8 @@
 package br.com.listtta.backend.model.mapper;
 
-import br.com.listtta.backend.model.dto.filters.CreateNewFilterDto;
-import br.com.listtta.backend.model.dto.filters.FiltersDto;
-import br.com.listtta.backend.model.dto.filters.UpdateFilterDto;
+import br.com.listtta.backend.model.dto.filters.CreateNewFilterDTO;
+import br.com.listtta.backend.model.dto.filters.FiltersDTO;
+import br.com.listtta.backend.model.dto.filters.UpdateFilterDTO;
 import br.com.listtta.backend.model.entities.filters.Filters;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,11 +16,11 @@ public interface FiltersMapper {
     FiltersMapper INSTANCE = Mappers.getMapper(FiltersMapper.class);
 
     @Mapping(target = "filterId", source = "filterId")
-    Filters createNewFilterDtoToModel (CreateNewFilterDto createNewFilterDto);
+    Filters createNewFilterDtoToModel (CreateNewFilterDTO createNewFilterDto);
 
     @Mapping(target = "filterId", ignore = true)
-    Filters updateFilterDtoToModel (UpdateFilterDto updateFilterDto);
-    FiltersDto filtersModelToDto (Filters filters);
-    List<FiltersDto> listFiltersModelToDto (List<Filters> filtersList);
+    Filters updateFilterDtoToModel (UpdateFilterDTO updateFilterDto);
+    FiltersDTO filtersModelToDto (Filters filters);
+    List<FiltersDTO> listFiltersModelToDto (List<Filters> filtersList);
 
 }

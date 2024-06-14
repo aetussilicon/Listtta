@@ -1,9 +1,9 @@
 package br.com.listtta.backend.service;
 
-import br.com.listtta.backend.model.dto.address.NewUserAddressDto;
-import br.com.listtta.backend.model.dto.address.UpdateUserAddressDto;
-import br.com.listtta.backend.model.dto.users.UsersSignupDto;
-import br.com.listtta.backend.model.dto.users.UsersUpdateDto;
+import br.com.listtta.backend.model.dto.address.NewUserAddressDTO;
+import br.com.listtta.backend.model.dto.address.UpdateUserAddressDTO;
+import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
+import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.mapper.AddressMapper;
@@ -27,10 +27,10 @@ public class AddressService {
     private final FindUsersMethods findUsers;
 
     @Transactional
-    public Address createNewUserAddress(UsersSignupDto userDto) {
+    public Address createNewUserAddress(UsersSignupDTO userDto) {
         Optional<Users> checkRecentUser = usersRepo.findUserByPuid(userDto.getPuid());
         if (checkRecentUser.isPresent()) {
-            NewUserAddressDto userAddressDto = new NewUserAddressDto();
+            NewUserAddressDTO userAddressDto = new NewUserAddressDTO();
             Users user = checkRecentUser.get();
             userAddressDto.setUsers(user);
             userAddressDto.setPuid(userDto.getPuid());
@@ -44,10 +44,10 @@ public class AddressService {
 
     }
 
-    public Address updateUserAddress(String puid, UsersUpdateDto updateDto) {
+    public Address updateUserAddress(String puid, UsersUpdateDTO updateDto) {
         Address checkInDB = findUsers.findUserAddress(puid);
 
-        UpdateUserAddressDto newDto = new UpdateUserAddressDto();
+        UpdateUserAddressDTO newDto = new UpdateUserAddressDTO();
         newDto.setState(updateDto.getAddress().getState());
         newDto.setCity(updateDto.getAddress().getCity());
 

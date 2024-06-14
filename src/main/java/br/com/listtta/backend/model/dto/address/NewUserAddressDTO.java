@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class NewUserAddressDto {
+public class NewUserAddressDTO {
 
     private Long addressId;
     private Users users;

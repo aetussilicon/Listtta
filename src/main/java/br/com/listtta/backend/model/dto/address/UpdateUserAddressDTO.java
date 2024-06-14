@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UpdateUserAddressDto {
+public class UpdateUserAddressDTO {
 
     private String state;
     private String city;

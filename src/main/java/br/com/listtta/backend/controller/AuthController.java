@@ -1,10 +1,9 @@
 package br.com.listtta.backend.controller;
 
-import br.com.listtta.backend.exceptions.CouldNotRegisterUserException;
 import br.com.listtta.backend.exceptions.UserAlreadyInDatabaseException;
-import br.com.listtta.backend.model.dto.authentication.LoginDto;
-import br.com.listtta.backend.model.dto.authentication.LoginResponseDto;
-import br.com.listtta.backend.model.dto.users.UsersSignupDto;
+import br.com.listtta.backend.model.dto.authentication.LoginDTO;
+import br.com.listtta.backend.model.dto.authentication.LoginResponseDTO;
+import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.service.UsersService;
 import br.com.listtta.backend.util.infra.security.TokenService;
@@ -33,18 +32,18 @@ public class AuthController {
 
     @PostMapping
     @RequestMapping("login")
-    public ResponseEntity login(@RequestBody @Valid LoginDto loginDto) {
+    public ResponseEntity login(@RequestBody @Valid LoginDTO loginDto) {
        var usernamePassword = new UsernamePasswordAuthenticationToken(loginDto.email(), loginDto.password());
        var auth = this.authenticationManager.authenticate(usernamePassword);
 
        var token = tokenService.generateToken((Users) auth.getPrincipal());
 
-       return ResponseEntity.ok(new LoginResponseDto(token));
+       return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping
     @RequestMapping("signup")
-    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody @Valid UsersSignupDto usersSignupDto) {
+    public ResponseEntity<Map<String, Object>> registerUser(@RequestBody @Valid UsersSignupDTO usersSignupDto) {
         Map<String, Object> response = new HashMap<>();
         try {
             Users newUser = usersService.createNewUser(usersSignupDto);

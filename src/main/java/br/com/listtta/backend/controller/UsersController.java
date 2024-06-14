@@ -1,7 +1,7 @@
 package br.com.listtta.backend.controller;
 
-import br.com.listtta.backend.model.dto.users.UsersDto;
-import br.com.listtta.backend.model.dto.users.UsersUpdateDto;
+import br.com.listtta.backend.model.dto.users.UsersDTO;
+import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.service.UsersService;
 import jakarta.validation.Valid;
@@ -21,19 +21,19 @@ public class UsersController {
 
     @PatchMapping
     @RequestMapping("update/{puid}")
-    public ResponseEntity<Users> updateUser(@PathVariable String puid, @RequestBody @Valid UsersUpdateDto usersUpdateDto) {
+    public ResponseEntity<Users> updateUser(@PathVariable String puid, @RequestBody @Valid UsersUpdateDTO usersUpdateDto) {
         return new ResponseEntity<>(service.updateUser(puid, usersUpdateDto), HttpStatus.ACCEPTED);
     }
 
     @GetMapping
     @RequestMapping("list/{puid}")
-    public ResponseEntity<UsersDto> getUser(@PathVariable String puid) {
+    public ResponseEntity<UsersDTO> getUser(@PathVariable String puid) {
         return new ResponseEntity<>(service.getUser(puid), HttpStatus.OK);
     }
 
     @GetMapping
     @RequestMapping("list/all")
-    public ResponseEntity<List<UsersDto>> getAllUsers() {
+    public ResponseEntity<List<UsersDTO>> getAllUsers() {
         return new ResponseEntity<>(service.getAllUsers(), HttpStatus.OK);
     }
 

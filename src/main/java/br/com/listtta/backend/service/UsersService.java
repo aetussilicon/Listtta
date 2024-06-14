@@ -3,13 +3,13 @@ package br.com.listtta.backend.service;
 import java.util.Date;
 import java.util.List;
 
+import br.com.listtta.backend.model.dto.users.UsersDTO;
+import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
+import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.listtta.backend.model.dto.users.UsersDto;
-import br.com.listtta.backend.model.dto.users.UsersSignupDto;
-import br.com.listtta.backend.model.dto.users.UsersUpdateDto;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.UserRoles;
 import br.com.listtta.backend.model.mapper.UsersMapper;
@@ -38,7 +38,7 @@ public class UsersService {
 
 //   Método de cadastro de usuários.
     @Transactional
-    public Users createNewUser(UsersSignupDto usersSignupDto) {
+    public Users createNewUser(UsersSignupDTO usersSignupDto) {
 
         //Checar se já existe usuário com base no email.
         findUsersMethods.findUserByEmail(usersSignupDto.getEmail());
@@ -70,7 +70,7 @@ public class UsersService {
 
 
     @Transactional
-    public Users updateUser(String puid, UsersUpdateDto usersUpdateDto) {
+    public Users updateUser(String puid, UsersUpdateDTO usersUpdateDto) {
         Users userToUpdate = findUsersMethods.findUsersByPuid(puid);
         Users updateFields = mapper.updateDtoToModel(usersUpdateDto);
 
@@ -88,11 +88,11 @@ public class UsersService {
         return userToUpdate;
     }
 
-    public UsersDto getUser(String userTag) {
+    public UsersDTO getUser(String userTag) {
         return mapper.userModelToDto(findUsersMethods.findUsersByPuid(userTag));
     }
 
-    public List<UsersDto> getAllUsers() {
+    public List<UsersDTO> getAllUsers() {
         return mapper.listModelToDto(usersRepository.findAll());
     }
 }
