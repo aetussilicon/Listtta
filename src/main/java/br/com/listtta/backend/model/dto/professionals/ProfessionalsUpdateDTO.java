@@ -6,9 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProfessionalsUpdateDto {
-
+public class ProfessionalsUpdateDTO {
     private ProfessionalsType type;
     private String instagramUrl;
-
 }

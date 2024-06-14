@@ -1,7 +1,7 @@
 package br.com.listtta.backend.controller;
 
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsDto;
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDto;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsDTO;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDTO;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.service.ProfessionalsService;
 import jakarta.validation.Valid;
@@ -21,19 +21,19 @@ public class ProfessionalsController {
 
     @PatchMapping
     @RequestMapping("update/{puid}")
-    public ResponseEntity<ProfessionalDetails> updateDetails(@PathVariable String puid,@RequestBody @Valid ProfessionalsUpdateDto professionalsUpdateDto) {
+    public ResponseEntity<ProfessionalDetails> updateDetails(@PathVariable String puid,@RequestBody @Valid ProfessionalsUpdateDTO professionalsUpdateDto) {
         return new ResponseEntity<>(professionalsService.updateProfessionalDetails(puid, professionalsUpdateDto), HttpStatus.ACCEPTED);
     }
 
     @GetMapping
     @RequestMapping("list/{puid}")
-    public ResponseEntity<ProfessionalsDto> getProfessional(@PathVariable String puid) {
+    public ResponseEntity<ProfessionalsDTO> getProfessional(@PathVariable String puid) {
         return new ResponseEntity<>(professionalsService.getProfessional(puid), HttpStatus.OK);
     }
 
     @GetMapping
     @RequestMapping("list/all")
-    public ResponseEntity<List<ProfessionalsDto>> getAllProfessionals() {
+    public ResponseEntity<List<ProfessionalsDTO>> getAllProfessionals() {
         return new ResponseEntity<>(professionalsService.getAllProfessionalsView(), HttpStatus.OK);
     }
 

@@ -1,6 +1,6 @@
 package br.com.listtta.backend.model.dto.users;
 
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDto;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDTO;
 import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.enums.UserGender;
 import br.com.listtta.backend.model.enums.UserRoles;
@@ -24,5 +24,5 @@ public class UsersSignupDto {
     @NotNull private String password;
     @NotNull private UserRoles role;
     @NotNull private Address address;
-    private ProfessionalsSignupDto professionalsDto;
+    private ProfessionalsSignupDTO professionalsDto;
 }

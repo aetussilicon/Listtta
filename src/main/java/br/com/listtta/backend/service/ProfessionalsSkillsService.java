@@ -4,13 +4,13 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsSkillsDTO;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
 import org.springframework.stereotype.Service;
 
 import br.com.listtta.backend.model.dto.users.UsersSignupDto;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.filters.Filters;
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsSkillsDto;
 import br.com.listtta.backend.model.mapper.ProfessionalsSkillsMapper;
 import br.com.listtta.backend.repository.FiltersRepository;
 import br.com.listtta.backend.repository.ProfessionalsSkillsRepository;
@@ -43,7 +43,7 @@ public class ProfessionalsSkillsService {
                     if (processedSkills.add(filterId)) {
                         Optional<Filters> checkSkillInDb = filtersRepository.findById(filterId);
                         checkSkillInDb.ifPresent(filter -> {
-                            ProfessionalsSkillsDto skillsDto = new ProfessionalsSkillsDto();
+                            ProfessionalsSkillsDTO skillsDto = new ProfessionalsSkillsDTO();
                             skillsDto.setPuid(professional.getPuid());
                             skillsDto.setFilterId(filterId);
 

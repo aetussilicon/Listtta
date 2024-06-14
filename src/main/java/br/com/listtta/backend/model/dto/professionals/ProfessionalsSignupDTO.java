@@ -10,8 +10,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class ProfessionalsSignupDto {
-
+public class ProfessionalsSignupDTO {
     private long detailsId;
     private Users users;
     private String puid;

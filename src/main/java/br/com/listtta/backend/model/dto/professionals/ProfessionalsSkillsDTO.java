@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProfessionalsSkillsDto {
-
+public class ProfessionalsSkillsDTO {
     private String puid;
     private Long filterId;
 }

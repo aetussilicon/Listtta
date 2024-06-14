@@ -1,6 +1,6 @@
 package br.com.listtta.backend.model.mapper;
 
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsSkillsDto;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsSkillsDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -13,5 +13,5 @@ public interface ProfessionalsSkillsMapper {
     ProfessionalsSkillsMapper INSTANCE = Mappers.getMapper(ProfessionalsSkillsMapper.class);
 
     @Mapping(target = "skillId", ignore = true)
-    ProfessionalsSkills skillsDtoToModel (ProfessionalsSkillsDto skillsDto);
+    ProfessionalsSkills skillsDtoToModel (ProfessionalsSkillsDTO skillsDto);
 }
