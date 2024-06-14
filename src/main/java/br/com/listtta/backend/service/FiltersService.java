@@ -7,6 +7,7 @@ import br.com.listtta.backend.model.dto.filters.UpdateFilterDTO;
 import br.com.listtta.backend.model.entities.filters.Filters;
 import br.com.listtta.backend.model.mapper.FiltersMapper;
 import br.com.listtta.backend.repository.FiltersRepository;
+import br.com.listtta.backend.util.validation.Patcher;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -91,16 +92,11 @@ public class FiltersService {
         Filters checkedFilter = checkFilterInDatabaseById(filterId);
         Filters fieldsToUpdate = filtersMapper.updateFilterDtoToModel(updateFilterDto);
 
-        for (Field field : Filters.class.getDeclaredFields()) {
-            field.setAccessible(true);
-
-            try {
-                if (field.get(fieldsToUpdate) != null && !field.get(fieldsToUpdate).equals(field.get(checkedFilter))) {
-                    field.set(checkedFilter, field.get(fieldsToUpdate));
-                }
-            } catch (IllegalAccessException e) {
-                throw new UpdateFieldsException("Não foi possível atualizar o filtro");
-            }
+        try {
+            Patcher.patch(checkedFilter, fieldsToUpdate);
+            filtersRepository.save(checkedFilter);
+        } catch (IllegalAccessException e) {
+            throw new UpdateFieldsException("Não foi possível atualizar o filtro!");
         }
         return checkedFilter;
     }
