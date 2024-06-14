@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +26,15 @@ public class UsersController {
 
     @PatchMapping
     @RequestMapping("update/{puid}")
-    public ResponseEntity<Users> updateUser(@PathVariable String puid, @RequestBody @Valid UsersUpdateDTO usersUpdateDto) {
-        return new ResponseEntity<>(service.updateUser(puid, usersUpdateDto), HttpStatus.ACCEPTED);
+    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable String puid, @ModelAttribute @Valid UsersUpdateDTO usersUpdateDto) {
+        try {
+            Users updatedUser = service.updateUser(puid, usersUpdateDto);
+            return new ResponseEntity<>(responses.controllersResponse(updatedUser, null), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping

@@ -1,5 +1,10 @@
 package br.com.listtta.backend.service;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +22,10 @@ import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
 import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +45,7 @@ public class UsersService {
     private final PuidGenerator puidGenerator;
     private final FindUsersMethods findUsersMethods;
 
-//   Método de cadastro de usuários.
+    // Método de cadastro de usuários.
     @Transactional
     public Users createNewUser(UsersSignupDTO usersSignupDto) {
 
@@ -67,8 +76,8 @@ public class UsersService {
         }
         return newUser;
     }
-
-
+    
+    //Update de usuários
     @Transactional
     public Users updateUser(String puid, UsersUpdateDTO usersUpdateDto) {
         Users userToUpdate = findUsersMethods.findUsersByPuid(puid);
@@ -76,6 +85,21 @@ public class UsersService {
 
         try {
             Patcher.patch(userToUpdate, updateFields);
+
+            //Atualizar a foto de perfil, se fornecida
+            MultipartFile profilePicture = usersUpdateDto.getProfilePicture();
+            if (profilePicture != null && !profilePicture.isEmpty()) {
+                try {
+                    byte[] bytes = profilePicture.getBytes();
+
+                    userToUpdate.setProfilePicture(bytes);
+                }
+                 catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            // Salvar o usuário atualizado no repositório
             usersRepository.save(userToUpdate);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
@@ -84,7 +108,6 @@ public class UsersService {
         if (usersUpdateDto.getAddress() != null) {
             addressService.updateUserAddress(puid, usersUpdateDto);
         }
-
         return userToUpdate;
     }
 
