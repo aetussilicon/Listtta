@@ -1,18 +1,15 @@
 package br.com.listtta.backend.model.dto.professionals;
 
-import br.com.listtta.backend.model.entities.filters.Filters;
-import br.com.listtta.backend.model.enums.ProfessionalsType;
+import br.com.listtta.backend.model.dto.address.AddressDTO;
 import br.com.listtta.backend.model.enums.UserGender;
 import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
-
 @Getter
 @Setter
-public class ProfessionalsDto {
+public class ProfessionalsDTO {
 
     private String puid;
     private String fullName;
@@ -24,9 +21,6 @@ public class ProfessionalsDto {
     private UserGender userGender;
     private String taxNumber;
     private String phoneNumber;
-    private String state;
-    private String city;
-    private ProfessionalsType type;
-    private String instagramUrl;
-    private Set<Filters> skills;
+    private AddressDTO address;
+    private ProfessionalsDetailsDTO professionalsDetails;
 }
