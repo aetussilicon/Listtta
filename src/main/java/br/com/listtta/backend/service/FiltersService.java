@@ -1,6 +1,6 @@
 package br.com.listtta.backend.service;
 
-import br.com.listtta.backend.exceptions.UpdateFieldsException;
+import br.com.listtta.backend.exceptions.users.CannotUpdateUsersFieldsException;
 import br.com.listtta.backend.model.dto.filters.CreateNewFilterDTO;
 import br.com.listtta.backend.model.dto.filters.FiltersDTO;
 import br.com.listtta.backend.model.dto.filters.UpdateFilterDTO;
@@ -12,7 +12,6 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -96,7 +95,7 @@ public class FiltersService {
             Patcher.patch(checkedFilter, fieldsToUpdate);
             filtersRepository.save(checkedFilter);
         } catch (IllegalAccessException e) {
-            throw new UpdateFieldsException("Não foi possível atualizar o filtro!");
+            throw new CannotUpdateUsersFieldsException("Não foi possível atualizar o filtro!");
         }
         return checkedFilter;
     }

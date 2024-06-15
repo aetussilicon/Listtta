@@ -1,20 +1,8 @@
 package br.com.listtta.backend.service;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.sql.Blob;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
-
 import br.com.listtta.backend.model.dto.users.UsersDTO;
 import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
 import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.UserRoles;
 import br.com.listtta.backend.model.mapper.UsersMapper;
@@ -22,10 +10,14 @@ import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
 import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

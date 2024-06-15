@@ -1,6 +1,6 @@
 package br.com.listtta.backend.controller;
 
-import br.com.listtta.backend.exceptions.UpdateFieldsException;
+import br.com.listtta.backend.exceptions.users.CannotUpdateUsersFieldsException;
 import br.com.listtta.backend.model.dto.filters.CreateNewFilterDTO;
 import br.com.listtta.backend.model.dto.filters.FiltersDTO;
 import br.com.listtta.backend.model.dto.filters.UpdateFilterDTO;
@@ -40,7 +40,7 @@ public class FiltersController {
         try {
             Filters updatedFilter = service.patchFilter(filterId, updateFilterDto);
             return new ResponseEntity<>(responses.controllersResponse(updatedFilter, null), HttpStatus.OK);
-        } catch (UpdateFieldsException e) {
+        } catch (CannotUpdateUsersFieldsException e) {
             return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.INTERNAL_SERVER_ERROR);

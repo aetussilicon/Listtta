@@ -1,6 +1,6 @@
 package br.com.listtta.backend.controller;
 
-import br.com.listtta.backend.exceptions.UserNotFound;
+import br.com.listtta.backend.exceptions.users.UserNotFound;
 import br.com.listtta.backend.model.dto.users.UsersDTO;
 import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import br.com.listtta.backend.model.entities.users.Users;

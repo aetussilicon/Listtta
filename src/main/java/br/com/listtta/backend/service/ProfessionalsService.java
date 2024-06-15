@@ -1,19 +1,13 @@
 package br.com.listtta.backend.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import br.com.listtta.backend.exceptions.UserNotFound;
+import br.com.listtta.backend.exceptions.users.CannotUpdateUsersFieldsException;
+import br.com.listtta.backend.exceptions.users.UserNotFound;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDTO;
-import br.com.listtta.backend.model.entities.Professionals.ProfessionalView;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import br.com.listtta.backend.exceptions.UpdateFieldsException;
 import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
+import br.com.listtta.backend.model.entities.Professionals.ProfessionalView;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
 import br.com.listtta.backend.model.mapper.ProfessionalsViewMapper;
@@ -23,6 +17,11 @@ import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
 import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -75,7 +74,7 @@ public class ProfessionalsService {
             Patcher.patch(detailsToUpdate, updateFields);
             professionalsRepository.save(detailsToUpdate);
         } catch (IllegalAccessException e) {
-            throw new UpdateFieldsException("Não foi possível atualizar o usuário: " + e);
+            throw new CannotUpdateUsersFieldsException("Não foi possível atualizar o usuário: " + e);
         }
         return detailsToUpdate;
     }

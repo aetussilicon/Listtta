@@ -5,12 +5,10 @@ import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.sql.Blob;
 import java.sql.Types;
 import java.util.Collection;
 import java.util.Date;

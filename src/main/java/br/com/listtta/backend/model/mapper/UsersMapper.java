@@ -6,13 +6,8 @@ import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import br.com.listtta.backend.model.entities.users.Users;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 

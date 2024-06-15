@@ -1,6 +1,6 @@
 package br.com.listtta.backend.service;
 
-import br.com.listtta.backend.exceptions.UserNotFound;
+import br.com.listtta.backend.exceptions.users.UserNotFound;
 import br.com.listtta.backend.model.dto.users.UsersViewDTO;
 import br.com.listtta.backend.model.entities.users.UsersView;
 import br.com.listtta.backend.model.mapper.UsersViewMapper;

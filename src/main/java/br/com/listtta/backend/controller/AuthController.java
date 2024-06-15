@@ -1,6 +1,6 @@
 package br.com.listtta.backend.controller;
 
-import br.com.listtta.backend.exceptions.UserAlreadyInDatabaseException;
+import br.com.listtta.backend.exceptions.users.UserAlreadyInDatabaseException;
 import br.com.listtta.backend.model.dto.authentication.LoginDTO;
 import br.com.listtta.backend.model.dto.authentication.LoginResponseDTO;
 import br.com.listtta.backend.model.dto.users.UsersSignupDTO;

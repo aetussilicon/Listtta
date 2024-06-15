@@ -1,4 +1,4 @@
-package br.com.listtta.backend.exceptions;
+package br.com.listtta.backend.exceptions.users;
 
 public class UserAlreadyInDatabaseException extends RuntimeException {
 

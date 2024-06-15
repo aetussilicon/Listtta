@@ -1,22 +1,21 @@
 package br.com.listtta.backend.service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSkillsDTO;
-import br.com.listtta.backend.model.enums.ProfessionalsType;
-import org.springframework.stereotype.Service;
-
 import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.filters.Filters;
+import br.com.listtta.backend.model.enums.ProfessionalsType;
 import br.com.listtta.backend.model.mapper.ProfessionalsSkillsMapper;
 import br.com.listtta.backend.repository.FiltersRepository;
 import br.com.listtta.backend.repository.ProfessionalsSkillsRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
