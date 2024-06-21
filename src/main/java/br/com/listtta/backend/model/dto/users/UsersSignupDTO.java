@@ -1,9 +1,11 @@
 package br.com.listtta.backend.model.dto.users;
 
+import br.com.listtta.backend.model.abstracts.UsersDTOAbstract;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDTO;
 import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.enums.UserGender;
 import br.com.listtta.backend.model.enums.UserRoles;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -14,15 +16,55 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class UsersSignupDTO {
+@MappedSuperclass
+public class UsersSignupDTO extends UsersDTOAbstract {
 
     private UUID userId;
-    private String puid;
-    private Date createdDate;
-    private UserGender userGender;
-    @NotNull @Email private String email;
-    @NotNull private String password;
-    @NotNull private UserRoles role;
+
+    @Override
+    @NotNull
+    public String getEmail() {
+        return super.getEmail();
+    }
+
+    @Override
+    public void setEmail(String email) {
+      super.setEmail(email);
+    }
+
+    @Override
+    @NotNull
+    public String getPassword() {
+        return super.getPassword();
+    }
+
+    @Override
+    public void setPassword(String password) {
+        super.setPassword(password);
+    }
+
+    @Override
+    @NotNull
+    public UserGender getGender() {
+        return super.getGender();
+    }
+
+    @Override
+    public void setGender(UserGender gender) {
+        super.setGender(gender);
+    }
+
+    @Override
+    @NotNull
+    public UserRoles getRole() {
+        return super.getRole();
+    }
+
+    @Override
+    public void setRole(UserRoles role) {
+        super.setRole(role);
+    }
+
     @NotNull private Address address;
     private ProfessionalsSignupDTO professionalsDto;
 }

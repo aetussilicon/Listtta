@@ -17,12 +17,10 @@ public interface UsersMapper {
     UsersMapper INSTANCE = Mappers.getMapper(UsersMapper.class);
 
     @Mapping(target = "userId", expression = "java(UUID.randomUUID())")
-    @Mapping(target = "userTag", ignore = true)
     @Mapping(target = "fullName", ignore = true)
     @Mapping(target = "taxNumber", ignore = true)
     @Mapping(target = "phoneNumber", ignore = true)
     @Mapping(target = "whatsappContact", ignore = true)
-    @Mapping(target = "userGender", ignore = true)
     @Mapping(target = "authorities", ignore = true)
     Users usersSignupDto(UsersSignupDTO usersSignupDto);
 

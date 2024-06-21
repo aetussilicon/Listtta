@@ -31,9 +31,6 @@ public class Users implements UserDetails {
 
     private String puid;
 
-    @Column(name = "user_tag")
-    private String userTag;
-
     @Column(name = "full_name")
     private String fullName;
 
@@ -59,7 +56,7 @@ public class Users implements UserDetails {
 
     @Column(name = "user_gender")
     @Enumerated(EnumType.STRING)
-    private UserGender userGender;
+    private UserGender gender;
 
     @Enumerated(EnumType.STRING)
     private UserRoles role;
