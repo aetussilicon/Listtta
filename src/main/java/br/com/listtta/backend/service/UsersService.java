@@ -2,17 +2,13 @@ package br.com.listtta.backend.service;
 
 import br.com.listtta.backend.model.abstracts.UsersDTOAbstract;
 import br.com.listtta.backend.model.dto.address.AddressDTO;
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDetailsDTO;
 import br.com.listtta.backend.model.dto.users.UsersDTO;
 import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
 import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
-import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.UserRoles;
-import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
-import br.com.listtta.backend.model.mapper.ProfessionalsViewMapper;
 import br.com.listtta.backend.model.mapper.UsersMapper;
 import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
