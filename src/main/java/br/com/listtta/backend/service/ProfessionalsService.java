@@ -43,7 +43,7 @@ public class ProfessionalsService {
     private final Tika tika = new Tika();
 
     @Transactional
-    public ProfessionalDetails createNewProfessionalDetals(UsersSignupDTO signupDto) {
+    protected ProfessionalDetails createNewProfessionalDetals(UsersSignupDTO signupDto) {
         Users professionalUser = findUsers.findUsersByPuid(signupDto.getPuid());
     
         // Mapeando o DTO de detalhes profissionais
@@ -79,16 +79,12 @@ public class ProfessionalsService {
         return detailsToUpdate;
     }
 
-    public ProfessionalsDetailsDTO getProfessional(String puid, Users professional) {
+    protected ProfessionalsDetailsDTO getProfessional(String puid, Users professional) {
        ProfessionalDetails details = professionalsRepository.findProfessionalByUsers(professional).orElseThrow(UserNotFound::new);
        ProfessionalsDetailsDTO returnDTO = professionalsMapper.getProfessionalDetails(professional, details);
 
        returnDTO.setSkills(skillsService.getSkills(puid));
 
         return returnDTO;
-    }
-
-    public List<ProfessionalsDTO> getAllProfessionalsView() {
-        return professionalsViewMapper.listModelToDto(professionalViewRepository.findAll());
     }
 }

@@ -1,5 +1,6 @@
 package br.com.listtta.backend.util;
 
+import br.com.listtta.backend.exceptions.address.NoUserAddressException;
 import br.com.listtta.backend.exceptions.professionals.ProfessionalDetailsNotFoundException;
 import br.com.listtta.backend.exceptions.users.UserAlreadyInDatabaseException;
 import br.com.listtta.backend.exceptions.users.UserNotFound;
@@ -7,6 +8,7 @@ import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.repository.AddressRepository;
+import br.com.listtta.backend.repository.ProfessionalViewRepository;
 import br.com.listtta.backend.repository.ProfessionalsRepository;
 import br.com.listtta.backend.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,61 +24,35 @@ public class FindUsersMethods {
     private final ProfessionalsRepository professionalsRepository;
     private final AddressRepository addressRepository;
 
-    private Optional<Users> checkingUser;
-
     //Procura por usuários em geral
     //Por CPF.
-    public void findUserByTaxNumberAndThrowErro(String taxNumber) throws UserAlreadyInDatabaseException {
-        checkingUser = usersRepository.findUsersByTaxNumber(taxNumber);
-
-        if (checkingUser.isPresent()) {
-            throw new UserAlreadyInDatabaseException();
-        }
+    public Users findUserByTaxNumberAndThrowErro(String taxNumber) {
+        return usersRepository.findUsersByTaxNumber(taxNumber).orElseThrow(UserAlreadyInDatabaseException::new);
     }
 
     public void findUserByEmail(String email) {
-        checkingUser = usersRepository.findUsersByEmail(email);
-
-        if (checkingUser.isPresent()) {
-            throw new UserAlreadyInDatabaseException();
-        }
+        usersRepository.findUsersByEmail(email).orElseThrow(UserAlreadyInDatabaseException::new);
     }
 
     //Por PUID.
     public Users findUsersByPuid(String puid) {
-        checkingUser = usersRepository.findUserByPuid(puid);
-
-        if (checkingUser.isPresent()) {
-            return checkingUser.get();
-        } throw new UserNotFound();
+        return usersRepository.findUserByPuid(puid).orElseThrow(UserNotFound::new);
     }
 
     //Procura de profissionais.
     //Por usuário.
     public ProfessionalDetails findProfessionalByUser(Users users) {
-        Optional<ProfessionalDetails> checkingDetails = professionalsRepository.findProfessionalByUsers(users);
-
-        if (checkingDetails.isPresent()) {
-            return checkingDetails.get();
-        } throw new ProfessionalDetailsNotFoundException();
-
+        return professionalsRepository.findProfessionalByUsers(users).orElseThrow(ProfessionalDetailsNotFoundException::new);
     }
 
     //Por PUID
     public ProfessionalDetails findProfessionalByPuid (String puid) {
-        Optional<ProfessionalDetails> checkingDetails = professionalsRepository.findProfessionalByPuid(puid);
-
-        if (checkingDetails.isPresent()) {
-            return checkingDetails.get();
-        } throw new ProfessionalDetailsNotFoundException();
+        return professionalsRepository.findProfessionalByPuid(puid).orElseThrow(ProfessionalDetailsNotFoundException::new);
     }
 
     //Procura de endereços.
     //Por PUID
     public Address findUserAddress(String puid) {
-        Optional<Address> checkAddressInDatabase = addressRepository.findUserAddressByPuid(puid);
-        if (checkAddressInDatabase.isPresent()) {
-            return checkAddressInDatabase.get();
-        } return null;
+       return  addressRepository.findUserAddressByPuid(puid).orElseThrow(NoUserAddressException::new);
     }
 }

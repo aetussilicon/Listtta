@@ -153,8 +153,4 @@ public class UsersService {
         }
         return returnDTO;
     }
-
-    public List<UsersDTO> getAllUsers() {
-        return mapper.listModelToDto(usersRepository.findAll());
-    }
 }

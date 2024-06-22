@@ -23,7 +23,6 @@ import java.util.Map;
 @RequestMapping("users")
 @RequiredArgsConstructor
 public class UsersController {
-
     private final UsersService service;
     private final ControllersResponse responses;
 
@@ -76,11 +75,4 @@ public class UsersController {
             return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @GetMapping
-    @RequestMapping("list/all")
-    public ResponseEntity<List<UsersDTO>> getAllUsers() {
-        return new ResponseEntity<>(service.getAllUsers(), HttpStatus.OK);
-    }
-
 }
