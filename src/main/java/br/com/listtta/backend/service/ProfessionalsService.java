@@ -2,7 +2,6 @@ package br.com.listtta.backend.service;
 
 import br.com.listtta.backend.exceptions.users.CannotUpdateUsersFieldsException;
 import br.com.listtta.backend.exceptions.users.UserNotFound;
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDetailsDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDTO;
@@ -10,8 +9,6 @@ import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
-import br.com.listtta.backend.model.mapper.ProfessionalsViewMapper;
-import br.com.listtta.backend.repository.ProfessionalViewRepository;
 import br.com.listtta.backend.repository.ProfessionalsRepository;
 import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
@@ -29,11 +26,9 @@ public class ProfessionalsService {
     //Repositórios
     private final ProfessionalsRepository professionalsRepository;
     private final UsersRepository usersRepository;
-    private final ProfessionalViewRepository professionalViewRepository;
 
     //Mappers
     private final ProfessionalsMapper professionalsMapper;
-    private final ProfessionalsViewMapper professionalsViewMapper;
 
     //Services
     private final ProfessionalsSkillsService skillsService;

@@ -8,13 +8,10 @@ import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.repository.AddressRepository;
-import br.com.listtta.backend.repository.ProfessionalViewRepository;
 import br.com.listtta.backend.repository.ProfessionalsRepository;
 import br.com.listtta.backend.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
