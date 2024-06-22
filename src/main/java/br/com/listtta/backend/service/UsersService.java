@@ -1,10 +1,17 @@
 package br.com.listtta.backend.service;
 
+import br.com.listtta.backend.model.abstracts.UsersDTOAbstract;
+import br.com.listtta.backend.model.dto.address.AddressDTO;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsDetailsDTO;
 import br.com.listtta.backend.model.dto.users.UsersDTO;
 import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
 import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
+import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
+import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.UserRoles;
+import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
+import br.com.listtta.backend.model.mapper.ProfessionalsViewMapper;
 import br.com.listtta.backend.model.mapper.UsersMapper;
 import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
@@ -105,6 +112,36 @@ public class UsersService {
 
     public UsersDTO getUser(String userTag) {
         return mapper.userModelToDto(findUsersMethods.findUsersByPuid(userTag));
+    public UsersDTOAbstract getUser(String puid) {
+        Users checkedUser = findUsersMethods.findUsersByPuid(puid);
+        Address userAddressFind = findUsersMethods.findUserAddress(puid);
+        UsersDTOAbstract returnDTO = null;
+
+        switch (checkedUser.getRole()) {
+            case USER:
+                AddressDTO userAddress = new AddressDTO();
+                userAddress.setState(userAddressFind.getState());
+                userAddress.setCity(userAddressFind.getCity());
+
+                UsersDTO userReturn = mapper.userModelToDto(checkedUser);
+                userReturn.setAddress(userAddress);
+
+                 returnDTO = userReturn;
+                break;
+            case PROFESSIONAL:
+               AddressDTO proAddress = new AddressDTO();
+               proAddress.setState(userAddressFind.getState());
+               proAddress.setCity(userAddressFind.getCity());
+
+               ProfessionalsDetailsDTO professionalsDTO = professionalsService.getProfessional(puid, checkedUser);
+               professionalsDTO.setAddress(proAddress);
+
+               returnDTO = professionalsDTO;
+               break;
+            default:
+                throw new RuntimeException();
+        }
+        return returnDTO;
     }
 
     public List<UsersDTO> getAllUsers() {

@@ -55,4 +55,8 @@ public class ProfessionalsSkillsService {
             }
         } signupDto.getProfessionalsDto().setSkills(null);
     }    
+    public Set<Long> getSkills(String puid) {
+        Set<Long> skills = skillsRepository.findSkillsByPuid(puid);
+        return skills;
+    }
 }

@@ -64,8 +64,8 @@ public class UsersController {
     @RequestMapping("list/{puid}")
     public ResponseEntity<Map<String, Object>> getUser(@PathVariable String puid) {
         try {
-            UsersDTO gettingUser = service.getUser(puid);
-            return new ResponseEntity<>(responses.controllersResponse(gettingUser, null), HttpStatus.OK);
+            UsersDTOAbstract user = service.getUser(puid);
+            return new ResponseEntity<>(responses.controllersResponse(user, null), HttpStatus.OK);
         } catch (UserNotFound e) {
             return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
