@@ -24,4 +24,6 @@ public abstract class UsersDTOAbstract {
    private UserGender gender;
    private UserRoles role;
    private AddressDTO address;
+   private String profilePictureMimeType;
+   private String profilePicture;
 }

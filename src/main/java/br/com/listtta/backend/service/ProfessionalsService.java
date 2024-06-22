@@ -3,11 +3,11 @@ package br.com.listtta.backend.service;
 import br.com.listtta.backend.exceptions.users.CannotUpdateUsersFieldsException;
 import br.com.listtta.backend.exceptions.users.UserNotFound;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDTO;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsDetailsDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDTO;
 import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
-import br.com.listtta.backend.model.entities.Professionals.ProfessionalView;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
 import br.com.listtta.backend.model.mapper.ProfessionalsViewMapper;
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +40,7 @@ public class ProfessionalsService {
 
     //Validações
     private final FindUsersMethods findUsers;
+    private final Tika tika = new Tika();
 
     @Transactional
     public ProfessionalDetails createNewProfessionalDetals(UsersSignupDTO signupDto) {
@@ -79,11 +79,13 @@ public class ProfessionalsService {
         return detailsToUpdate;
     }
 
-    public ProfessionalsDTO getProfessional(String puid) {
-        Optional<ProfessionalView> checkingProfessional = professionalViewRepository.findProfessionalViewByPuid(puid);
-        if (checkingProfessional.isPresent()) {
-            return professionalsViewMapper.professionalModelToDto(checkingProfessional.get());
-        } throw new UserNotFound();
+    public ProfessionalsDetailsDTO getProfessional(String puid, Users professional) {
+       ProfessionalDetails details = professionalsRepository.findProfessionalByUsers(professional).orElseThrow(UserNotFound::new);
+       ProfessionalsDetailsDTO returnDTO = professionalsMapper.getProfessionalDetails(professional, details);
+
+       returnDTO.setSkills(skillsService.getSkills(puid));
+
+        return returnDTO;
     }
 
     public List<ProfessionalsDTO> getAllProfessionalsView() {

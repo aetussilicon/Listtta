@@ -1,6 +1,7 @@
 package br.com.listtta.backend.controller;
 
 import br.com.listtta.backend.exceptions.users.UserNotFound;
+import br.com.listtta.backend.model.abstracts.UsersDTOAbstract;
 import br.com.listtta.backend.model.dto.users.UsersDTO;
 import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import br.com.listtta.backend.model.entities.users.Users;
@@ -37,17 +38,20 @@ public class UsersController {
         Map<String, Object> fileGetResponse = new HashMap<>();
 
         MultipartFile profilePicture = usersUpdateDto.getProfilePicture();
-        if (profilePicture.getSize() > MAX_FILE_SIZE) {
-            fileGetResponse.put("Status", "Error");
-            fileGetResponse.put("Data", "A imagem deve ter até 5MB.");
-            return new ResponseEntity<>(fileGetResponse, HttpStatus.BAD_REQUEST);
-        }
 
-        String fileType = profilePicture.getContentType();
-        if (!ALLOWED_MIME_TYPE.contains(fileType)) {
-            fileGetResponse.put("Status", "Error");
-            fileGetResponse.put("Data", "Imagem devem ser dos tipos PNG, JPEG ou JPG");
-            return new ResponseEntity<>(fileGetResponse, HttpStatus.BAD_REQUEST);
+        if (profilePicture != null) {
+            if (profilePicture.getSize() > MAX_FILE_SIZE) {
+                fileGetResponse.put("Status", "Error");
+                fileGetResponse.put("Data", "A imagem deve ter até 5MB.");
+                return new ResponseEntity<>(fileGetResponse, HttpStatus.BAD_REQUEST);
+            }
+
+            String fileType = profilePicture.getContentType();
+            if (!ALLOWED_MIME_TYPE.contains(fileType)) {
+                fileGetResponse.put("Status", "Error");
+                fileGetResponse.put("Data", "Imagem devem ser dos tipos PNG, JPEG ou JPG");
+                return new ResponseEntity<>(fileGetResponse, HttpStatus.BAD_REQUEST);
+            }
         }
 
         try {

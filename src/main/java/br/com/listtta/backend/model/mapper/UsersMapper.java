@@ -22,6 +22,7 @@ public interface UsersMapper {
     @Mapping(target = "phoneNumber", ignore = true)
     @Mapping(target = "whatsappContact", ignore = true)
     @Mapping(target = "authorities", ignore = true)
+    @Mapping(target = "profilePicture", ignore = true)
     Users usersSignupDto(UsersSignupDTO usersSignupDto);
 
     @Mapping(target = "userId", ignore = true)
@@ -33,7 +34,9 @@ public interface UsersMapper {
     @Mapping(target = "profilePicture", ignore = true)
     Users updateDtoToModel(UsersUpdateDTO userUpdateDto);
 
+    @Mapping(target = "profilePicture", ignore = true)
     UsersDTO userModelToDto(Users users);
 
+    @Mapping(target = "profilePicture", ignore = true)
     List<UsersDTO> listModelToDto(List<Users> usersList);
 }

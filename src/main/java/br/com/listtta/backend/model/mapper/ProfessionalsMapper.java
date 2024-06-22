@@ -24,5 +24,6 @@ public interface ProfessionalsMapper {
     ProfessionalDetails updateProfessionalDtoToModel(ProfessionalsUpdateDTO professionalsUpdateDto);
 
     @Mapping(source = "details.puid", target = "puid")
+    @Mapping(target = "profilePicture", ignore = true)
     ProfessionalsDetailsDTO getProfessionalDetails(Users professional, ProfessionalDetails details);
 }
