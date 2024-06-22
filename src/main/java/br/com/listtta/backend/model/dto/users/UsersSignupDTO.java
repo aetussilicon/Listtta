@@ -65,6 +65,6 @@ public class UsersSignupDTO extends UsersDTOAbstract {
         super.setRole(role);
     }
 
-    @NotNull private Address address;
+//    @NotNull private Address address;
     private ProfessionalsSignupDTO professionalsDto;
 }
