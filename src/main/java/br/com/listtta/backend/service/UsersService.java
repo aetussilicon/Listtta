@@ -77,33 +77,24 @@ public class UsersService {
     
     //Update de usuários
     @Transactional
-    public Users updateUser(String puid, UsersUpdateDTO usersUpdateDto) {
+    public Users updateUserInfo(String puid, UsersUpdateDTO usersUpdateDto) {
         Users userToUpdate = findUsersMethods.findUsersByPuid(puid);
         Users updateFields = mapper.updateDtoToModel(usersUpdateDto);
+
+        if (usersUpdateDto.getTaxNumber() != null) {
+            updateFields.setTaxNumber(CPFValidation.cpfValidation(userToUpdate.getTaxNumber()));
+        }
 
         try {
             Patcher.patch(userToUpdate, updateFields);
 
-            //Atualizar a foto de perfil, se fornecida
-            MultipartFile profilePicture = usersUpdateDto.getProfilePicture();
-            if (profilePicture != null && !profilePicture.isEmpty()) {
-                try {
-                    byte[] bytes = profilePicture.getBytes();
-
-                    userToUpdate.setProfilePicture(bytes);
-                }
-                 catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            // Salvar o usuário atualizado no repositóriupdateUserInfoo
+            // Salvar o usuário atualizado no repositório
             usersRepository.save(userToUpdate);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
 
-        if (userToUpdate.getRole() != UserRoles.USER) {
+        if (userToUpdate.getRole() == UserRoles.PROFESSIONAL) {
             professionalsService.updateProfessionalDetails(puid, usersUpdateDto);
         }
 

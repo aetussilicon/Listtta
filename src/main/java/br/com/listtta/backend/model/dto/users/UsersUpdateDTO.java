@@ -1,5 +1,6 @@
 package br.com.listtta.backend.model.dto.users;
 
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDTO;
 import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.enums.UserGender;
 import jakarta.validation.constraints.Email;
@@ -10,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 @Setter
 public class UsersUpdateDTO {
-    private String userTag;
     private String fullName;
     private UserGender userGender;
     private String taxNumber;
@@ -19,4 +19,5 @@ public class UsersUpdateDTO {
     private String phoneNumber;
     private String whatsappContact;
     private Address address;
+    private ProfessionalsUpdateDTO professionalsDetails;
 }

@@ -6,18 +6,16 @@ import br.com.listtta.backend.model.dto.professionals.ProfessionalsDetailsDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDTO;
 import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
+import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
 import br.com.listtta.backend.repository.ProfessionalsRepository;
-import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
 import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +23,6 @@ public class ProfessionalsService {
 
     //Repositórios
     private final ProfessionalsRepository professionalsRepository;
-    private final UsersRepository usersRepository;
 
     //Mappers
     private final ProfessionalsMapper professionalsMapper;
@@ -35,10 +32,9 @@ public class ProfessionalsService {
 
     //Validações
     private final FindUsersMethods findUsers;
-    private final Tika tika = new Tika();
 
     @Transactional
-    protected ProfessionalDetails createNewProfessionalDetals(UsersSignupDTO signupDto) {
+    public void createNewProfessionalDetails(UsersSignupDTO signupDto) {
         Users professionalUser = findUsers.findUsersByPuid(signupDto.getPuid());
     
         // Mapeando o DTO de detalhes profissionais
@@ -52,26 +48,36 @@ public class ProfessionalsService {
         ProfessionalDetails professional = professionalsMapper.professionalsDetailsDtoToModel(professionalDetails);
     
         // Salvando os detalhes profissionais no repositório
-        ProfessionalDetails savedProfessional = professionalsRepository.save(professional);
+        professionalsRepository.save(professional);
         
         skillsService.attachedProfessionalsSkills(signupDto);
-
-        return savedProfessional;
     }
-    
+
     //Método não salvando no banco de dados
-    public ProfessionalDetails updateProfessionalDetails(String userTag, ProfessionalsUpdateDTO professionalsUpdateDto) {
-        Users professionalUser = findUsers.findUsersByPuid(userTag);
+    @Transactional
+    public Users updateProfessionalDetails(String puid, UsersUpdateDTO updateDTO) {
+        Users professionalUser = findUsers.findUsersByPuid(puid);
         ProfessionalDetails detailsToUpdate = findUsers.findProfessionalByUser(professionalUser);
-        ProfessionalDetails updateFields = professionalsMapper.updateProfessionalDtoToModel(professionalsUpdateDto);
+
+        ProfessionalsUpdateDTO updateFieldsDTO = new ProfessionalsUpdateDTO();
+        updateFieldsDTO.setType(updateDTO.getProfessionalsDetails().getType());
+        updateFieldsDTO.setInstagramUrl(updateDTO.getProfessionalsDetails().getInstagramUrl());
+
+        ProfessionalDetails updateFields = professionalsMapper.updateProfessionalDtoToModel(updateFieldsDTO);
 
         try {
             Patcher.patch(detailsToUpdate, updateFields);
             professionalsRepository.save(detailsToUpdate);
+
+            if (updateDTO.getProfessionalsDetails().getSkills() != null) {
+                skillsService.updateProfessionalSkills(puid, updateDTO.getProfessionalsDetails().getSkills());
+            }
+
         } catch (IllegalAccessException e) {
             throw new CannotUpdateUsersFieldsException("Não foi possível atualizar o usuário: " + e);
         }
-        return detailsToUpdate;
+
+        return professionalUser;
     }
 
     protected ProfessionalsDetailsDTO getProfessional(String puid, Users professional) {

@@ -1,7 +1,9 @@
 package br.com.listtta.backend.service;
 
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSkillsDTO;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDTO;
 import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
+import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.filters.Filters;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
@@ -54,7 +56,35 @@ public class ProfessionalsSkillsService {
                 throw new RuntimeException();
             }
         } signupDto.getProfessionalsDto().setSkills(null);
-    }    
+    }
+
+    public void updateProfessionalSkills(String puid, Set<Long> newSkills) {
+        ProfessionalDetails professional = findMethods.findProfessionalByPuid(puid);
+
+        if (professional.getType() == ProfessionalsType.TATTOO){
+            Set<Long> existingSkills = skillsRepository.findSkillsByPuid(puid);
+
+            existingSkills.stream()
+                    .filter(skillId -> !newSkills.contains(skillId))
+                    .forEach(skillId -> {
+                        skillsRepository.deleteByPuidAndFilterId(puid, skillId);
+                    });
+
+            for (Long filterId : newSkills) {
+                if (!existingSkills.contains(filterId)) {
+                    Optional<Filters> checkSkillInDB = filtersRepository.findById(filterId);
+                    checkSkillInDB.ifPresent(filter -> {
+                        ProfessionalsSkillsDTO skillsDTO = new ProfessionalsSkillsDTO();
+                        skillsDTO.setPuid(professional.getPuid());
+                        skillsDTO.setFilterId(filterId);
+                        skillsRepository.save(skillsMapper.skillsDtoToModel(skillsDTO));
+                    });
+                }
+            }
+        } else {
+            throw new RuntimeException("Apenas tatuadores possuem especialidades");
+        }
+    }
     public Set<Long> getSkills(String puid) {
         Set<Long> skills = skillsRepository.findSkillsByPuid(puid);
         return skills;
