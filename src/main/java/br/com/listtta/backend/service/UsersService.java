@@ -1,5 +1,7 @@
 package br.com.listtta.backend.service;
 
+import br.com.listtta.backend.exceptions.FileToBigException;
+import br.com.listtta.backend.exceptions.MimeTypeNotAllowed;
 import br.com.listtta.backend.model.abstracts.UsersDTOAbstract;
 import br.com.listtta.backend.model.dto.address.AddressDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDetailsDTO;
@@ -12,6 +14,8 @@ import br.com.listtta.backend.model.enums.UserRoles;
 import br.com.listtta.backend.model.mapper.UsersMapper;
 import br.com.listtta.backend.repository.UsersRepository;
 import br.com.listtta.backend.util.FindUsersMethods;
+import br.com.listtta.backend.util.validation.CPFValidatorService;
+import br.com.listtta.backend.util.validation.ControllersResponse;
 import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
 import org.apache.tika.Tika;
@@ -21,9 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +44,10 @@ public class UsersService {
     //Métodos extras
     private final PuidGenerator puidGenerator;
     private final FindUsersMethods findUsersMethods;
+    private final CPFValidatorService CPFValidation;
+
+    private static final long MAX_FILE_SIZE = 5 * 1024 * 1024;
+    private static final List<String> ALLOWED_MIME_TYPE = Arrays.asList("image/png", "image/jpeg", "image/jpg");
 
     // Método de cadastro de usuários.
     @Transactional
@@ -70,11 +76,11 @@ public class UsersService {
         addressService.createNewUserAddress(usersSignupDto);
 
         if (usersSignupDto.getRole() == UserRoles.PROFESSIONAL) {
-            professionalsService.createNewProfessionalDetals(usersSignupDto);
+            professionalsService.createNewProfessionalDetails(usersSignupDto);
         }
         return newUser;
     }
-    
+
     //Update de usuários
     @Transactional
     public Users updateUserInfo(String puid, UsersUpdateDTO usersUpdateDto) {
@@ -104,6 +110,30 @@ public class UsersService {
         return userToUpdate;
     }
 
+    @Transactional
+    public Users updateUserProfilePicture(String puid, UsersUpdateDTO updateDTO) {
+        Users userToUpdate = findUsersMethods.findUsersByPuid(puid);
+        MultipartFile profilePicture = updateDTO.getProfilePicture();
+        String fileType = profilePicture.getContentType();
+
+        if (profilePicture != null && !profilePicture.isEmpty()) {
+            if (profilePicture.getSize() > MAX_FILE_SIZE) {
+                throw new FileToBigException();
+            } else if (!ALLOWED_MIME_TYPE.contains(fileType)) {
+                throw new MimeTypeNotAllowed(fileType);
+            }
+
+            try {
+                byte[] bytes = profilePicture.getBytes();
+                userToUpdate.setProfilePicture(bytes);
+                usersRepository.save(userToUpdate);
+            } catch (IOException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        return userToUpdate;
+    }
+
     public UsersDTOAbstract getUser(String puid) {
         Tika tika = new Tika();
 
@@ -125,20 +155,20 @@ public class UsersService {
                             .encodeToString(checkedUser.getProfilePicture()));
                     userReturn.setProfilePictureMimeType(tika.detect(checkedUser.getProfilePicture()));
                 }
-                 returnDTO = userReturn;
+                returnDTO = userReturn;
                 break;
             case PROFESSIONAL:
-               ProfessionalsDetailsDTO professionalsDTO = professionalsService.getProfessional(puid, checkedUser);
-               professionalsDTO.setAddress(userAddress);
+                ProfessionalsDetailsDTO professionalsDTO = professionalsService.getProfessional(puid, checkedUser);
+                professionalsDTO.setAddress(userAddress);
 
-               if (checkedUser.getProfilePicture() != null) {
-                   professionalsDTO.setProfilePicture(Base64.getEncoder()
-                           .encodeToString(checkedUser.getProfilePicture()));
-                   professionalsDTO.setProfilePictureMimeType(tika.detect(checkedUser.getProfilePicture()));
-               }
+                if (checkedUser.getProfilePicture() != null) {
+                    professionalsDTO.setProfilePicture(Base64.getEncoder()
+                            .encodeToString(checkedUser.getProfilePicture()));
+                    professionalsDTO.setProfilePictureMimeType(tika.detect(checkedUser.getProfilePicture()));
+                }
 
-               returnDTO = professionalsDTO;
-               break;
+                returnDTO = professionalsDTO;
+                break;
             default:
                 throw new RuntimeException();
         }
