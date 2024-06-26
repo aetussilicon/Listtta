@@ -19,6 +19,7 @@ import br.com.listtta.backend.util.validation.ControllersResponse;
 import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
 import org.apache.tika.Tika;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,9 +84,10 @@ public class UsersService {
 
     //Update de usuários
     @Transactional
-    public Users updateUserInfo(String puid, UsersUpdateDTO usersUpdateDto) {
+    public UsersDTOAbstract updateUserInfo(String puid, UsersUpdateDTO usersUpdateDto) {
         Users userToUpdate = findUsersMethods.findUsersByPuid(puid);
         Users updateFields = mapper.updateDtoToModel(usersUpdateDto);
+        UsersDTOAbstract returnDTO = null;
 
         if (usersUpdateDto.getTaxNumber() != null) {
             updateFields.setTaxNumber(CPFValidation.cpfValidation(userToUpdate.getTaxNumber()));
@@ -100,14 +102,26 @@ public class UsersService {
             throw new RuntimeException(e);
         }
 
-        if (userToUpdate.getRole() == UserRoles.PROFESSIONAL) {
-            professionalsService.updateProfessionalDetails(puid, usersUpdateDto);
-        }
-
         if (usersUpdateDto.getAddress() != null) {
             addressService.updateUserAddress(puid, usersUpdateDto);
         }
-        return userToUpdate;
+
+        if (userToUpdate.getRole() == UserRoles.USER) {
+            returnDTO = mapper.userModelToDto(userToUpdate);
+        } else if (userToUpdate.getRole() == UserRoles.PROFESSIONAL && usersUpdateDto.getProfessionalsDetails() != null) {
+            returnDTO = professionalsService.updateProfessionalDetails(puid, usersUpdateDto);
+        } else if (usersUpdateDto.getProfessionalsDetails() == null) {
+            returnDTO = professionalsService.getProfessional(puid, userToUpdate);
+        }
+
+//        switch (userToUpdate.getRole()) {
+//            case USER:
+//                break;
+//            case PROFESSIONAL:
+//
+//                break;
+//        }
+        return returnDTO;
     }
 
     @Transactional
