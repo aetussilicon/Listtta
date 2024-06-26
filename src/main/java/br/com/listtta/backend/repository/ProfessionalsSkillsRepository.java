@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public interface ProfessionalsSkillsRepository extends JpaRepository<ProfessionalsSkills, UUID>{
-    @Query("SELECT s.skillId FROM ProfessionalsSkills s WHERE s.puid = :puid")
+    @Query("SELECT s.filterId FROM ProfessionalsSkills s WHERE s.puid = :puid")
     Set<Long> findSkillsByPuid(@Param("puid") String puid);
 
     @Modifying

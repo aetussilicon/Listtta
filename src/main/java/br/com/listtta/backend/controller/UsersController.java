@@ -6,6 +6,7 @@ import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.service.UsersService;
 import br.com.listtta.backend.util.validation.ControllersResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +21,11 @@ public class UsersController {
     private final UsersService service;
     private final ControllersResponse responses;
 
-    @PatchMapping("update/{puid}")
-    public ResponseEntity<Map<String, Object>> updateUserInfo(@PathVariable String puid, @RequestBody UsersUpdateDTO updateDTO) {
+    @PatchMapping
+    @RequestMapping("update/{puid}")
+    public ResponseEntity<Map<String, Object>> updateUserInfo(@PathVariable String puid, @RequestBody @Valid UsersUpdateDTO updateDTO) {
         try {
-            Users updateUser = service.updateUserInfo(puid, updateDTO);
+            UsersDTOAbstract updateUser = service.updateUserInfo(puid, updateDTO);
             return new ResponseEntity<>(responses.controllersResponse(updateUser, null), HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.BAD_REQUEST);

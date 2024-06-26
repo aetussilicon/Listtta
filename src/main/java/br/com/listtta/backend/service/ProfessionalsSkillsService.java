@@ -64,11 +64,15 @@ public class ProfessionalsSkillsService {
         if (professional.getType() == ProfessionalsType.TATTOO){
             Set<Long> existingSkills = skillsRepository.findSkillsByPuid(puid);
 
-            existingSkills.stream()
-                    .filter(skillId -> !newSkills.contains(skillId))
-                    .forEach(skillId -> {
-                        skillsRepository.deleteByPuidAndFilterId(puid, skillId);
-                    });
+            int i;
+            for (i = 0; i <= 5 ; i++) {
+                existingSkills.forEach(skillId -> skillsRepository.deleteByPuidAndFilterId(puid, skillId));
+            }
+//            existingSkills.stream()
+//                    .filter(skillId -> !newSkills.contains(skillId))
+//                    .forEach(skillId -> {
+//                        skillsRepository.deleteByPuidAndFilterId(puid, skillId);
+//                    });
 
             for (Long filterId : newSkills) {
                 if (!existingSkills.contains(filterId)) {

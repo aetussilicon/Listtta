@@ -55,7 +55,7 @@ public class ProfessionalsService {
 
     //Método não salvando no banco de dados
     @Transactional
-    public Users updateProfessionalDetails(String puid, UsersUpdateDTO updateDTO) {
+    public ProfessionalsDetailsDTO updateProfessionalDetails(String puid, UsersUpdateDTO updateDTO) {
         Users professionalUser = findUsers.findUsersByPuid(puid);
         ProfessionalDetails detailsToUpdate = findUsers.findProfessionalByUser(professionalUser);
 
@@ -77,7 +77,10 @@ public class ProfessionalsService {
             throw new CannotUpdateUsersFieldsException("Não foi possível atualizar o usuário: " + e);
         }
 
-        return professionalUser;
+        ProfessionalsDetailsDTO returnDTO = professionalsMapper.getProfessionalDetails(professionalUser, detailsToUpdate);
+        returnDTO.setSkills(skillsService.getSkills(puid));
+
+        return returnDTO;
     }
 
     protected ProfessionalsDetailsDTO getProfessional(String puid, Users professional) {
