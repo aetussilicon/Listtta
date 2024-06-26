@@ -1,5 +1,6 @@
 package br.com.listtta.backend.service;
 
+import br.com.listtta.backend.exceptions.address.CannotSaveAddressException;
 import br.com.listtta.backend.model.dto.address.NewUserAddressDTO;
 import br.com.listtta.backend.model.dto.address.UpdateUserAddressDTO;
 import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
@@ -23,28 +24,24 @@ public class AddressService {
 
     private final AddressRepository addressRepo;
     private final AddressMapper addressMapper;
-    private final UsersRepository usersRepo;
     private final FindUsersMethods findUsers;
 
     @Transactional
-    public Address createNewUserAddress(UsersSignupDTO userDto) {
-        Optional<Users> checkRecentUser = usersRepo.findUserByPuid(userDto.getPuid());
-        if (checkRecentUser.isPresent()) {
-            NewUserAddressDTO userAddressDto = new NewUserAddressDTO();
-            Users user = checkRecentUser.get();
-            userAddressDto.setUsers(user);
+    public void createNewUserAddress(UsersSignupDTO userDto) {
+        Users newUser = findUsers.findUsersByPuid(userDto.getPuid());
+        try {
+            NewUserAddressDTO userAddressDto = userDto.getAddressDto();
+            userAddressDto.setUsers(newUser);
             userAddressDto.setPuid(userDto.getPuid());
-            userAddressDto.setState(userDto.getAddress().getState());
-            userAddressDto.setCity(userDto.getAddress().getCity());
 
-            return addressRepo.save(addressMapper.newUserAddressDtoToModel(userAddressDto));
-        } else {
-            throw new RuntimeException();
+            addressRepo.save(addressMapper.newUserAddressDtoToModel(userAddressDto));
+        } catch (RuntimeException e) {
+            throw new CannotSaveAddressException();
         }
 
     }
 
-    public Address updateUserAddress(String puid, UsersUpdateDTO updateDto) {
+    public void updateUserAddress(String puid, UsersUpdateDTO updateDto) {
         Address checkInDB = findUsers.findUserAddress(puid);
 
         UpdateUserAddressDTO newDto = new UpdateUserAddressDTO();
@@ -58,7 +55,6 @@ public class AddressService {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e.fillInStackTrace());
         }
-        return checkInDB;
     }
 
 }
