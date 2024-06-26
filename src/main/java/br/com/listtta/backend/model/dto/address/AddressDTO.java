@@ -1,5 +1,6 @@
 package br.com.listtta.backend.model.dto.address;
 
+import br.com.listtta.backend.model.enums.CitiesZone;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,4 +9,9 @@ import lombok.Setter;
 public class AddressDTO {
     private String state;
     private String city;
+    private CitiesZone cityZone;
+    private String district;
+    private String street;
+    private String complement;
+    private String zipCode;
 }

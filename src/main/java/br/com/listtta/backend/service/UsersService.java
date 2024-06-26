@@ -55,7 +55,7 @@ public class UsersService {
     public Users createNewUser(UsersSignupDTO usersSignupDto) {
 
         //Checar se já existe usuário com base no email.
-        findUsersMethods.findUserByEmail(usersSignupDto.getEmail());
+        findUsersMethods.verifyInUserAlredyExists(usersSignupDto.getEmail());
 
         if (usersSignupDto.getRole() == UserRoles.USER) {
             usersSignupDto.setPuid(puidGenerator.puidGenerator(null));
@@ -114,13 +114,6 @@ public class UsersService {
             returnDTO = professionalsService.getProfessional(puid, userToUpdate);
         }
 
-//        switch (userToUpdate.getRole()) {
-//            case USER:
-//                break;
-//            case PROFESSIONAL:
-//
-//                break;
-//        }
         return returnDTO;
     }
 

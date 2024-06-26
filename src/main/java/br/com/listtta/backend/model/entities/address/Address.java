@@ -31,7 +31,7 @@ public class Address {
     private CitiesZone cityZone;
     private String district;
     private String street;
-    private String number;
+//    private int number;
     private String complement;
 
     @Column(name = "zip_code")

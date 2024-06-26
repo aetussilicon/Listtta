@@ -13,6 +13,8 @@ import br.com.listtta.backend.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class FindUsersMethods {
@@ -25,6 +27,13 @@ public class FindUsersMethods {
     //Por CPF.
     public Users findUserByTaxNumberAndThrowErro(String taxNumber) {
         return usersRepository.findUsersByTaxNumber(taxNumber).orElseThrow(UserAlreadyInDatabaseException::new);
+    }
+
+    public void verifyInUserAlredyExists(String email) {
+        Optional<Users> verifyUser = usersRepository.findUsersByEmail(email);
+        if (verifyUser.isPresent()) {
+            throw new UserAlreadyInDatabaseException();
+        }
     }
 
     public void findUserByEmail(String email) {
