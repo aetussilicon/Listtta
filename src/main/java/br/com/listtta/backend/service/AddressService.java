@@ -23,7 +23,7 @@ import java.util.Optional;
 public class AddressService {
 
     private final AddressRepository addressRepo;
-    private final AddressMapper addressMapper;
+    private final AddressMapper mapper;
     private final FindUsersMethods findUsers;
 
     @Transactional
@@ -34,27 +34,23 @@ public class AddressService {
             userAddressDto.setUsers(newUser);
             userAddressDto.setPuid(userDto.getPuid());
 
-            addressRepo.save(addressMapper.newUserAddressDtoToModel(userAddressDto));
+            addressRepo.save(mapper.newUserAddressDtoToModel(userAddressDto));
         } catch (RuntimeException e) {
             throw new CannotSaveAddressException();
         }
 
     }
 
-    public void updateUserAddress(String puid, UsersUpdateDTO updateDto) {
+    @Transactional
+    public void updateUserAddress(String puid, UsersUpdateDTO requestDTO) {
         Address checkInDB = findUsers.findUserAddress(puid);
+        Address updateDTO = mapper.updateUserAddressDtoToModel(requestDTO.getAddress());
 
-        UpdateUserAddressDTO newDto = new UpdateUserAddressDTO();
-        newDto.setState(updateDto.getAddress().getState());
-        newDto.setCity(updateDto.getAddress().getCity());
-
-        Address updateFields = addressMapper.updateUserAddressDtoToModel(newDto);
         try {
-            Patcher.patch(checkInDB, updateFields);
+            Patcher.patch(checkInDB, updateDTO);
             addressRepo.save(checkInDB);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e.fillInStackTrace());
         }
     }
-
 }

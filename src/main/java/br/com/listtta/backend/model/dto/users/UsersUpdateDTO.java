@@ -1,7 +1,7 @@
 package br.com.listtta.backend.model.dto.users;
 
+import br.com.listtta.backend.model.dto.address.UpdateUserAddressDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDTO;
-import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.enums.UserGender;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
@@ -18,6 +18,6 @@ public class UsersUpdateDTO {
     private MultipartFile profilePicture;
     private String phoneNumber;
     private String whatsappContact;
-    private Address address;
+    private UpdateUserAddressDTO address;
     private ProfessionalsUpdateDTO professionalsDetails;
 }

@@ -28,6 +28,7 @@ public class Address {
     private String city;
 
     @Column(name = "city_zone")
+    @Enumerated(EnumType.STRING)
     private CitiesZone cityZone;
     private String district;
     private String street;
