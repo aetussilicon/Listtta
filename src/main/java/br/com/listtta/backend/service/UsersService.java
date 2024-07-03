@@ -90,7 +90,7 @@ public class UsersService {
         UsersDTOAbstract returnDTO = null;
 
         if (usersUpdateDto.getTaxNumber() != null) {
-            updateFields.setTaxNumber(CPFValidation.cpfValidation(userToUpdate.getTaxNumber()));
+            updateFields.setTaxNumber(CPFValidation.cpfValidation(usersUpdateDto.getTaxNumber()));
         }
 
         try {
@@ -149,6 +149,11 @@ public class UsersService {
         AddressDTO userAddress = new AddressDTO();
         userAddress.setState(getUserAddres.getState());
         userAddress.setCity(getUserAddres.getCity());
+        userAddress.setCityZone(getUserAddres.getCityZone() != null ? getUserAddres.getCityZone().getCityZone() : "");
+        userAddress.setDistrict(getUserAddres.getDistrict());
+        userAddress.setStreet(getUserAddres.getStreet());
+        userAddress.setComplement(getUserAddres.getComplement());
+        userAddress.setZipCode(getUserAddres.getZipCode());
 
         UsersDTOAbstract returnDTO = null;
 

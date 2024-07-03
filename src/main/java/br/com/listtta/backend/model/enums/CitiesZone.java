@@ -4,13 +4,14 @@ import lombok.Getter;
 
 @Getter
 public enum CitiesZone {
-    ZONA_SUL("zona sul"),
-    ZONA_NORTE("zona norte"),
-    ZONA_LESTE("zona leste"),
-    ZONA_OESTE("zona oeste"),
-    CENTRO("centro");
+    ZONA_SUL("Sul"),
+    ZONA_NORTE("Norte"),
+    ZONA_LESTE("Leste"),
+    ZONA_OESTE("Oeste"),
+    CENTRO("Centro");
 
     private final String cityZone;
+
     CitiesZone(String cityZone) {
         this.cityZone = cityZone;
     }

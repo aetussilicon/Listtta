@@ -13,6 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -24,6 +31,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .cors(withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
@@ -33,20 +41,21 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 
                         //Usuários
-                        .requestMatchers(HttpMethod.POST, "/users/update/{puid}").hasRole("USER")
+                        .requestMatchers(HttpMethod.PATCH, "/users/update/{puid}").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/users/list/{puid}").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/users/list/all").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/users/update/picture/{puid}").hasRole("USER")
 
                         //Profissionais
                         .requestMatchers(HttpMethod.GET, "/professionals/list/all").permitAll()
                         .requestMatchers(HttpMethod.GET, "/professionals/list/{puid}").hasRole("PROFESSIONAL")
-                        .requestMatchers(HttpMethod.POST, "/professionals/update/{puid}").hasRole("PROFESSIONAL")
+                        .requestMatchers(HttpMethod.PATCH, "/professionals/update/{puid").hasRole("PROFESSIONAL")
 
                         //Filtros
                         .requestMatchers(HttpMethod.GET, "/filters/list/all").permitAll()
                         .requestMatchers(HttpMethod.GET, "/filters/list/{filterName}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/filters/create").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/filters/update/{filterId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/filters/update/{filterId}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/filters/delete/{filterId}").hasRole("ADMIN")
 
                         .anyRequest().authenticated()
@@ -66,4 +75,14 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }

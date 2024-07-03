@@ -9,7 +9,7 @@ import lombok.Setter;
 public class AddressDTO {
     private String state;
     private String city;
-    private CitiesZone cityZone;
+    private String cityZone;
     private String district;
     private String street;
     private String complement;
