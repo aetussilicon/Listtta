@@ -12,9 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 public class UsersUpdateDTO {
     private String fullName;
-    private UserGender userGender;
+    private UserGender gender;
     private String taxNumber;
-    @Email private String email;
+    @Email
+    private String email;
     private MultipartFile profilePicture;
     private String phoneNumber;
     private String whatsappContact;
