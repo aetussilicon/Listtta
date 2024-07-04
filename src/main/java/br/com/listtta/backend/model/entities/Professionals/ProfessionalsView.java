@@ -1,13 +1,16 @@
 package br.com.listtta.backend.model.entities.Professionals;
 
 import java.sql.Date;
+import java.util.Set;
 import java.util.UUID;
 
 import br.com.listtta.backend.model.enums.CitiesZone;
+import br.com.listtta.backend.model.enums.ProfessionalsType;
 import br.com.listtta.backend.model.enums.UserGender;
-import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -34,7 +37,8 @@ public class ProfessionalsView {
     private String fullName;
 
     @Column(name = "user_gender")
-    private String userGender;
+    @Enumerated(EnumType.STRING)
+    private UserGender gender;
 
     @Column(name = "created_date")
     private Date createdDate;
@@ -56,4 +60,12 @@ public class ProfessionalsView {
 
     @Column(name = "zip_code")
     private String zipCode;
+
+    @Column(name = "professional_type")
+    @Enumerated(EnumType.STRING)
+    private ProfessionalsType type;
+
+    @Column(name = "instagram_url")
+    private String instagramUrl;
+    private Set<Long> skills;
 }
