@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode(of = "userId")
 public class ProfessionalsView {
 
     @Id
@@ -32,22 +34,17 @@ public class ProfessionalsView {
     private String fullName;
 
     @Column(name = "user_gender")
-    private UserGender userGender;
+    private String userGender;
 
     @Column(name = "created_date")
     private Date createdDate;
     private String email;
-    private String passoword;
-
-    @Column(name = "tax_number")
-    private String taxNumber;
 
     @Column(name = "phone_number")
     private String phoneNumber;
 
     @Column(name = "whatsappContact")
     private String whatsappContact;
-    private UserRoles role;
     private String state;
     private String city;
 
