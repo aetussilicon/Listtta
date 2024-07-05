@@ -1,6 +1,7 @@
 package br.com.listtta.backend.model.entities.address;
 
 import br.com.listtta.backend.model.entities.users.Users;
+import br.com.listtta.backend.model.enums.CitiesZone;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,4 +26,15 @@ public class Address {
     private String puid;
     private String state;
     private String city;
+
+    @Column(name = "city_zone")
+    @Enumerated(EnumType.STRING)
+    private CitiesZone cityZone;
+    private String district;
+    private String street;
+//    private int number;
+    private String complement;
+
+    @Column(name = "zip_code")
+    private String zipCode;
 }

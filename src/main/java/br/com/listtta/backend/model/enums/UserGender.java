@@ -9,9 +9,9 @@ public enum UserGender {
     FEMININO("feminino"),
     OUTROS("outros");
 
-    private final String userGender;
+    private final String gender;
 
-    UserGender(String userGender) {
-        this.userGender = userGender;
+    UserGender(String gender) {
+        this.gender = gender;
     }
 }

@@ -1,4 +1,4 @@
-package br.com.listtta.backend.exceptions;
+package br.com.listtta.backend.exceptions.professionals;
 
 public class ProfessionalDetailsNotFoundException extends RuntimeException{
     public ProfessionalDetailsNotFoundException() {

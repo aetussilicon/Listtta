@@ -13,7 +13,7 @@ public class UsersViewDTO {
     String userTag;
     String puid;
     String fullName;
-    UserGender userGender;
+    UserGender gender;
     Date createdDate;
     String email;
     String taxNumber;

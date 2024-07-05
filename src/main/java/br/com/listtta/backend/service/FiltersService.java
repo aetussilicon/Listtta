@@ -1,17 +1,17 @@
 package br.com.listtta.backend.service;
 
-import br.com.listtta.backend.exceptions.UpdateFieldsException;
-import br.com.listtta.backend.model.dto.filters.CreateNewFilterDto;
-import br.com.listtta.backend.model.dto.filters.FiltersDto;
-import br.com.listtta.backend.model.dto.filters.UpdateFilterDto;
+import br.com.listtta.backend.exceptions.users.CannotUpdateUsersFieldsException;
+import br.com.listtta.backend.model.dto.filters.CreateNewFilterDTO;
+import br.com.listtta.backend.model.dto.filters.FiltersDTO;
+import br.com.listtta.backend.model.dto.filters.UpdateFilterDTO;
 import br.com.listtta.backend.model.entities.filters.Filters;
 import br.com.listtta.backend.model.mapper.FiltersMapper;
 import br.com.listtta.backend.repository.FiltersRepository;
+import br.com.listtta.backend.util.validation.Patcher;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -83,33 +83,28 @@ public class FiltersService {
         throw new RuntimeException("Filtro não encontrado!");
     }
 
-    public Filters createNewFilter(CreateNewFilterDto createNewFilterDto) {
+    public Filters createNewFilter(CreateNewFilterDTO createNewFilterDto) {
         return filtersRepository.save(filtersMapper.createNewFilterDtoToModel(createNewFilterDto));
     }
 
-    public Filters patchFilter(Long filterId, UpdateFilterDto updateFilterDto) {
+    public Filters patchFilter(Long filterId, UpdateFilterDTO updateFilterDto) {
         Filters checkedFilter = checkFilterInDatabaseById(filterId);
         Filters fieldsToUpdate = filtersMapper.updateFilterDtoToModel(updateFilterDto);
 
-        for (Field field : Filters.class.getDeclaredFields()) {
-            field.setAccessible(true);
-
-            try {
-                if (field.get(fieldsToUpdate) != null && !field.get(fieldsToUpdate).equals(field.get(checkedFilter))) {
-                    field.set(checkedFilter, field.get(fieldsToUpdate));
-                }
-            } catch (IllegalAccessException e) {
-                throw new UpdateFieldsException("Não foi possível atualizar o filtro");
-            }
+        try {
+            Patcher.patch(checkedFilter, fieldsToUpdate);
+            filtersRepository.save(checkedFilter);
+        } catch (IllegalAccessException e) {
+            throw new CannotUpdateUsersFieldsException("Não foi possível atualizar o filtro!");
         }
         return checkedFilter;
     }
 
-    public FiltersDto getOneFilter(String filterName) {
+    public FiltersDTO getOneFilter(String filterName) {
         return filtersMapper.filtersModelToDto(checkFilterInDatabaseByName(filterName));
     }
 
-    public List<FiltersDto> gerAllFilters() {
+    public List<FiltersDTO> gerAllFilters() {
         return filtersMapper.listFiltersModelToDto(filtersRepository.findAll());
     }
 

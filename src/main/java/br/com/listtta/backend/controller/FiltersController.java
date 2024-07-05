@@ -1,10 +1,12 @@
 package br.com.listtta.backend.controller;
 
-import br.com.listtta.backend.model.dto.filters.CreateNewFilterDto;
-import br.com.listtta.backend.model.dto.filters.FiltersDto;
-import br.com.listtta.backend.model.dto.filters.UpdateFilterDto;
+import br.com.listtta.backend.exceptions.users.CannotUpdateUsersFieldsException;
+import br.com.listtta.backend.model.dto.filters.CreateNewFilterDTO;
+import br.com.listtta.backend.model.dto.filters.FiltersDTO;
+import br.com.listtta.backend.model.dto.filters.UpdateFilterDTO;
 import br.com.listtta.backend.model.entities.filters.Filters;
 import br.com.listtta.backend.service.FiltersService;
+import br.com.listtta.backend.util.validation.ControllersResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,37 +14,62 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("filters")
 @RequiredArgsConstructor
 public class FiltersController {
 
-    private final FiltersService filtersService;
+    private final FiltersService service;
+    private final ControllersResponse responses;
 
     @PostMapping("create")
-    public ResponseEntity<Filters> createNewFilter(@RequestBody @Valid CreateNewFilterDto createNewFilterDto) {
-        return new ResponseEntity<>(filtersService.createNewFilter(createNewFilterDto), HttpStatus.CREATED);
+    public ResponseEntity<Map<String, Object>> createNewFilter(@RequestBody @Valid CreateNewFilterDTO createNewFilterDto) {
+        try {
+            Filters newFilter = service.createNewFilter(createNewFilterDto);
+            return new ResponseEntity<>(responses.controllersResponse(newFilter, null), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @PatchMapping("update/{filterId}")
-    public ResponseEntity<Filters> patchFilter(@PathVariable Long filterId, @RequestBody UpdateFilterDto updateFilterDto) {
-        return new ResponseEntity<>(filtersService.patchFilter(filterId, updateFilterDto), HttpStatus.ACCEPTED);
+    public ResponseEntity<Map<String, Object>> patchFilter(@PathVariable Long filterId, @RequestBody UpdateFilterDTO updateFilterDto) {
+        try {
+            Filters updatedFilter = service.patchFilter(filterId, updateFilterDto);
+            return new ResponseEntity<>(responses.controllersResponse(updatedFilter, null), HttpStatus.OK);
+        } catch (CannotUpdateUsersFieldsException e) {
+            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("list/{filterName}")
-    public ResponseEntity<FiltersDto> getOneFilter(@PathVariable String filterName) {
-        return new ResponseEntity<>(filtersService.getOneFilter(filterName), HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> getOneFilter(@PathVariable String filterName) {
+        try {
+            FiltersDTO gettingFilter = service.getOneFilter(filterName);
+            return new ResponseEntity<>(responses.controllersResponse(gettingFilter, null), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("list/all")
-    public ResponseEntity<List<FiltersDto>> getAllFilters() {
-        return new ResponseEntity<>(filtersService.gerAllFilters(), HttpStatus.OK);
+    public ResponseEntity<List<FiltersDTO>> getAllFilters() {
+        return new ResponseEntity<>(service.gerAllFilters(), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{filterId}")
-    public ResponseEntity<String> deleteFilter(@PathVariable Long filterId) {
-        return new ResponseEntity<>(filtersService.deleteFilter(filterId), HttpStatus.ACCEPTED);
+    public ResponseEntity<Map<String, Object>> deleteFilter(@PathVariable Long filterId) {
+        try {
+            String deleteString = service.deleteFilter(filterId);
+            return new ResponseEntity<>(responses.controllersResponse(deleteString, null), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

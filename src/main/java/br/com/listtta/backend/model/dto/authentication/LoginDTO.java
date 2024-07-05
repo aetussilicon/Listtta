@@ -1,4 +1,4 @@
 package br.com.listtta.backend.model.dto.authentication;
 
-public record LoginDto(String email, String password) {
+public record LoginDTO(String email, String password) {
 }

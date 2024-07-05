@@ -4,10 +4,12 @@ import br.com.listtta.backend.model.enums.UserGender;
 import br.com.listtta.backend.model.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Types;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -29,15 +31,14 @@ public class Users implements UserDetails {
 
     private String puid;
 
-    @Column(name = "user_tag")
-    private String userTag;
-
     @Column(name = "full_name")
     private String fullName;
 
-//    @Lob
-//    @Column(name = "profile_picture")
-//    private byte[] profilePicture;
+    @Lob
+    @Column(name = "profile_picture")
+    @JdbcTypeCode(Types.VARBINARY)
+    private byte[] profilePicture;
+
     private String email;
     private String password;
 
@@ -55,7 +56,7 @@ public class Users implements UserDetails {
 
     @Column(name = "user_gender")
     @Enumerated(EnumType.STRING)
-    private UserGender userGender;
+    private UserGender gender;
 
     @Enumerated(EnumType.STRING)
     private UserRoles role;

@@ -6,13 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class NewUserAddressDto {
+public class NewUserAddressDTO {
 
     private Long addressId;
     private Users users;
     private String puid;
     private String state;
     private String city;
-    private String district;
-    private String postalCode;
 }

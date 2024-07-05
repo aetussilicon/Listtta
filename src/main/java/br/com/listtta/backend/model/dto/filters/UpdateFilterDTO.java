@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UpdateFilterDto {
+public class UpdateFilterDTO {
 
     private String filterName;
     private String displayName;

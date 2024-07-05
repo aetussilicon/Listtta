@@ -1,40 +1,36 @@
 package br.com.listtta.backend.controller;
 
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsDto;
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDto;
-import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
-import br.com.listtta.backend.service.ProfessionalsService;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsViewDTO;
+import br.com.listtta.backend.service.ProfessionalsService;
+import br.com.listtta.backend.util.validation.ControllersResponse;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("professionals")
 @RequiredArgsConstructor
 public class ProfessionalsController {
 
-    private final ProfessionalsService professionalsService;
-
-    @PatchMapping
-    @RequestMapping("update/{puid}")
-    public ResponseEntity<ProfessionalDetails> updateDetails(@PathVariable String puid,@RequestBody @Valid ProfessionalsUpdateDto professionalsUpdateDto) {
-        return new ResponseEntity<>(professionalsService.updateProfessionalDetails(puid, professionalsUpdateDto), HttpStatus.ACCEPTED);
-    }
-
-    @GetMapping
-    @RequestMapping("list/{puid}")
-    public ResponseEntity<ProfessionalsDto> getProfessional(@PathVariable String puid) {
-        return new ResponseEntity<>(professionalsService.getProfessional(puid), HttpStatus.OK);
-    }
+    private final ProfessionalsService service;
+    private final ControllersResponse responses;
 
     @GetMapping
     @RequestMapping("list/all")
-    public ResponseEntity<List<ProfessionalsDto>> getAllProfessionals() {
-        return new ResponseEntity<>(professionalsService.getAllProfessionalsView(), HttpStatus.OK);
-    }
+    public ResponseEntity<Map<String, Object>> listAllProfessionals() {
+        try {
+            List<ProfessionalsViewDTO> professionalsList = service.listAllProfessionals();
+            return new ResponseEntity<>(responses.controllersResponse(professionalsList, null), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.BAD_REQUEST);
+        }
 
+    }
 }

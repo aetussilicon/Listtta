@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FiltersDto {
+public class FiltersDTO {
 
     private Long filterId;
     private String filterName;

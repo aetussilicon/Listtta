@@ -1,9 +1,10 @@
 package br.com.listtta.backend.service;
 
-import br.com.listtta.backend.model.dto.address.NewUserAddressDto;
-import br.com.listtta.backend.model.dto.address.UpdateUserAddressDto;
-import br.com.listtta.backend.model.dto.users.UsersSignupDto;
-import br.com.listtta.backend.model.dto.users.UsersUpdateDto;
+import br.com.listtta.backend.exceptions.address.CannotSaveAddressException;
+import br.com.listtta.backend.model.dto.address.NewUserAddressDTO;
+import br.com.listtta.backend.model.dto.address.UpdateUserAddressDTO;
+import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
+import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.mapper.AddressMapper;
@@ -22,43 +23,34 @@ import java.util.Optional;
 public class AddressService {
 
     private final AddressRepository addressRepo;
-    private final AddressMapper addressMapper;
-    private final UsersRepository usersRepo;
+    private final AddressMapper mapper;
     private final FindUsersMethods findUsers;
 
     @Transactional
-    public Address createNewUserAddress(UsersSignupDto userDto) {
-        Optional<Users> checkRecentUser = usersRepo.findUserByPuid(userDto.getPuid());
-        if (checkRecentUser.isPresent()) {
-            NewUserAddressDto userAddressDto = new NewUserAddressDto();
-            Users user = checkRecentUser.get();
-            userAddressDto.setUsers(user);
+    public void createNewUserAddress(UsersSignupDTO userDto) {
+        Users newUser = findUsers.findUsersByPuid(userDto.getPuid());
+        try {
+            NewUserAddressDTO userAddressDto = userDto.getAddressDto();
+            userAddressDto.setUsers(newUser);
             userAddressDto.setPuid(userDto.getPuid());
-            userAddressDto.setState(userDto.getAddress().getState());
-            userAddressDto.setCity(userDto.getAddress().getCity());
 
-            return addressRepo.save(addressMapper.newUserAddressDtoToModel(userAddressDto));
-        } else {
-            throw new RuntimeException();
+            addressRepo.save(mapper.newUserAddressDtoToModel(userAddressDto));
+        } catch (RuntimeException e) {
+            throw new CannotSaveAddressException();
         }
 
     }
 
-    public Address updateUserAddress(String puid, UsersUpdateDto updateDto) {
+    @Transactional
+    public void updateUserAddress(String puid, UsersUpdateDTO requestDTO) {
         Address checkInDB = findUsers.findUserAddress(puid);
+        Address updateDTO = mapper.updateUserAddressDtoToModel(requestDTO.getAddress());
 
-        UpdateUserAddressDto newDto = new UpdateUserAddressDto();
-        newDto.setState(updateDto.getAddress().getState());
-        newDto.setCity(updateDto.getAddress().getCity());
-
-        Address updateFields = addressMapper.updateUserAddressDtoToModel(newDto);
         try {
-            Patcher.patch(checkInDB, updateFields);
+            Patcher.patch(checkInDB, updateDTO);
             addressRepo.save(checkInDB);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e.fillInStackTrace());
         }
-        return checkInDB;
     }
-
 }

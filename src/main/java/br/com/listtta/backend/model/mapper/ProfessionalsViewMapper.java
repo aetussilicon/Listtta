@@ -1,17 +1,36 @@
 package br.com.listtta.backend.model.mapper;
 
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsDto;
-import br.com.listtta.backend.model.entities.Professionals.ProfessionalView;
+import java.util.List;
+
+import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-import java.util.List;
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsViewDTO;
+import br.com.listtta.backend.model.entities.Professionals.ProfessionalsView;
 
 @Mapper(componentModel = "spring")
 public interface ProfessionalsViewMapper {
 
     ProfessionalsViewMapper INSTANCE = Mappers.getMapper(ProfessionalsViewMapper.class);
 
-    ProfessionalsDto professionalModelToDto(ProfessionalView professionalView);
-    List<ProfessionalsDto> listModelToDto(List<ProfessionalView> professionalViewList);
+    @Mappings({
+            @Mapping(source = "state", target = "address.state"),
+            @Mapping(source = "city", target = "address.city"),
+            @Mapping(source = "cityZone", target = "address.cityZone"),
+            @Mapping(source = "district", target = "address.district"),
+            @Mapping(source = "street", target = "address.street"),
+            @Mapping(source = "complement", target = "address.complement"),
+            @Mapping(source = "zipCode", target = "address.zipCode"),
+            @Mapping(source = "type", target = "details.type"),
+            @Mapping(source = "instagramUrl", target = "details.instagramUrl"),
+            @Mapping(source = "skills", target = "details.skills")
+
+    })
+    ProfessionalsViewDTO getProfessionalView(ProfessionalsView professionalsView);
+
+    @InheritConfiguration
+    List<ProfessionalsViewDTO> listAllProfessionalsView(List<ProfessionalsView> professionalsViews);
 }
