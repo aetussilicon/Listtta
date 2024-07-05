@@ -35,43 +35,42 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        //Endpoints
+                        // Endpoints
                         // Autenticação
                         .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 
-                        //Usuários
-                        .requestMatchers(HttpMethod.PATCH, "/users/update/{puid}").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/users/list/{puid}").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/users/list/all").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/users/update/picture/{puid}").hasRole("USER")
+                        // Usuários
+                        .requestMatchers(HttpMethod.PATCH, "/users/update/{puid}").permitAll()// .hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/users/list/{puid}").permitAll()// .hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/users/list/all").permitAll()// .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/users/update/picture/{puid}").permitAll()// .hasRole("USER")
 
-                        //Profissionais
+                        // Profissionais
                         .requestMatchers(HttpMethod.GET, "/professionals/list/all").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/professionals/list/{puid}").hasRole("PROFESSIONAL")
-                        .requestMatchers(HttpMethod.PATCH, "/professionals/update/{puid").hasRole("PROFESSIONAL")
+                        .requestMatchers(HttpMethod.GET, "/professionals/list/{puid}").permitAll()// .hasRole("PROFESSIONAL")
+                        .requestMatchers(HttpMethod.PATCH, "/professionals/update/{puid").permitAll()// .hasRole("PROFESSIONAL")
 
-                        //Filtros
+                        // Filtros
                         .requestMatchers(HttpMethod.GET, "/filters/list/all").permitAll()
                         .requestMatchers(HttpMethod.GET, "/filters/list/{filterName}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/filters/create").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/filters/update/{filterId}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/filters/delete/{filterId}").hasRole("ADMIN")
 
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
-
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
