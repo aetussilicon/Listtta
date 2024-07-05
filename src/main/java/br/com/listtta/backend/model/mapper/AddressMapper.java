@@ -13,6 +13,11 @@ public interface AddressMapper {
     AddressMapper INSTANCE = Mappers.getMapper(AddressMapper.class);
 
     @Mapping(target = "addressId", source = "addressId")
+    @Mapping(target = "cityZone", ignore = true)
+    @Mapping(target = "district", ignore = true)
+    @Mapping(target = "street", ignore = true)
+    @Mapping(target = "complement", ignore = true)
+    @Mapping(target = "zipCode", ignore = true)
     Address newUserAddressDtoToModel(NewUserAddressDTO newUserAddressDto);
 
     @Mapping(target = "addressId", ignore = true)
