@@ -32,17 +32,17 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UsersService {
 
-    //Mappers
+    // Mappers
     private final UsersMapper mapper;
 
-    //Repositórios
+    // Repositórios
     private final UsersRepository usersRepository;
 
-    //Services
+    // Services
     private final AddressService addressService;
     private final ProfessionalsService professionalsService;
 
-    //Métodos extras
+    // Métodos extras
     private final PuidGenerator puidGenerator;
     private final FindUsersMethods findUsersMethods;
     private final CPFValidatorService CPFValidation;
@@ -54,7 +54,7 @@ public class UsersService {
     @Transactional
     public Users createNewUser(UsersSignupDTO usersSignupDto) {
 
-        //Checar se já existe usuário com base no email.
+        // Checar se já existe usuário com base no email.
         findUsersMethods.verifyInUserAlredyExists(usersSignupDto.getEmail());
 
         if (usersSignupDto.getRole() == UserRoles.USER) {
@@ -63,17 +63,17 @@ public class UsersService {
             usersSignupDto.setPuid(puidGenerator.puidGenerator(usersSignupDto.getProfessionalsDto().getType()));
         }
 
-        //Data de criação da conta.
+        // Data de criação da conta.
         usersSignupDto.setCreatedDate(new Date());
 
-        //Criptografa senha do usuário.
+        // Criptografa senha do usuário.
         usersSignupDto.setPassword(new BCryptPasswordEncoder().encode(usersSignupDto.getPassword()));
 
-        //Mapeia o usuário para entidade e salva no banco de dados.
+        // Mapeia o usuário para entidade e salva no banco de dados.
         Users newUser = mapper.usersSignupDto(usersSignupDto);
         usersRepository.save(newUser);
 
-        //Após salvar, salva também o endereço do usuário.
+        // Após salvar, salva também o endereço do usuário.
         addressService.createNewUserAddress(usersSignupDto);
 
         if (usersSignupDto.getRole() == UserRoles.PROFESSIONAL) {
@@ -82,16 +82,16 @@ public class UsersService {
         return newUser;
     }
 
-    //Update de usuários
+    // Update de usuários
     @Transactional
     public UsersDTOAbstract updateUserInfo(String puid, UsersUpdateDTO usersUpdateDto) {
         Users userToUpdate = findUsersMethods.findUsersByPuid(puid);
         Users updateFields = mapper.updateDtoToModel(usersUpdateDto);
         UsersDTOAbstract returnDTO = null;
 
-        if (usersUpdateDto.getTaxNumber() != null) {
-            updateFields.setTaxNumber(CPFValidation.cpfValidation(usersUpdateDto.getTaxNumber()));
-        }
+        // if (usersUpdateDto.getTaxNumber() != null) {
+        // updateFields.setTaxNumber(CPFValidation.cpfValidation(usersUpdateDto.getTaxNumber()));
+        // }
 
         try {
             Patcher.patch(userToUpdate, updateFields);
@@ -108,7 +108,8 @@ public class UsersService {
 
         if (userToUpdate.getRole() == UserRoles.USER) {
             returnDTO = mapper.userModelToDto(userToUpdate);
-        } else if (userToUpdate.getRole() == UserRoles.PROFESSIONAL && usersUpdateDto.getProfessionalsDetails() != null) {
+        } else if (userToUpdate.getRole() == UserRoles.PROFESSIONAL
+                && usersUpdateDto.getProfessionalsDetails() != null) {
             returnDTO = professionalsService.updateProfessionalDetails(puid, usersUpdateDto);
         } else if (usersUpdateDto.getProfessionalsDetails() == null) {
             returnDTO = professionalsService.getProfessional(puid, userToUpdate);
