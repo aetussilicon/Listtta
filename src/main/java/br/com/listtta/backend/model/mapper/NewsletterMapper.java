@@ -13,4 +13,6 @@ public interface NewsletterMapper {
 
     @Mapping(target = "letterId", ignore = true)
     Newsletter registerNewsletterEmail(NewsletterDTO newsletterDTO);
+
+    NewsletterDTO entityToDto(Newsletter newsletter);
 }
