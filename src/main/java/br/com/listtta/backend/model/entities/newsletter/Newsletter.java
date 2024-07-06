@@ -20,6 +20,7 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "letterId")
 public class Newsletter {
 
+    @Column(name = "letter_id")
     private Long letterId;
     private String email;
 
