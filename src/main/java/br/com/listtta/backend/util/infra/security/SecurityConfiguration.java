@@ -58,6 +58,9 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.PATCH, "/filters/update/{filterId}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/filters/delete/{filterId}").hasRole("ADMIN")
 
+                        // Newsletter
+                        .requestMatchers(HttpMethod.POST, "/newsletter/new").permitAll()
+
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

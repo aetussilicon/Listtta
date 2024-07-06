@@ -18,7 +18,7 @@ public class NewsletterService {
     private final NewsletterMapper mapper;
 
     public NewsletterDTO registerNewNewsletterEmail(NewsletterDTO newsletterDTO) {
-        repository.findByEmail(newsletterDTO.getEmail()).orElseThrow(RuntimeException::new);
+        // repository.findByEmail(newsletterDTO.getEmail()).orElseThrow(RuntimeException::new);
 
         newsletterDTO.setCreatedDate(new Date());
 

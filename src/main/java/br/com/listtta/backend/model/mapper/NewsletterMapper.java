@@ -11,7 +11,6 @@ import br.com.listtta.backend.model.entities.newsletter.Newsletter;
 public interface NewsletterMapper {
     NewsletterMapper INSTACE = Mappers.getMapper(NewsletterMapper.class);
 
-    @Mapping(target = "letterId", ignore = true)
     Newsletter registerNewsletterEmail(NewsletterDTO newsletterDTO);
 
     NewsletterDTO entityToDto(Newsletter newsletter);
