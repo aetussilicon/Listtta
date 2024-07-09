@@ -20,4 +20,5 @@ public class ProfessionalsViewDTO {
     private AddressDTO address;
     private DetailsDTO details;
     private String profilePicture;
+    private String mimetype;
 }

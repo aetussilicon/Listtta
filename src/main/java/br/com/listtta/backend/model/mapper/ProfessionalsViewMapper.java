@@ -1,8 +1,11 @@
 package br.com.listtta.backend.model.mapper;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Base64;
 import java.util.List;
 
+import org.apache.tika.Tika;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -29,6 +32,25 @@ public interface ProfessionalsViewMapper {
         return bytea != null ? Base64.getEncoder().encodeToString(bytea) : null;
     }
 
+    @Named("detectMimetype")
+    default String detectMimetype(byte[] bytea) {
+        if (bytea == null) {
+            return null;
+        }
+
+        String mimeType;
+
+        try {
+            Tika tika = new Tika();
+            mimeType = tika.detect(bytea);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mimeType = null;
+        }
+
+        return mimeType;
+    }
+
     @Mappings({
             @Mapping(source = "state", target = "address.state"),
             @Mapping(source = "city", target = "address.city"),
@@ -40,7 +62,8 @@ public interface ProfessionalsViewMapper {
             @Mapping(source = "type", target = "details.type"),
             @Mapping(source = "instagramUrl", target = "details.instagramUrl"),
             @Mapping(source = "skills", target = "details.skills"),
-            @Mapping(source = "profilePicture", target = "profilePicture", qualifiedByName = "mapByteaToBase64")
+            @Mapping(source = "profilePicture", target = "profilePicture", qualifiedByName = "mapByteaToBase64"),
+            @Mapping(source = "profilePicture", target = "mimetype", qualifiedByName = "detectMimetype")
 
     })
     ProfessionalsViewDTO getProfessionalView(ProfessionalsView professionalsView);
