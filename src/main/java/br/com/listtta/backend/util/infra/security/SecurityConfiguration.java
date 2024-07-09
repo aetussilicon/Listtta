@@ -19,70 +19,79 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import lombok.RequiredArgsConstructor;
+import java.util.Arrays;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final SecurityFilter securityFilter;
+        private final SecurityFilter securityFilter;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .cors(Customizer.withDefaults())
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        // Endpoints
-                        // Autenticação
-                        .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                return http
+                                .csrf(csrf -> csrf.disable())
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                .authorizeHttpRequests(authorize -> authorize
+                                                // Endpoints
+                                                // Autenticação
+                                                .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
+                                                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 
-                        // Usuários
-                        .requestMatchers(HttpMethod.PATCH, "/users/update/{puid}").permitAll()// .hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/users/list/{puid}").permitAll()// .hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/users/list/all").permitAll()// .hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/users/update/picture/{puid}").permitAll()// .hasRole("USER")
+                                                // Usuários
+                                                .requestMatchers(HttpMethod.POST, "/users/update/{puid}")
+                                                .hasRole("USER")
+                                                .requestMatchers(HttpMethod.GET, "/users/list/{puid}").hasRole("USER")
+                                                .requestMatchers(HttpMethod.GET, "/users/list/all").hasRole("ADMIN")
 
-                        // Profissionais
-                        .requestMatchers(HttpMethod.GET, "/professionals/list/all").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/professionals/list/{puid}").permitAll()// .hasRole("PROFESSIONAL")
-                        .requestMatchers(HttpMethod.PATCH, "/professionals/update/{puid").permitAll()// .hasRole("PROFESSIONAL")
+                                                // Profissionais
+                                                .requestMatchers(HttpMethod.GET, "/professionals/list/all").permitAll()
+                                                .requestMatchers(HttpMethod.GET, "/professionals/list/{puid}")
+                                                .permitAll()// .hasRole("PROFESSIONAL")
+                                                .requestMatchers(HttpMethod.PATCH, "/professionals/update/{puid")
+                                                .permitAll()// .hasRole("PROFESSIONAL")
 
-                        // Filtros
-                        .requestMatchers(HttpMethod.GET, "/filters/list/all").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/filters/list/{filterName}").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/filters/create").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/filters/update/{filterId}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/filters/delete/{filterId}").hasRole("ADMIN")
+                                                // Filtros
+                                                .requestMatchers(HttpMethod.GET, "/filters/list/all").permitAll()
+                                                .requestMatchers(HttpMethod.GET, "/filters/list/{filterName}")
+                                                .permitAll()
+                                                .requestMatchers(HttpMethod.POST, "/filters/create").hasRole("ADMIN")
+                                                .requestMatchers(HttpMethod.PATCH, "/filters/update/{filterId}")
+                                                .hasRole("ADMIN")
+                                                .requestMatchers(HttpMethod.DELETE, "/filters/delete/{filterId}")
+                                                .hasRole("ADMIN")
 
-                        .anyRequest().authenticated())
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
+                                                // Newsletter
+                                                .requestMatchers(HttpMethod.POST, "/newsletter/new").permitAll()
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+                                                .anyRequest().authenticated())
+                                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                                .build();
+        }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+                        throws Exception {
+                return authenticationConfiguration.getAuthenticationManager();
+        }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(
-                Arrays.asList("http://localhost:5173", "https://listtta.com.br", "http://89.116.74.28:5173"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
+
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+                configuration.setAllowedHeaders(Arrays.asList("*"));
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration);
+                return source;
+        }
 }
