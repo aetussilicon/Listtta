@@ -19,4 +19,6 @@ public class ProfessionalsViewDTO {
     private String whatsappContact;
     private AddressDTO address;
     private DetailsDTO details;
+    private String profilePicture;
+    private String mimetype;
 }
