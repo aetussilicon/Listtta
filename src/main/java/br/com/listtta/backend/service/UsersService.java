@@ -17,6 +17,8 @@ import br.com.listtta.backend.util.FindUsersMethods;
 import br.com.listtta.backend.util.validation.CPFValidatorService;
 import br.com.listtta.backend.util.validation.ControllersResponse;
 import br.com.listtta.backend.util.validation.Patcher;
+import br.com.listtta.backend.util.validation.TokenValidation;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.tika.Tika;
 import org.springframework.security.core.parameters.P;
@@ -42,10 +44,11 @@ public class UsersService {
     private final AddressService addressService;
     private final ProfessionalsService professionalsService;
 
-    // Métodos extras
+    // Validações e geradores
     private final PuidGenerator puidGenerator;
     private final FindUsersMethods findUsersMethods;
     private final CPFValidatorService CPFValidation;
+    private final TokenValidation tokenValidation;
 
     private static final long MAX_FILE_SIZE = 5 * 1024 * 1024;
     private static final List<String> ALLOWED_MIME_TYPE = Arrays.asList("image/png", "image/jpeg", "image/jpg");
@@ -142,7 +145,9 @@ public class UsersService {
         return userToUpdate;
     }
 
-    public UsersDTOAbstract getUser(String puid) {
+    public UsersDTOAbstract getUser(String puid, HttpServletRequest request) {
+        tokenValidation.compareTokens(puid, request);
+
         Tika tika = new Tika();
 
         Users checkedUser = findUsersMethods.findUsersByPuid(puid);
