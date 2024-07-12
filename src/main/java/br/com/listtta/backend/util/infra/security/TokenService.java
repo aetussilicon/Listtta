@@ -46,6 +46,19 @@ public class TokenService {
         }
     }
 
+    public String extractPuidFromToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("listtta")
+                    .build()
+                    .verify(token)
+                    .getClaim("puid").asString();
+        } catch (JWTVerificationException e) {
+            throw new RuntimeException("Erro ao verificar token: " + e);
+        }
+    }
+
     private Instant generateExpirationDate() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
