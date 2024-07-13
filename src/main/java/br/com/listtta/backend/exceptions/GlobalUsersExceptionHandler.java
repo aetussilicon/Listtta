@@ -1,5 +1,6 @@
 package br.com.listtta.backend.exceptions;
 
+import br.com.listtta.backend.exceptions.professionals.ProfessionalDetailsNotFoundException;
 import br.com.listtta.backend.exceptions.users.*;
 import br.com.listtta.backend.util.validation.ControllersResponse;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,11 @@ public class GlobalUsersExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleUserNotFoundException(UserNotFoundException exception) {
+        return new ResponseEntity<>(response.controllersResponse(null, exception), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ProfessionalDetailsNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleProfessionalDetailsNotFoundException(ProfessionalDetailsNotFoundException exception) {
         return new ResponseEntity<>(response.controllersResponse(null, exception), HttpStatus.BAD_REQUEST);
     }
 
