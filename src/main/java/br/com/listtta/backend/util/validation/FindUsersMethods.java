@@ -1,9 +1,9 @@
-package br.com.listtta.backend.util;
+package br.com.listtta.backend.util.validation;
 
 import br.com.listtta.backend.exceptions.address.NoUserAddressException;
 import br.com.listtta.backend.exceptions.professionals.ProfessionalDetailsNotFoundException;
 import br.com.listtta.backend.exceptions.users.UserAlreadyInDatabaseException;
-import br.com.listtta.backend.exceptions.users.UserNotFound;
+import br.com.listtta.backend.exceptions.users.UserNotFoundException;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.entities.users.Users;
@@ -42,7 +42,7 @@ public class FindUsersMethods {
 
     //Por PUID.
     public Users findUsersByPuid(String puid) {
-        return usersRepository.findUserByPuid(puid).orElseThrow(UserNotFound::new);
+        return usersRepository.findUserByPuid(puid).orElseThrow(UserNotFoundException::new);
     }
 
     //Procura de profissionais.

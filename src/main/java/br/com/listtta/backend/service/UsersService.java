@@ -1,7 +1,7 @@
 package br.com.listtta.backend.service;
 
-import br.com.listtta.backend.exceptions.FileToBigException;
-import br.com.listtta.backend.exceptions.MimeTypeNotAllowed;
+import br.com.listtta.backend.exceptions.files.FileToBigException;
+import br.com.listtta.backend.exceptions.files.MimeTypeNotAllowedException;
 import br.com.listtta.backend.model.abstracts.UsersDTOAbstract;
 import br.com.listtta.backend.model.dto.address.AddressDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDetailsDTO;
@@ -13,15 +13,13 @@ import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.UserRoles;
 import br.com.listtta.backend.model.mapper.UsersMapper;
 import br.com.listtta.backend.repository.UsersRepository;
-import br.com.listtta.backend.util.FindUsersMethods;
+import br.com.listtta.backend.util.validation.FindUsersMethods;
 import br.com.listtta.backend.util.validation.CPFValidatorService;
-import br.com.listtta.backend.util.validation.ControllersResponse;
 import br.com.listtta.backend.util.validation.Patcher;
 import br.com.listtta.backend.util.validation.TokenValidation;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.tika.Tika;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -131,7 +129,7 @@ public class UsersService {
             if (profilePicture.getSize() > MAX_FILE_SIZE) {
                 throw new FileToBigException();
             } else if (!ALLOWED_MIME_TYPE.contains(fileType)) {
-                throw new MimeTypeNotAllowed(fileType);
+                throw new MimeTypeNotAllowedException(fileType);
             }
 
             try {

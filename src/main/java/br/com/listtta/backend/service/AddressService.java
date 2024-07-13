@@ -2,21 +2,17 @@ package br.com.listtta.backend.service;
 
 import br.com.listtta.backend.exceptions.address.CannotSaveAddressException;
 import br.com.listtta.backend.model.dto.address.NewUserAddressDTO;
-import br.com.listtta.backend.model.dto.address.UpdateUserAddressDTO;
 import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
 import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.mapper.AddressMapper;
 import br.com.listtta.backend.repository.AddressRepository;
-import br.com.listtta.backend.repository.UsersRepository;
-import br.com.listtta.backend.util.FindUsersMethods;
+import br.com.listtta.backend.util.validation.FindUsersMethods;
 import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

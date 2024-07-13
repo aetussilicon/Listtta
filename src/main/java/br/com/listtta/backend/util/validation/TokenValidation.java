@@ -1,10 +1,9 @@
 package br.com.listtta.backend.util.validation;
 
-import br.com.listtta.backend.exceptions.UserNotAllowedException;
+import br.com.listtta.backend.exceptions.users.UserNotAllowedException;
 import br.com.listtta.backend.util.infra.security.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component

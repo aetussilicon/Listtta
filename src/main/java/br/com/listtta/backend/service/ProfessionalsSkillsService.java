@@ -1,16 +1,14 @@
 package br.com.listtta.backend.service;
 
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSkillsDTO;
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDTO;
 import br.com.listtta.backend.model.dto.users.UsersSignupDTO;
-import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalDetails;
 import br.com.listtta.backend.model.entities.filters.Filters;
 import br.com.listtta.backend.model.enums.ProfessionalsType;
 import br.com.listtta.backend.model.mapper.ProfessionalsSkillsMapper;
 import br.com.listtta.backend.repository.FiltersRepository;
 import br.com.listtta.backend.repository.ProfessionalsSkillsRepository;
-import br.com.listtta.backend.util.FindUsersMethods;
+import br.com.listtta.backend.util.validation.FindUsersMethods;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

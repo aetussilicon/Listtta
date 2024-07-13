@@ -1,7 +1,7 @@
 package br.com.listtta.backend.service;
 
 import br.com.listtta.backend.exceptions.users.CannotUpdateUsersFieldsException;
-import br.com.listtta.backend.exceptions.users.UserNotFound;
+import br.com.listtta.backend.exceptions.users.UserNotFoundException;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDetailsDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsUpdateDTO;
@@ -14,7 +14,7 @@ import br.com.listtta.backend.model.mapper.ProfessionalsMapper;
 import br.com.listtta.backend.model.mapper.ProfessionalsViewMapper;
 import br.com.listtta.backend.repository.ProfessionalsRepository;
 import br.com.listtta.backend.repository.ProfessionalsViewRepository;
-import br.com.listtta.backend.util.FindUsersMethods;
+import br.com.listtta.backend.util.validation.FindUsersMethods;
 import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
 
@@ -94,7 +94,7 @@ public class ProfessionalsService {
 
     protected ProfessionalsDetailsDTO getProfessional(String puid, Users professional) {
         ProfessionalDetails details = professionalsRepository.findProfessionalByUsers(professional)
-                .orElseThrow(UserNotFound::new);
+                .orElseThrow(UserNotFoundException::new);
         ProfessionalsDetailsDTO returnDTO = professionalsMapper.getProfessionalDetails(professional, details);
 
         returnDTO.setSkills(skillsService.getSkills(puid));

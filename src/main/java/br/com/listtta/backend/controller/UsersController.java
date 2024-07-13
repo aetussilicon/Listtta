@@ -1,7 +1,5 @@
 package br.com.listtta.backend.controller;
 
-import br.com.listtta.backend.exceptions.UserNotAllowedException;
-import br.com.listtta.backend.exceptions.users.UserNotFound;
 import br.com.listtta.backend.model.abstracts.UsersDTOAbstract;
 import br.com.listtta.backend.model.dto.users.UsersUpdateDTO;
 import br.com.listtta.backend.model.entities.users.Users;
@@ -41,28 +39,15 @@ public class UsersController {
     public ResponseEntity<Map<String, Object>> updateUserProfilePicture(@PathVariable String puid,
             @ModelAttribute UsersUpdateDTO usersUpdateDto) {
 
-        try {
-            Users updatedUser = service.updateUserProfilePicture(puid, usersUpdateDto);
-            return new ResponseEntity<>(responses.controllersResponse(updatedUser, null), HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        Users updatedUser = service.updateUserProfilePicture(puid, usersUpdateDto);
+        return new ResponseEntity<>(responses.controllersResponse(updatedUser, null), HttpStatus.OK);
+
     }
 
     @GetMapping
     @RequestMapping("list/{puid}")
     public ResponseEntity<Map<String, Object>> getUser(@PathVariable String puid, HttpServletRequest request) {
-        try {
-            UsersDTOAbstract user = service.getUser(puid, request);
-            return new ResponseEntity<>(responses.controllersResponse(user, null), HttpStatus.OK);
-        } catch (UserNotAllowedException e) {
-            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.FORBIDDEN);
-        } catch (UserNotFound e) {
-            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        UsersDTOAbstract user = service.getUser(puid, request);
+        return new ResponseEntity<>(responses.controllersResponse(user, null), HttpStatus.OK);
     }
 }
