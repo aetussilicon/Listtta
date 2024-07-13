@@ -24,24 +24,16 @@ public class UsersController {
     @PatchMapping
     @RequestMapping("update/{puid}")
     public ResponseEntity<Map<String, Object>> updateUserInfo(@PathVariable String puid,
-            @RequestBody @Valid UsersUpdateDTO updateDTO) {
-        try {
-            UsersDTOAbstract updateUser = service.updateUserInfo(puid, updateDTO);
-            return new ResponseEntity<>(responses.controllersResponse(updateUser, null), HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<>(responses.controllersResponse(null, e), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+                                                              @RequestBody @Valid UsersUpdateDTO updateDTO) {
+        UsersDTOAbstract updateUser = service.updateUserInfo(puid, updateDTO);
+        return new ResponseEntity<>(responses.controllersResponse(updateUser, null), HttpStatus.OK);
     }
 
     @PatchMapping("update/picture/{puid}")
     public ResponseEntity<Map<String, Object>> updateUserProfilePicture(@PathVariable String puid,
-            @ModelAttribute UsersUpdateDTO usersUpdateDto) {
-
+                                                                        @ModelAttribute UsersUpdateDTO usersUpdateDto) {
         Users updatedUser = service.updateUserProfilePicture(puid, usersUpdateDto);
         return new ResponseEntity<>(responses.controllersResponse(updatedUser, null), HttpStatus.OK);
-
     }
 
     @GetMapping
