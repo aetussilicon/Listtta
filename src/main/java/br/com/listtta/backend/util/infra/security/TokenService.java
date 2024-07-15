@@ -18,16 +18,15 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(Users users) {
+    public String generateToken(Users users, boolean rememberMe) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            String token = JWT.create()
+            return JWT.create()
                     .withIssuer("listtta")
                     .withSubject(users.getEmail())
                     .withClaim("puid", users.getPuid())
-                    .withExpiresAt(generateExpirationDate())
+                    .withExpiresAt(generateExpirationDate(rememberMe))
                     .sign(algorithm);
-            return token;
         } catch (JWTCreationException e) {
             throw new RuntimeException("Erro enquanto token era gerado" + e);
         }
@@ -59,7 +58,11 @@ public class TokenService {
         }
     }
 
-    private Instant generateExpirationDate() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+    private Instant generateExpirationDate(boolean rememberMe) {
+        if (rememberMe) {
+            return LocalDateTime.now().plusDays(7).toInstant(ZoneOffset.of("-03:00"));
+        } else {
+            return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+        }
     }
 }
