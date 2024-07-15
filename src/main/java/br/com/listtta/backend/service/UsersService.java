@@ -85,13 +85,19 @@ public class UsersService {
 
     // Update de usuários
     @Transactional
-    public UsersDTOAbstract updateUserInfo(String puid, UsersUpdateDTO usersUpdateDto) {
+    public UsersDTOAbstract updateUserInfo(String puid, UsersUpdateDTO usersUpdateDto, HttpServletRequest request) {
+        tokenValidation.compareTokens(puid, request);
+
         Users userToUpdate = findUsersMethods.findUsersByPuid(puid);
         Users updateFields = mapper.updateDtoToModel(usersUpdateDto);
         UsersDTOAbstract returnDTO = null;
 
         // if (usersUpdateDto.getTaxNumber() != null) {
-        // updateFields.setTaxNumber(CPFValidation.cpfValidation(usersUpdateDto.getTaxNumber()));
+        // updateFields.setTaxNumber(CPFValida
+        //
+        //
+        //
+        // ion.cpfValidation(usersUpdateDto.getTaxNumber()));
         // }
 
         try {
@@ -120,12 +126,14 @@ public class UsersService {
     }
 
     @Transactional
-    public Users updateUserProfilePicture(String puid, UsersUpdateDTO updateDTO) {
+    public Users updateUserProfilePicture(String puid, UsersUpdateDTO updateDTO, HttpServletRequest request) {
+        tokenValidation.compareTokens(puid, request);
+
         Users userToUpdate = findUsersMethods.findUsersByPuid(puid);
         MultipartFile profilePicture = updateDTO.getProfilePicture();
         String fileType = profilePicture.getContentType();
 
-        if (profilePicture != null && !profilePicture.isEmpty()) {
+        if (!profilePicture.isEmpty()) {
             if (profilePicture.getSize() > MAX_FILE_SIZE) {
                 throw new FileToBigException();
             } else if (!ALLOWED_MIME_TYPE.contains(fileType)) {
