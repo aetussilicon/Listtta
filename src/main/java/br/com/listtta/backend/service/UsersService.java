@@ -1,7 +1,7 @@
 package br.com.listtta.backend.service;
 
-import br.com.listtta.backend.exceptions.FileToBigException;
-import br.com.listtta.backend.exceptions.MimeTypeNotAllowed;
+import br.com.listtta.backend.exceptions.files.FileToBigException;
+import br.com.listtta.backend.exceptions.files.MimeTypeNotAllowedException;
 import br.com.listtta.backend.model.abstracts.UsersDTOAbstract;
 import br.com.listtta.backend.model.dto.address.AddressDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsDetailsDTO;
@@ -13,13 +13,13 @@ import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.UserRoles;
 import br.com.listtta.backend.model.mapper.UsersMapper;
 import br.com.listtta.backend.repository.UsersRepository;
-import br.com.listtta.backend.util.FindUsersMethods;
+import br.com.listtta.backend.util.validation.FindUsersMethods;
 import br.com.listtta.backend.util.validation.CPFValidatorService;
-import br.com.listtta.backend.util.validation.ControllersResponse;
 import br.com.listtta.backend.util.validation.Patcher;
+import br.com.listtta.backend.util.validation.TokenValidation;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.tika.Tika;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,10 +42,11 @@ public class UsersService {
     private final AddressService addressService;
     private final ProfessionalsService professionalsService;
 
-    // Métodos extras
+    // Validações e geradores
     private final PuidGenerator puidGenerator;
     private final FindUsersMethods findUsersMethods;
     private final CPFValidatorService CPFValidation;
+    private final TokenValidation tokenValidation;
 
     private static final long MAX_FILE_SIZE = 5 * 1024 * 1024;
     private static final List<String> ALLOWED_MIME_TYPE = Arrays.asList("image/png", "image/jpeg", "image/jpg");
@@ -84,13 +85,19 @@ public class UsersService {
 
     // Update de usuários
     @Transactional
-    public UsersDTOAbstract updateUserInfo(String puid, UsersUpdateDTO usersUpdateDto) {
+    public UsersDTOAbstract updateUserInfo(String puid, UsersUpdateDTO usersUpdateDto, HttpServletRequest request) {
+        tokenValidation.compareTokens(puid, request);
+
         Users userToUpdate = findUsersMethods.findUsersByPuid(puid);
         Users updateFields = mapper.updateDtoToModel(usersUpdateDto);
         UsersDTOAbstract returnDTO = null;
 
         // if (usersUpdateDto.getTaxNumber() != null) {
-        // updateFields.setTaxNumber(CPFValidation.cpfValidation(usersUpdateDto.getTaxNumber()));
+        // updateFields.setTaxNumber(CPFValida
+        //
+        //
+        //
+        // ion.cpfValidation(usersUpdateDto.getTaxNumber()));
         // }
 
         try {
@@ -119,16 +126,18 @@ public class UsersService {
     }
 
     @Transactional
-    public Users updateUserProfilePicture(String puid, UsersUpdateDTO updateDTO) {
+    public Users updateUserProfilePicture(String puid, UsersUpdateDTO updateDTO, HttpServletRequest request) {
+        tokenValidation.compareTokens(puid, request);
+
         Users userToUpdate = findUsersMethods.findUsersByPuid(puid);
         MultipartFile profilePicture = updateDTO.getProfilePicture();
         String fileType = profilePicture.getContentType();
 
-        if (profilePicture != null && !profilePicture.isEmpty()) {
+        if (!profilePicture.isEmpty()) {
             if (profilePicture.getSize() > MAX_FILE_SIZE) {
                 throw new FileToBigException();
             } else if (!ALLOWED_MIME_TYPE.contains(fileType)) {
-                throw new MimeTypeNotAllowed(fileType);
+                throw new MimeTypeNotAllowedException(fileType);
             }
 
             try {
@@ -142,7 +151,9 @@ public class UsersService {
         return userToUpdate;
     }
 
-    public UsersDTOAbstract getUser(String puid) {
+    public UsersDTOAbstract getUser(String puid, HttpServletRequest request) {
+        tokenValidation.compareTokens(puid, request);
+
         Tika tika = new Tika();
 
         Users checkedUser = findUsersMethods.findUsersByPuid(puid);

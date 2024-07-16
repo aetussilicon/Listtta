@@ -1,4 +1,4 @@
-package br.com.listtta.backend.exceptions;
+package br.com.listtta.backend.exceptions.files;
 
 public class FileToBigException extends RuntimeException {
     public FileToBigException() {

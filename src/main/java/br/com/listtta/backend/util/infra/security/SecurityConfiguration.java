@@ -44,15 +44,15 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 
                         // Usuários
-                        .requestMatchers(HttpMethod.PATCH, "/users/update/{puid}").permitAll()// .hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/users/list/{puid}").permitAll()// .hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/users/list/all").permitAll()// .hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PATCH, "/users/update/picture/{puid}").permitAll()// .hasRole("USER")
+                        .requestMatchers(HttpMethod.PATCH, "/users/update/{puid}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/users/list/{puid}").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/users/list/all").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/users/update/picture/{puid}").hasRole("USER")
 
                         // Profissionais
                         .requestMatchers(HttpMethod.GET, "/professionals/list/all").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/professionals/list/{puid}").permitAll()// .hasRole("PROFESSIONAL")
-                        .requestMatchers(HttpMethod.PATCH, "/professionals/update/{puid").permitAll()// .hasRole("PROFESSIONAL")
+                        .requestMatchers(HttpMethod.GET, "/professionals/list/{puid}").hasRole("PROFESSIONAL")
+                        .requestMatchers(HttpMethod.PATCH, "/professionals/update/{puid").hasRole("PROFESSIONAL")
 
                         // Filtros
                         .requestMatchers(HttpMethod.GET, "/filters/list/all").permitAll()
@@ -83,6 +83,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://listtta.com.br"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
