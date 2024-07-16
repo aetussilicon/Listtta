@@ -24,15 +24,15 @@ public class UsersController {
     @PatchMapping
     @RequestMapping("update/{puid}")
     public ResponseEntity<Map<String, Object>> updateUserInfo(@PathVariable String puid,
-                                                              @RequestBody @Valid UsersUpdateDTO updateDTO) {
-        UsersDTOAbstract updateUser = service.updateUserInfo(puid, updateDTO);
+                                                              @RequestBody @Valid UsersUpdateDTO updateDTO, HttpServletRequest request) {
+        UsersDTOAbstract updateUser = service.updateUserInfo(puid, updateDTO, request);
         return new ResponseEntity<>(responses.controllersResponse(updateUser, null), HttpStatus.OK);
     }
 
     @PatchMapping("update/picture/{puid}")
     public ResponseEntity<Map<String, Object>> updateUserProfilePicture(@PathVariable String puid,
-                                                                        @ModelAttribute UsersUpdateDTO usersUpdateDto) {
-        Users updatedUser = service.updateUserProfilePicture(puid, usersUpdateDto);
+                                                                        @ModelAttribute UsersUpdateDTO usersUpdateDto, HttpServletRequest request) {
+        Users updatedUser = service.updateUserProfilePicture(puid, usersUpdateDto, request);
         return new ResponseEntity<>(responses.controllersResponse(updatedUser, null), HttpStatus.OK);
     }
 
