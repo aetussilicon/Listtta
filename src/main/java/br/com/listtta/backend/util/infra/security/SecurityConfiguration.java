@@ -42,6 +42,7 @@ public class SecurityConfiguration {
                         // Autenticação
                         .requestMatchers(HttpMethod.POST, "/auth/signup").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/oauth/google/grantcode").permitAll()
 
                         // Usuários
                         .requestMatchers(HttpMethod.PATCH, "/users/update/{puid}").hasRole("USER")
