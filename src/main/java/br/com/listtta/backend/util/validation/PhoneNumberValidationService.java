@@ -15,6 +15,10 @@ public class PhoneNumberValidationService {
      * @throws PhoneNumberNotValidException if the phone number is not valid.
      */
     public String formatPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null) {
+            throw new PhoneNumberNotValidException("O número de telefone é inválido");
+        }
+
         String validatedNumber = validatePhoneNumber(phoneNumber);
 
         //Formatando número
@@ -22,7 +26,7 @@ public class PhoneNumberValidationService {
         String leftNumbers = validatedNumber.substring(2, 7);
         String rightNumbers = validatedNumber.substring(7);
 
-        StringBuilder builder = new StringBuilder();3
+        StringBuilder builder = new StringBuilder();
         builder.append("(").append(stateDDD).append(")");
         builder.append(" ").append(leftNumbers).append("-").append(rightNumbers);
 
