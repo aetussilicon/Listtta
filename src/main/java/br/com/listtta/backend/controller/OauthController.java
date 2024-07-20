@@ -21,6 +21,6 @@ public class OauthController {
     @RequestMapping("google/grantcode")
     public ResponseEntity<Void> grantCode(@RequestParam("code") String code) {
         service.registerUserWithGoogle(code);
-        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("http://localhost:5173/success")).build();
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("http://localhost:5173/oauth/success")).build();
     }
 }

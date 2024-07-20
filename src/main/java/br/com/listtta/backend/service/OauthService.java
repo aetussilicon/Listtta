@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ public class OauthService {
 
     private final RandomPasswordGenerator passwordGenerator;
 
+    @Transactional
     public void registerUserWithGoogle(String code) {
         String accessTokenResponse = googleService.getOauthAccessTokenGoogle(code);
         JsonObject accessTokenJson = new Gson().fromJson(accessTokenResponse, JsonObject.class);
