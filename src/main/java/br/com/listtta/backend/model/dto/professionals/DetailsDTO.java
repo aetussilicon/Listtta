@@ -1,10 +1,10 @@
 package br.com.listtta.backend.model.dto.professionals;
 
-import java.util.Set;
-
 import br.com.listtta.backend.model.enums.ProfessionalsType;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter
 @Setter

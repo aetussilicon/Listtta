@@ -1,10 +1,9 @@
 package br.com.listtta.backend.repository;
 
-import java.util.UUID;
-
+import br.com.listtta.backend.model.entities.Professionals.ProfessionalsView;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.listtta.backend.model.entities.Professionals.ProfessionalsView;
+import java.util.UUID;
 
 public interface ProfessionalsViewRepository extends JpaRepository<ProfessionalsView, UUID> {
 

@@ -17,11 +17,10 @@ import br.com.listtta.backend.repository.ProfessionalsViewRepository;
 import br.com.listtta.backend.util.validation.FindUsersMethods;
 import br.com.listtta.backend.util.validation.Patcher;
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

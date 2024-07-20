@@ -1,18 +1,17 @@
 package br.com.listtta.backend.controller;
 
-import java.util.List;
-import java.util.Map;
-
+import br.com.listtta.backend.model.dto.professionals.ProfessionalsViewDTO;
+import br.com.listtta.backend.service.ProfessionalsService;
+import br.com.listtta.backend.util.validation.ControllersResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.listtta.backend.model.dto.professionals.ProfessionalsViewDTO;
-import br.com.listtta.backend.service.ProfessionalsService;
-import br.com.listtta.backend.util.validation.ControllersResponse;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("professionals")

@@ -4,17 +4,14 @@ import br.com.listtta.backend.model.abstracts.UsersDTOAbstract;
 import br.com.listtta.backend.model.dto.address.AddressDTO;
 import br.com.listtta.backend.model.dto.address.NewUserAddressDTO;
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsSignupDTO;
-import br.com.listtta.backend.model.entities.address.Address;
 import br.com.listtta.backend.model.enums.UserGender;
 import br.com.listtta.backend.model.enums.UserRoles;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.UUID;
 
 @Getter

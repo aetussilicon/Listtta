@@ -1,7 +1,6 @@
 package br.com.listtta.backend.repository;
 
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalsSkills;
-import br.com.listtta.backend.model.entities.filters.Filters;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

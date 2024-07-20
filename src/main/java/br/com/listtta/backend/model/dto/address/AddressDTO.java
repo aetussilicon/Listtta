@@ -1,6 +1,5 @@
 package br.com.listtta.backend.model.dto.address;
 
-import br.com.listtta.backend.model.enums.CitiesZone;
 import lombok.Getter;
 import lombok.Setter;
 

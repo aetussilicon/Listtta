@@ -1,21 +1,14 @@
 package br.com.listtta.backend.model.mapper;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.Base64;
-import java.util.List;
-
-import org.apache.tika.Tika;
-import org.mapstruct.InheritConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
-import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
-
 import br.com.listtta.backend.model.dto.professionals.ProfessionalsViewDTO;
 import br.com.listtta.backend.model.entities.Professionals.ProfessionalsView;
 import br.com.listtta.backend.model.enums.CitiesZone;
+import org.apache.tika.Tika;
+import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
+
+import java.util.Base64;
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ProfessionalsViewMapper {

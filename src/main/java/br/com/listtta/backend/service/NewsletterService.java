@@ -1,14 +1,13 @@
 package br.com.listtta.backend.service;
 
-import java.util.Date;
-
-import org.springframework.stereotype.Service;
-
 import br.com.listtta.backend.model.dto.newsletter.NewsletterDTO;
 import br.com.listtta.backend.model.entities.newsletter.Newsletter;
 import br.com.listtta.backend.model.mapper.NewsletterMapper;
 import br.com.listtta.backend.repository.NewsletterRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor

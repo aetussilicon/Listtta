@@ -13,8 +13,8 @@ import br.com.listtta.backend.model.entities.users.Users;
 import br.com.listtta.backend.model.enums.UserRoles;
 import br.com.listtta.backend.model.mapper.UsersMapper;
 import br.com.listtta.backend.repository.UsersRepository;
-import br.com.listtta.backend.util.validation.FindUsersMethods;
 import br.com.listtta.backend.util.validation.CPFValidatorService;
+import br.com.listtta.backend.util.validation.FindUsersMethods;
 import br.com.listtta.backend.util.validation.Patcher;
 import br.com.listtta.backend.util.validation.TokenValidation;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +26,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor

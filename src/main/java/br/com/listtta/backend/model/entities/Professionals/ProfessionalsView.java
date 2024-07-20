@@ -1,27 +1,16 @@
 package br.com.listtta.backend.model.entities.Professionals;
 
+import br.com.listtta.backend.model.enums.CitiesZone;
+import br.com.listtta.backend.model.enums.ProfessionalsType;
+import br.com.listtta.backend.model.enums.UserGender;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+
 import java.sql.Date;
 import java.sql.Types;
 import java.util.Set;
 import java.util.UUID;
-
-import org.hibernate.annotations.JdbcTypeCode;
-
-import br.com.listtta.backend.model.enums.CitiesZone;
-import br.com.listtta.backend.model.enums.ProfessionalsType;
-import br.com.listtta.backend.model.enums.UserGender;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "professional_details")

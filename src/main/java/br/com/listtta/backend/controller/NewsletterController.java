@@ -1,8 +1,10 @@
 package br.com.listtta.backend.controller;
 
-import java.util.Map;
-
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
+import br.com.listtta.backend.model.dto.newsletter.NewsletterDTO;
+import br.com.listtta.backend.service.NewsletterService;
+import br.com.listtta.backend.util.validation.ControllersResponse;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,11 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.listtta.backend.model.dto.newsletter.NewsletterDTO;
-import br.com.listtta.backend.service.NewsletterService;
-import br.com.listtta.backend.util.validation.ControllersResponse;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import java.util.Map;
 
 @RestController
 @RequestMapping("newsletter")
