@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-    private final String listttaUrl = System.getenv("LISTTTA_URL")
+    private final String listttaUrl = System.getenv("LISTTTA_URL");
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
