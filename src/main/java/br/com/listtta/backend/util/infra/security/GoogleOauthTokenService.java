@@ -2,18 +2,21 @@ package br.com.listtta.backend.util.infra.security;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Base64;
+
 @Service
 public class GoogleOauthTokenService {
 
-            private final String clientId = System.getenv("CLIENT_ID");
-            private final String clientSecret = System.getenv("CLIENT_SECRET");
-            private final String redirectUri = System.getenv("REDIRECT_URI");
+    private final String clientId = System.getenv("CLIENT_ID");
+    private final String clientSecret = System.getenv("CLIENT_SECRET");
+    private final String redirectUri = System.getenv("REDIRECT_URI");
 
     public String getOauthAccessTokenGoogle(String code) {
         RestTemplate restTemplate = new RestTemplate();
@@ -40,19 +43,8 @@ public class GoogleOauthTokenService {
     }
 
     public JsonObject getProfileDetailsGoogle(String accessToken) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setBearerAuth(accessToken);
-
-        HttpEntity<String> requestEntity = new HttpEntity<>(httpHeaders);
-
-        String url = "https://www.googleapis.com/oauth2/v2/userinfo";
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
-
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return new Gson().fromJson(response.getBody(), JsonObject.class);
-        } else {
-            throw new RuntimeException("Failed to get profile details from Google");
-        }
+        String[] parts = accessToken.split("\\.");
+        String payload = new String(Base64.getUrlDecoder().decode(parts[1]));
+        return JsonParser.parseString(payload).getAsJsonObject();
     }
 }
