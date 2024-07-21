@@ -1,11 +1,13 @@
 package br.com.listtta.backend.util.validation;
 
 import br.com.listtta.backend.exceptions.PhoneNumberNotValidException;
+import org.springframework.stereotype.Component;
 
 /**
  * A service for validating and formatting Brazilian phone numbers.
  */
-public class PhoneNumberValidationService {
+@Component
+public class PhoneNumberFormatter {
 
     /**
      * Formats a given phone number string into the standard Brazilian format.

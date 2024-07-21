@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for PhoneNumberValidationService.
  */
 class PhoneNumberValidationServiceTest {
-    private final PhoneNumberValidationService phoneNumberValidationService = new PhoneNumberValidationService();
+    private final PhoneNumberFormatter phoneNumberValidationService = new PhoneNumberFormatter();
 
     @Test
     void testFormatPhoneNumber_ValidNumber() {
